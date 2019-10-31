@@ -34,4 +34,14 @@ public class DataPoint
         this.color = color;
         this.attributes = new Dictionary<string, Object>();
     }
+
+    public Vector3 GetPos()
+    {
+        return this.pos;
+    }
+
+    public Color GetColor()
+    {
+        return this.color;
+    }
 }
