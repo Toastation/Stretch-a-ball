@@ -1,50 +1,55 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
+  
+using UnityEngine;
+using Unity.Collections;
+using Unity.Jobs;
 
-// [RequireComponent(typeof(MeshFilter))]
-// public class MeshDeformer : MonoBehaviour
-// {
-//     Mesh deformingMesh;
-//     Vector3[] originalVertices, displacedVertices;
-//     /** Scaling of the force so the deformation is uniform regardless of the size of the shape */
-//     float uniformScale = 1f;
-//     /** Max distance from which vertices are affected by a deformation */
-//     float maxDistThreshold;
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshCollider))]
+public class MeshDeformerLite : MonoBehaviour
+{
+    private Mesh mesh;
+    private MeshCollider meshCollider;
 
-//     void Start()
-//     {
-//         deformingMesh = GetComponent<MeshFilter>().mesh;
-//         originalVertices = deformingMesh.vertices;
-//         displacedVertices = new Vector3[originalVertices.Length];
-//         for (int i = 0; i < originalVertices.Length; i++) {
-//             displacedVertices[i] = originalVertices[i];
-//         }
-//         vertexVelocities = new Vector3[originalVertices.Length];
-//     }
+    private Vector3[] vertices;
+    private Vector3[] normals;
 
-//     void Update()
-//     {
-//         uniformScale = transform.localScale.x;
-//     }
+    private void Start()
+    {
+        mesh = gameObject.GetComponent<MeshFilter>().mesh;
+        mesh.MarkDynamic(); // optimize mesh for frequent update
 
-//     public void Deform(Vector3 contactPoint, float force) 
-//     {
-//         Debug.DrawLine(Camera.main.transform.position, contactPoint);
-//         for (int i = 0; i < displacedVertices.Length; i++) {
-//             MoveVertex(i, contactPoint, force);
-//         }
-//     }
+        meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
 
-//     void MoveVertex(int i, Vector3 point, float force) 
-//     {
-//         Vector3 distToOrigin = displacedVertices[i] - point;
-//         distToOrigin *= uniformScale;
-//         float sqrMag = distToOrigin.sqrMagnitude;
-//         if (sqrMag > maxDistThreshold) return;
-//         float attenuatedForce = force / (1f + sqrMag);
-//         // update the mesh
-//         deformingMesh.vertices = displacedVertices;
-//         deformingMesh.RecalculateNormals();
-//     }
-// }
+        // This memory setup assumes the vertex count will not change.
+        vertices = mesh.vertices;
+        normals = mesh.normals;
+    }
+
+    // The deformation should always take place after the main update
+    private void LateUpdate() {
+        mesh.vertices = vertices;
+
+        // no need to update normals since the displacement is colinear to the normal
+        mesh.RecalculateBounds();
+
+        // bug with the mesh collider, the mesh is updated as expected but internally it still uses the unmodified mesh.
+        meshCollider.enabled = false;
+        meshCollider.enabled = true;
+    }
+
+    public void Deform( Vector3 point, float radius, float force )
+    {
+        Vector3 center = transform.InverseTransformPoint(point); // Transform the point from world space to local space.
+        // go through all vertices and move the ones inside the radius of contact
+        for (int i = 0; i < vertices.Length; i++) {
+            Vector3 vertex = vertices[i];
+            float dxSqr = Mathf.Pow(vertex.x - center.x, 2);
+            float dySqr = Mathf.Pow(vertex.y - center.y, 2);
+            float dzSqr = Mathf.Pow(vertex.z - center.z, 2);
+            if (dxSqr + dySqr + dzSqr < Mathf.Pow(radius, 2)) {
+                vertices[i] += normals[i] * force * Time.deltaTime;
+            }
+        }
+    }
+}

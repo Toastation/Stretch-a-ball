@@ -34,7 +34,9 @@ public class MeshDeformer : MonoBehaviour
             UpdateVertex(i);
         }   
         deformingMesh.vertices = displacedVertices;
+        // perf are bad with a high number of vertex....
         deformingMesh.RecalculateNormals();
+        deformingMesh.RecalculateBounds();
     }
 
     public void SpreadForce(Vector3 contactPoint, float force) 
@@ -63,5 +65,13 @@ public class MeshDeformer : MonoBehaviour
         velocity *= 1f - deceleration * Time.deltaTime;
         vertexVelocities[i] = velocity;
         displacedVertices[i] += velocity * (Time.deltaTime / uniformScale);
+    }
+
+    void OnDrawGizmosSelected() 
+    {
+        Vector3 center = deformingMesh.bounds.center;
+        float radius = deformingMesh.bounds.extents.magnitude;
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(center, radius);
     }
 }
