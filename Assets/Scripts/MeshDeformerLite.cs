@@ -40,20 +40,12 @@ public class MeshDeformerLite : MonoBehaviour
 
     public void Deform(Vector3 point, float radius, float force)
     {
-        Vector3 center = transform.InverseTransformPoint(point); // Transform the point from world space to local space.
+        Vector3 center = transform.InverseTransformPoint(point);
         // go through all vertices and move the ones inside the radius of contact
         for (int i = 0; i < vertices.Length; i++) {
             Vector3 dist = vertices[i] - center;
             float reducedForce =  1 / (1f + 100 * dist.sqrMagnitude);
             vertices[i] += normals[i] * reducedForce * Time.deltaTime;
-
-            // Vector3 vertex = vertices[i];
-            // float dxSqr = Mathf.Pow(vertex.x - center.x, 2);
-            // float dySqr = Mathf.Pow(vertex.y - center.y, 2);
-            // float dzSqr = Mathf.Pow(vertex.z - center.z, 2);
-            // if (dxSqr + dySqr + dzSqr < Mathf.Pow(radius, 2)) {
-            //     vertices[i] += normals[i] * force * Time.deltaTime;
-            // }
         }
     }
 }

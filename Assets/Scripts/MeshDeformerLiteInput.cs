@@ -14,7 +14,7 @@ public class MeshDeformerLiteInput: MonoBehaviour
 
         if(Input.GetMouseButton(0)) {
             RaycastHit hit;
-            if( Physics.Raycast(ray, out hit, distance)) {
+            if (Physics.Raycast(ray, out hit, distance)) {
                 MeshDeformerLite deformer = hit.collider.GetComponent<MeshDeformerLite>();
                 MeshDeformerLiteRadius deformerRadius = hit.collider.GetComponent<MeshDeformerLiteRadius>();
                 if (deformer) {
