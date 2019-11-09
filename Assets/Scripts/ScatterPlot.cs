@@ -7,6 +7,7 @@ public class ScatterPlot : MonoBehaviour
 
     /** The path to the CSV file containing the data. Set by the user */
     public string csvPath;
+
     public GameObject PointPrefab;
 
     /** The list of points in the scatterplot */
