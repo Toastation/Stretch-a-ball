@@ -38,6 +38,14 @@ public class MeshDeformerMove : MonoBehaviour
         for (int i = 0; i < selectedVertices.Length; i++) selectedVertices[i] = false;
     }
 
+    private void Update() 
+    {
+        // if (Input.GetMouseButton(0)) {
+        //     Debug.Log("hehehe" + lastHitPoint + " "+ Camera.main.transform.position);
+            Debug.DrawLine(Camera.main.transform.position, transform.position, Color.red);
+        // }    
+    }
+
     // The deformation should always take place after the main update
     private void LateUpdate() {
         mesh.vertices = vertices;
@@ -99,6 +107,10 @@ public class MeshDeformerMove : MonoBehaviour
                 vertices[i] = originPos[i] + disp * intensities[i];
             }
         }
+    }
+
+    public bool Contains(Vector3 point) {
+        return meshCollider.bounds.Contains(point);
     }
 
 }
