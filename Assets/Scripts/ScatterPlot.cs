@@ -47,7 +47,7 @@ public class ScatterPlot : MonoBehaviour
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         foreach (DataPoint dp in dataPoints) 
         {
-            if (volume.Contains(dp)) 
+            if (volume.Contains(dp.GetPos())) 
             {
                 pointsInVolume.Add(dp);
             }
@@ -66,7 +66,7 @@ public class ScatterPlot : MonoBehaviour
         {
             foreach (MeshDeformerMove volume in volumes)
             {
-                if (volume.Contains(dp))
+                if (volume.Contains(dp.GetPos()))
                 {
                     pointsInVolume.Add(dp);
                     break;
