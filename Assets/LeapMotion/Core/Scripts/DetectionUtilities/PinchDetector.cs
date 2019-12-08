@@ -81,11 +81,13 @@ namespace Leap.Unity {
 
       if (IsActive) {
         if (_distance > DeactivateDistance) {
-          changeState(false);
+                    //Debug.Log("C EST DESACTIVE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    changeState(false);
           //return;
         }
       } else {
         if (_distance < ActivateDistance) {
+          //Debug.Log("IL EST DETECTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           changeState(true);
         }
       }
