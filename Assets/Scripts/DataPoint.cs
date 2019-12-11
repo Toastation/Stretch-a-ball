@@ -19,6 +19,8 @@ public class DataPoint
     /** Dictionary of possible attributes, the key is the name of the attribute */
     private Dictionary<string, Object> attributes;
 
+    private GameObject gameObject;
+
     /**
      * Creates a DataPoint from a position, the default color is black
      */
@@ -35,6 +37,11 @@ public class DataPoint
         this.attributes = new Dictionary<string, Object>();
     }
 
+    public void SetGameObject(GameObject gameObject) 
+    {
+        this.gameObject = gameObject;
+    }
+
     public Vector3 GetPos()
     {
         return this.pos;
@@ -43,5 +50,11 @@ public class DataPoint
     public Color GetColor()
     {
         return this.color;
+    }
+
+    public Renderer GetRenderer()
+    {
+        if (this.gameObject == null) Debug.LogError("undefined gameObject in DataPoint");
+        return this.gameObject.GetComponent<Renderer>();
     }
 }

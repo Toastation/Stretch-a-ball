@@ -20,10 +20,11 @@ public class ScatterPlot : MonoBehaviour
         Debug.Log("nb of points : " + dataPoints.Count);
 
         //instantiate prefab
-        Instantiate(PointPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         foreach (DataPoint dp in dataPoints)
         {
-            Instantiate(PointPrefab, dp.GetPos(), Quaternion.identity);
+            GameObject dpInstance = Instantiate(PointPrefab, dp.GetPos(), Quaternion.identity);
+            dpInstance.GetComponent<Renderer>().material.color = dp.GetColor();
+            dp.SetGameObject(dpInstance);
         }
     }
 
