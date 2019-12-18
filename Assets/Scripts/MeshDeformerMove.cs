@@ -40,9 +40,9 @@ public class MeshDeformerMove : MonoBehaviour
 
     private void Update() 
     {
+        // Draw a line from the camera to the mouse position when the left mouse button is pressed
         // if (Input.GetMouseButton(0)) {
-        //     Debug.Log("hehehe" + lastHitPoint + " "+ Camera.main.transform.position);
-            Debug.DrawLine(Camera.main.transform.position, transform.position, Color.red);
+            // Debug.DrawLine(Camera.main.transform.position, transform.position, Color.red);
         // }    
     }
 
@@ -59,6 +59,9 @@ public class MeshDeformerMove : MonoBehaviour
         meshCollider.enabled = true;
     }
 
+    /**
+    * Converts the mouse position (2D) to world coordinate (3D)
+    */
     private Vector3 GetMouseWorldPos() 
     {
         Vector3 mousePos = Input.mousePosition;
@@ -66,6 +69,11 @@ public class MeshDeformerMove : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
+    /**
+    * Launch a ray from the camera towards the mouse position and determines if 
+    * the mesh is hit. If so, the vertices near the contact point (user param)
+    * are marked and their origin position saved.
+    */
     private void OnMouseDown() 
     {
         zOffset = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
@@ -92,6 +100,9 @@ public class MeshDeformerMove : MonoBehaviour
         } 
     }
 
+    /**
+    * Deselect all vertices
+    */
     private void OnMouseUp() 
     {
         for (int i = 0; i < selectedVertices.Length; i++) {
@@ -99,6 +110,9 @@ public class MeshDeformerMove : MonoBehaviour
         }
     }
 
+    /**
+    * Move the selected vertices on the mesh based on their distances with the contact point
+    */
     private void OnMouseDrag() 
     {
         Vector3 disp = GetMouseWorldPos() - lastMousePosAtHit; 
@@ -109,6 +123,9 @@ public class MeshDeformerMove : MonoBehaviour
         }
     }
 
+    /**
+    * Returns whether or not the given point is inside the mesh
+    */
     public bool Contains(Vector3 point) {
         return meshCollider.bounds.Contains(point);
     }

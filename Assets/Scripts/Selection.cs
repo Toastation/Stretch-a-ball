@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Selection
+public class PointSelection
 {
     private List<DataPoint> selectedPoints;
 
-    public Selection()
+    public PointSelection()
     {
         selectedPoints = new List<DataPoint>();
     }
 
-    public Selection AndBoolOperation(Selection selec1, Selection selec2)
+    public PointSelection AndBoolOperation(PointSelection selec1, PointSelection selec2)
     {   
-        Selection newSelection = new Selection();
+        PointSelection newSelection = new PointSelection();
         foreach (DataPoint dp in selec1.selectedPoints)
         {
             if (selec1.selectedPoints.Contains(dp))
@@ -24,9 +24,9 @@ public class Selection
         return newSelection;
     }
 
-    public Selection OrBoolOperation(Selection selec1, Selection selec2)
+    public PointSelection OrBoolOperation(PointSelection selec1, PointSelection selec2)
     {
-        Selection newSelection = new Selection();
+        PointSelection newSelection = new PointSelection();
         foreach (DataPoint dp in selec1.selectedPoints)
         {
             newSelection.selectedPoints.Add(dp);
@@ -41,9 +41,9 @@ public class Selection
         return newSelection;
     }
 
-    public Selection NotInBoolOperation(Selection selec1, Selection selec2)
+    public PointSelection NotInBoolOperation(PointSelection selec1, PointSelection selec2)
     {
-        Selection newSelection = new Selection();
+        PointSelection newSelection = new PointSelection();
         foreach (DataPoint dp in selec1.selectedPoints)
         {
             if (!selec2.selectedPoints.Contains(dp))

@@ -17,7 +17,7 @@ public class ScatterPlot : MonoBehaviour
     {
         // load the points from the csv and prints the number of points loaded
         dataPoints = LoadCSV.LoadCSVFile(csvPath);
-        Debug.Log("nb of points : " + dataPoints.Count);
+        Debug.Log("Loaded " + dataPoints.Count + " points");
 
         //instantiate prefab
         foreach (DataPoint dp in dataPoints)
@@ -30,6 +30,7 @@ public class ScatterPlot : MonoBehaviour
 
     void Update()
     {
+        /** TEMPORARY **/
         if (Input.GetKeyDown(KeyCode.R))
         {
             MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
