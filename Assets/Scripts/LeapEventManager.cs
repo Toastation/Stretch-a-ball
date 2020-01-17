@@ -20,6 +20,9 @@ namespace Leap.Unity
         Vector3 lastPosition;
         Vector3 lastPositionR;
         Vector3 lastPositionL;
+        float referenceWait = 1;
+        float wait = 0;
+        float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
 
         void PinchDetected()
         {
@@ -66,49 +69,61 @@ namespace Leap.Unity
                     initializedRight = true;
                 }
             }
-            
-            if(nb_pinch == 2 && !creating)
+           
+            if (creating)
             {
-                //Debug.Log(" CREATION MODE");
-                creating = true;
-                currentCreation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                currentCreation.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
-                float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
-                currentCreation.transform.localScale = new Vector3(tmp, tmp, tmp);
-                lastPosition = currentCreation.transform.position;
-                lastPositionL = scriptPDL.Position;
-                lastPositionR = scriptPDR.Position;
-            }
-            else if (nb_pinch == 2) //Sizing mode
-            {
-                //Debug.Log(" SIZING MODE");
-                currentCreation.transform.position += ((scriptPDL.Position + scriptPDR.Position)/2 - lastPosition);
-                float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position) - Vector3.Distance(lastPositionL, lastPositionR)); 
-                Debug.Log(tmp);
-                currentCreation.transform.localScale += new Vector3(tmp, tmp, tmp);
-                lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
-                lastPositionL = scriptPDL.Position;
-                lastPositionR = scriptPDR.Position;
-
-            } else if (nb_pinch == 1) //Deplacement mode
-            {
-                //Debug.Log(" DEPLACEMENT MODE");
-                if (scriptPDL.IsPinching)
+                if (nb_pinch == 1)
                 {
-                    currentCreation.transform.position += (scriptPDL.Position - lastPositionL);
+                    //Debug.Log(" DEPLACEMENT MODE");
+                    wait = 0;
+                    if (scriptPDL.IsPinching)
+                    {
+                        currentCreation.transform.position += (scriptPDL.Position - lastPositionL);
+                    }
+                    else
+                    {
+                        currentCreation.transform.position += (scriptPDR.Position - lastPositionR);
+                    }
+                    lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
+                    
+                }
+                else if (nb_pinch == 2)
+                {
+                    //Debug.Log(" SIZING MODE");
+                    wait = 0;
+                    currentCreation.transform.position += ((scriptPDL.Position + scriptPDR.Position) / 2 - lastPosition);
+                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position) - Vector3.Distance(lastPositionL, lastPositionR));
+                    Debug.Log(tmp);
+                    currentCreation.transform.localScale += new Vector3(tmp, tmp, tmp);
+                    lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
+                    
                 }
                 else
                 {
-                    currentCreation.transform.position += (scriptPDR.Position - lastPositionR);
+                    // Debug.Log(" FINISHED MODE");
+                    wait += Time.deltaTime;
+                    if (wait >= referenceWait)
+                    {
+                        creating = false;
+                    }   
                 }
-                lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
                 lastPositionL = scriptPDL.Position;
                 lastPositionR = scriptPDR.Position;
             }
-            else
+            else if (!creating)
             {
-               // Debug.Log(" FINISHED MODE");
-                creating = false;
+                if (nb_pinch == 2)
+                {
+                    //Debug.Log(" CREATION MODE");
+                    creating = true;
+                    currentCreation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    currentCreation.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
+                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
+                    currentCreation.transform.localScale = new Vector3(tmp, tmp, tmp);
+                    lastPosition = currentCreation.transform.position;
+                    lastPositionL = scriptPDL.Position;
+                    lastPositionR = scriptPDR.Position;
+                }
             }
         }
     }
