@@ -17,11 +17,13 @@ namespace Leap.Unity
         PinchDetector scriptPDL;
         PinchDetector scriptPDR;
         GameObject currentCreation;
+        public Camera cam;
         Vector3 lastPosition;
         Vector3 lastPositionR;
         Vector3 lastPositionL;
         float referenceWait = 1;
         float wait = 0;
+        float FOV;
         float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
 
         void PinchDetected()
@@ -92,9 +94,15 @@ namespace Leap.Unity
                     //Debug.Log(" SIZING MODE");
                     wait = 0;
                     currentCreation.transform.position += ((scriptPDL.Position + scriptPDR.Position) / 2 - lastPosition);
-                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position) - Vector3.Distance(lastPositionL, lastPositionR));
+                    float TanFOV = (float)Math.Tan((double)cam.fieldOfView * 0.5 * Math.PI/180);
+                    float distCam = Vector3.Distance(cam.transform.position,currentCreation.transform.position);
+                    float tmp = ((Vector3.Distance(scriptPDL.Position, scriptPDR.Position) - Vector3.Distance(lastPositionL, lastPositionR))) * TanFOV * 2 * distCam ;
                     Debug.Log(tmp);
-                    currentCreation.transform.localScale += new Vector3(tmp, tmp, tmp);
+                    Vector3 t = new Vector3(tmp, tmp, tmp);
+                    if ((currentCreation.transform.localScale + t).x > 0)
+                    {
+                        currentCreation.transform.localScale += t;
+                    }
                     lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
                     
                 }
