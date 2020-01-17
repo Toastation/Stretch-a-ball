@@ -16,11 +16,12 @@ public class MeshDeformerMove : MonoBehaviour
     private bool[] selectedVertices;
     private float[] intensities;
     private Vector3 lastMousePosAtHit;
-    private Vector3 lastHitPoint;
 
     // drag data
-    private Vector3 dragOffset;
     private float zOffset;
+
+    // user data
+    public float deformArea = 0.2f;
 
     private void Start()
     {
@@ -31,7 +32,6 @@ public class MeshDeformerMove : MonoBehaviour
         meshCollider.sharedMesh = mesh;
 
         vertices = mesh.vertices;
-        lastHitPoint = new Vector3();
         originPos = new Vector3[vertices.Length];
         selectedVertices = new bool[vertices.Length];
         intensities = new float[vertices.Length];
@@ -77,25 +77,21 @@ public class MeshDeformerMove : MonoBehaviour
     private void OnMouseDown() 
     {
         zOffset = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        dragOffset = gameObject.transform.position - GetMouseWorldPos();
-        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
         if (Physics.Raycast(ray, out hit, 100)) {
             lastMousePosAtHit = GetMouseWorldPos();
-            lastHitPoint = hit.point;
             Vector3 center = transform.InverseTransformPoint(hit.point); 
             for (int i = 0; i < selectedVertices.Length; i++) {
-                Vector3 vertex = vertices[i];
-                float dxSqr = Mathf.Pow(vertex.x - center.x, 2);
-                float dySqr = Mathf.Pow(vertex.y - center.y, 2);
-                float dzSqr = Mathf.Pow(vertex.z - center.z, 2);
-                if (dxSqr + dySqr + dzSqr < Mathf.Pow(0.2f, 2)) {
+                Vector3 dist = center - vertices[i];
+                dist *= transform.localScale.x;
+                float distSqrMag = dist.sqrMagnitude;
+                //if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
                     selectedVertices[i] = true;
                     originPos[i] = vertices[i];
-                    Vector3 dist = vertices[i] - center;
-                    intensities[i] =  1 / (1f + 100 * dist.sqrMagnitude);
-                }
+                    intensities[i] =  1 / ((1f + 100 * distSqrMag) * transform.localScale.x);
+                //}
             }
         } 
     }
@@ -103,7 +99,7 @@ public class MeshDeformerMove : MonoBehaviour
     /**
     * Deselect all vertices
     */
-    private void OnMouseUp() 
+    private void OnMouseUp()
     {
         for (int i = 0; i < selectedVertices.Length; i++) {
             selectedVertices[i] = false;

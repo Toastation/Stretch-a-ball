@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class CamMotion : MonoBehaviour
 {
-    float mainSpeed = 2.5f;
-    float camSens = 100.0f;
+    public float translationSpeed = 2.5f;
+    public float rotationSpeed = 100.0f;
      
     void Update () {
-        // rotations (pitch and yaw)
+        // rotation (pitch)
         Vector3 rot = new Vector3();
         if (Input.GetKey(KeyCode.UpArrow)) {
-            rot.x -= camSens * Time.deltaTime;
+            rot.x -= rotationSpeed * Time.deltaTime;
         } else if (Input.GetKey(KeyCode.DownArrow)) {
-            rot.x += camSens * Time.deltaTime;
+            rot.x += rotationSpeed * Time.deltaTime;
         }
+        // rotation (yaw)
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            rot.y -= camSens * Time.deltaTime;
+            rot.y -= rotationSpeed * Time.deltaTime;
         } else if (Input.GetKey(KeyCode.RightArrow)) {
-            rot.y += camSens * Time.deltaTime;
+            rot.y += rotationSpeed * Time.deltaTime;
         }
-        transform.eulerAngles += rot;
-
         // translations    
-        Vector3 p = GetDir() * mainSpeed * Time.deltaTime;
+        Vector3 p = GetTranslationDir() * translationSpeed * Time.deltaTime;
+        
+        transform.eulerAngles += rot;
         transform.Translate(p);
     }
      
-    private Vector3 GetDir() { 
+    private Vector3 GetTranslationDir() { 
         Vector3 dir = new Vector3();
         if (Input.GetKey (KeyCode.Z)){
             dir += new Vector3(0, 0 , 1);
