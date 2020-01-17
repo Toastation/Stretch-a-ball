@@ -23,18 +23,8 @@ public class CamMotion : MonoBehaviour
         transform.eulerAngles += rot;
 
         // translations    
-        Vector3 p = GetDir();
-        p = p * mainSpeed * Time.deltaTime;
-        Vector3 newPosition = transform.position;
-        if (Input.GetKey(KeyCode.Space)) {
-            transform.Translate(p);
-            newPosition.x = transform.position.x;
-            newPosition.z = transform.position.z;
-            transform.position = newPosition;
-        }
-        else {
-            transform.Translate(p);
-        }   
+        Vector3 p = GetDir() * mainSpeed * Time.deltaTime;
+        transform.Translate(p);
     }
      
     private Vector3 GetDir() { 
@@ -50,6 +40,12 @@ public class CamMotion : MonoBehaviour
         }
         if (Input.GetKey (KeyCode.D)){
             dir += new Vector3(1, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.Space)) {
+            dir += new Vector3(0, 1, 0);
+        }
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            dir += new Vector3(0, -1, 0);
         }
         return dir;
     }
