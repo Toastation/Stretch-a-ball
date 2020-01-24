@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-
 namespace Leap.Unity
 {
     public class LeapEventManager : MonoBehaviour
@@ -16,15 +15,18 @@ namespace Leap.Unity
         GameObject Left;
         PinchDetector scriptPDL;
         PinchDetector scriptPDR;
-        GameObject currentCreation;
+        GameObject currentSelection;
         public Camera cam;
         Vector3 lastPosition;
         Vector3 lastPositionR;
         Vector3 lastPositionL;
         float referenceWait = 1;
         float wait = 0;
-        float FOV;
-        float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
+        int LA_VARIABLE = 0;
+        //float FOV;
+        //float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
+
+        
 
         void PinchDetected()
         {
@@ -71,68 +73,27 @@ namespace Leap.Unity
                     initializedRight = true;
                 }
             }
-           
-            if (creating)
+
+            switch (LA_VARIABLE)
             {
-                if (nb_pinch == 1)
-                {
-                    //Debug.Log(" DEPLACEMENT MODE");
-                    wait = 0;
-                    if (scriptPDL.IsPinching)
-                    {
-                        currentCreation.transform.position += (scriptPDL.Position - lastPositionL);
-                    }
-                    else
-                    {
-                        currentCreation.transform.position += (scriptPDR.Position - lastPositionR);
-                    }
-                    lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
-                    
-                }
-                else if (nb_pinch == 2)
-                {
-                    //Debug.Log(" SIZING MODE");
-                    wait = 0;
-                    currentCreation.transform.position += ((scriptPDL.Position + scriptPDR.Position) / 2 - lastPosition);
-                    float TanFOV = (float)Math.Tan((double)cam.fieldOfView * 0.5 * Math.PI/180);
-                    float distCam = Vector3.Distance(cam.transform.position,currentCreation.transform.position);
-                    float tmp = ((Vector3.Distance(scriptPDL.Position, scriptPDR.Position) - Vector3.Distance(lastPositionL, lastPositionR))) * TanFOV * 2 * distCam ;
-                    Debug.Log(tmp);
-                    Vector3 t = new Vector3(tmp, tmp, tmp);
-                    if ((currentCreation.transform.localScale + t).x > 0)
-                    {
-                        currentCreation.transform.localScale += t;
-                    }
-                    lastPosition = (scriptPDL.Position + scriptPDR.Position) / 2;
-                    
-                }
-                else
-                {
-                    // Debug.Log(" FINISHED MODE");
-                    wait += Time.deltaTime;
-                    if (wait >= referenceWait)
-                    {
-                        creating = false;
-                    }   
-                }
-                lastPositionL = scriptPDL.Position;
-                lastPositionR = scriptPDR.Position;
+                case 0: //CREATION
+                    LeapCreation.creationMain(ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
+            ref lastPosition, ref lastPositionR, ref lastPositionL, referenceWait, ref wait);
+                    break;
+                case 1: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+
+                    break;
+                case 2:
+
+                    break;
             }
-            else if (!creating)
-            {
-                if (nb_pinch == 2)
-                {
-                    //Debug.Log(" CREATION MODE");
-                    creating = true;
-                    currentCreation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    currentCreation.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
-                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
-                    currentCreation.transform.localScale = new Vector3(tmp, tmp, tmp);
-                    lastPosition = currentCreation.transform.position;
-                    lastPositionL = scriptPDL.Position;
-                    lastPositionR = scriptPDR.Position;
-                }
-            }
+
+
+
+
+
+
+            
         }
     }
 }
