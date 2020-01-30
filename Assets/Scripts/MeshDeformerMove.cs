@@ -6,8 +6,6 @@ using Unity.Jobs;
 using System;
 using System.Collections.Generic;
 
-using mattatz.MeshSmoothingSystem;
-
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
 public class MeshDeformerMove : MonoBehaviour
