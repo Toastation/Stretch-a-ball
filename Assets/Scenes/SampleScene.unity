@@ -351,7 +351,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Quit
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -805,7 +804,6 @@ GameObject:
   - component: {fileID: 194966207}
   - component: {fileID: 194966209}
   - component: {fileID: 194966208}
-  - component: {fileID: 194966210}
   m_Layer: 0
   m_Name: Palm UI
   m_TagString: Untagged
@@ -861,18 +859,6 @@ MonoBehaviour:
     results with a significant performance boost over the Physics.IgnoreCollision()
     method utilized by this script.'
   _isEditing: 0
---- !u!114 &194966210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194966206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0857ad84a45ba6c43b436266de688a38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &228774364 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 188576, guid: 39d18871c11b53c4082d8202e3db68a3,
@@ -2462,7 +2448,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -2591,7 +2576,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -3944,7 +3928,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Creation
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -5106,7 +5089,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Help/Options
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -5758,7 +5740,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Hide/Show
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -5869,7 +5850,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Selection
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -6853,7 +6833,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -6982,7 +6961,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -7469,6 +7447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333178099}
+  - component: {fileID: 1333178100}
   m_Layer: 0
   m_Name: Buttons Panel
   m_TagString: Untagged
@@ -7497,6 +7476,19 @@ Transform:
   m_Father: {fileID: 706947768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1333178100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333178098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47174532aad799640abc86b87a35908d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMenu: 0
 --- !u!1 &1333901492
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,7 +8349,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: Statistiques
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -8485,7 +8476,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671344593}
-  m_Text: "Cr\xE9ation"
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -8902,7 +8893,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -9058,7 +9048,6 @@ MonoBehaviour:
   minMaxHeight: {x: 0, y: 0.02}
   restingHeight: 0.5
   _springForce: 0.1
-  buttonName: 
   _OnPress:
     m_PersistentCalls:
       m_Calls: []
