@@ -15,19 +15,19 @@ public class CurrentMenu : MonoBehaviour
         Quit
     }
     TextMesh textObject;
-    public Menu currentMenu;
+    private Menu currentMenu;
 
-    // Start is called before the first frame update
-    void Start()
+    // GetCurrentMenu returns the current menu
+    Menu GetCurrentMenu()
     {
-        textObject = GameObject.Find("MenuName").GetComponent<TextMesh>();
-        textObject.text = "Init";
-        currentMenu = Menu.NoMenuSelected;
+        return currentMenu;
     }
 
-    // Update is called once per fram
-    void Update()
+    // SetMenu changes the value of the current menu
+    public int SetMenu(Menu newMenu)
     {
+        currentMenu = newMenu;
+        // Communicating the new menu to the 3D text
         switch (currentMenu)
         {
             case Menu.NoMenuSelected:
@@ -54,12 +54,29 @@ public class CurrentMenu : MonoBehaviour
             default:
                 textObject.text = "Error    ";
                 break;
-
-
-
-
-
-
+                return 0;
         }
+        return 0;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        textObject = GameObject.Find("MenuName").GetComponent<TextMesh>();
+        textObject.text = "Init";
+        currentMenu = Menu.NoMenuSelected;
+    }
+
+    // Update is called once per fram
+    void Update()
+    {
+        
+
+
+
+
+
+
+        
     }
 }
