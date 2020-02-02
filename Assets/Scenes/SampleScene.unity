@@ -8391,7 +8391,7 @@ GameObject:
   - component: {fileID: 1652879636}
   - component: {fileID: 1652879635}
   m_Layer: 0
-  m_Name: Button Statitics
+  m_Name: Button Statistics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
