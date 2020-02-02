@@ -4784,6 +4784,7 @@ GameObject:
   - component: {fileID: 706947770}
   - component: {fileID: 706947769}
   - component: {fileID: 706947771}
+  - component: {fileID: 706947772}
   m_Layer: 0
   m_Name: Palm UI
   m_TagString: Untagged
@@ -4850,6 +4851,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76336e13ffd486f489844dc42b3ce341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &706947772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706947767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98001f50808832d45a0c2c235eda6908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &717949043
@@ -7788,7 +7801,7 @@ GameObject:
   - component: {fileID: 1474435514}
   - component: {fileID: 1474435513}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Menu Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8378,7 +8391,7 @@ GameObject:
   - component: {fileID: 1652879636}
   - component: {fileID: 1652879635}
   m_Layer: 0
-  m_Name: Button Statitiques
+  m_Name: Button Statitics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

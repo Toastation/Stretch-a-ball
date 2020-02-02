@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class CurrentMenu : MonoBehaviour
 {
+    //enumerating the different Menus
     public enum Menu
     {
         NoMenuSelected,
         Creation,
         Selection,
-        Statistiques,
+        Statistics,
         Hide_Show,
         Help_Options,
         Quit
     }
-    TextMesh textObject;
-    private Menu currentMenu;
+
+    TextMesh textObject; // textObject is the text displayed on the menu screen
+    private Menu currentMenu; // Menu is private for oriented object programmming purposes
 
     // GetCurrentMenu returns the current menu
     Menu GetCurrentMenu()
@@ -39,7 +41,7 @@ public class CurrentMenu : MonoBehaviour
             case Menu.Selection:
                 textObject.text = "Selection";
                 break;
-            case Menu.Statistiques:
+            case Menu.Statistics:
                 textObject.text = "Statistics";
                 break;
             case Menu.Hide_Show:
@@ -62,9 +64,12 @@ public class CurrentMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Finds the display screen
         textObject = GameObject.Find("MenuName").GetComponent<TextMesh>();
-        textObject.text = "Init";
+        // Initiates the menu value 
         currentMenu = Menu.NoMenuSelected;
+        textObject.text = "No Menu Selected";
+        
     }
 
     // Update is called once per fram
