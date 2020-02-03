@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap.Unity.Interaction;
 using System.Timers;
+using System.Diagnostics;
 
 public class MenuInteraction : MonoBehaviour
 {
-    private int TimeOut;
-
-    private void MyTimer(int Time)
-    {
-        Timer T = new System.Timers.Timer();
-        T.Interval = Time;
-        T.Enabled = true;
-        return;
-    }
+    static int FrameCounter;
+    static bool ChangeMenuPage;
 
     CurrentMenu cMenu;
     //Listing of all the buttons
@@ -26,7 +20,7 @@ public class MenuInteraction : MonoBehaviour
     InteractionButton ButtonQuit;
 
 
-    void MenuManager()
+    private bool MenuManager() // MenuManager returns true if it changed a page
     {
         // Checks whether a button is pressed
 
@@ -52,6 +46,7 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.Return);
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
+                                    return true;
                                 }
 
                                 break;
@@ -63,18 +58,21 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSelection(CurrentMenu.Selection.Modification);
 
                                 if (ButtonSelection.isPressed)
-                                {
                                     cMenu.SetSelection(CurrentMenu.Selection.Erase);
-                                }
+                                    
 
                                 if (ButtonStatistics.isPressed)
+                                {
                                     cMenu.SetSelection(CurrentMenu.Selection.SetOperation);
+                                    return true;
+                                }
 
                                 if (ButtonHide_Show.isPressed)
                                 {
                                     cMenu.SetSelection(CurrentMenu.Selection.Return);
                                     cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
+                                    return true;
                                 }
 
                                 break;
@@ -93,6 +91,7 @@ public class MenuInteraction : MonoBehaviour
                     if (ButtonSelection.isPressed)
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Selection);
+                        return true;
                     }
 
                     if (ButtonStatistics.isPressed)
@@ -114,7 +113,7 @@ public class MenuInteraction : MonoBehaviour
                 
         }
 
-        return;
+        return false;
        
     }
 
@@ -130,15 +129,22 @@ public class MenuInteraction : MonoBehaviour
         ButtonHelp_Options = GameObject.Find("Button Help/Options").GetComponent<InteractionButton>(); // Button for Help_Options
         ButtonQuit = GameObject.Find("Button Quit").GetComponent<InteractionButton>(); // Button for Quit
 
-        //Initialisation of the timer
-        TimeOut = 500;
-
-
+        FrameCounter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MenuManager();
+        
+
+        if(ChangeMenuPage && FrameCounter < 120)
+        {
+            FrameCounter++;
+        }
+        else
+        {
+            FrameCounter = 0;
+            ChangeMenuPage = MenuManager();
+        }
     }
 }
