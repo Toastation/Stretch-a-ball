@@ -14,17 +14,72 @@ public class MenuInteraction : MonoBehaviour
     InteractionButton ButtonQuit;
 
 
+    void MenuManager()
+    {
+        // Checks whether a button is pressed
+
+        switch (cMenu.GetCurrentMenu())
+        {
+            case CurrentMenu.Menu.Selection:
+                {
+                    if (ButtonCreation.isPressed)
+                        cMenu.SetSelection(CurrentMenu.Selection.Modification);
+
+                    if (ButtonSelection.isPressed)
+                        cMenu.SetSelection(CurrentMenu.Selection.Erase);
+
+                    if (ButtonStatistics.isPressed)
+                        cMenu.SetSelection(CurrentMenu.Selection.SetOperation);
+
+                    if (ButtonHide_Show.isPressed)
+                    {
+                        cMenu.SetSelection(CurrentMenu.Selection.Return);
+                        cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
+                        cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
+                    }
+
+                    break;
+                }
+
+            default: // General Menu Behavior
+                {
+                    if (ButtonCreation.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Creation);
+
+                    if (ButtonSelection.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Selection);
+
+                    if (ButtonStatistics.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Statistics);
+
+                    if (ButtonHide_Show.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Hide_Show);
+
+                    if (ButtonHelp_Options.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
+
+                    if (ButtonQuit.isPressed)
+                        cMenu.SetMenu(CurrentMenu.Menu.Quit);
+                    break;
+                }
+                
+        }
+
+        return;
+       
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         //Initialisation of the different menu buttons
         cMenu = GameObject.Find("Palm UI").GetComponent<CurrentMenu>();
-        ButtonCreation = GameObject.Find("Button Creation").GetComponent<InteractionButton>();
-        ButtonSelection = GameObject.Find("Button Selection").GetComponent<InteractionButton>();
-        ButtonStatistics = GameObject.Find("Button Statistics").GetComponent<InteractionButton>();
-        ButtonHide_Show = GameObject.Find("Button Hide/Show").GetComponent<InteractionButton>();
-        ButtonHelp_Options = GameObject.Find("Button Help/Options").GetComponent<InteractionButton>();
-        ButtonQuit = GameObject.Find("Button Quit").GetComponent<InteractionButton>();
+        ButtonCreation = GameObject.Find("Button Creation").GetComponent<InteractionButton>(); // Button for Creation/Modification/Intersection
+        ButtonSelection = GameObject.Find("Button Selection").GetComponent<InteractionButton>(); // Button for Selection/Erase/Union
+        ButtonStatistics = GameObject.Find("Button Statistics").GetComponent<InteractionButton>(); // Button for Statsistics/Operation/Relative Complement
+        ButtonHide_Show = GameObject.Find("Button Hide/Show").GetComponent<InteractionButton>(); // Button for Hide_Show/Return/Return
+        ButtonHelp_Options = GameObject.Find("Button Help/Options").GetComponent<InteractionButton>(); // Button for Help_Options
+        ButtonQuit = GameObject.Find("Button Quit").GetComponent<InteractionButton>(); // Button for Quit
 
 
     }
@@ -32,24 +87,6 @@ public class MenuInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Checks whether a button is pressed
-
-        if (ButtonCreation.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Creation);
-
-        if (ButtonSelection.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Selection);
-
-        if (ButtonStatistics.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Statistics);
-
-        if (ButtonHide_Show.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Hide_Show);
-
-        if (ButtonHelp_Options.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
-
-        if (ButtonQuit.isPressed)
-            cMenu.SetMenu(CurrentMenu.Menu.Quit);
+        MenuManager();
     }
 }
