@@ -43,6 +43,12 @@ public class CurrentMenu : MonoBehaviour
     private Selection currentSelection;
     private SetOperation currentSetOperation;
 
+    // GetCurrentMenuSelection returns the current menu
+    public Selection GetCurrentMenuSelection()
+    {
+        return currentSelection;
+    }
+
     // GetCurrentMenu returns the current menu
     public Menu GetCurrentMenu()
     {
