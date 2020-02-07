@@ -90,14 +90,11 @@ public class MeshDeformerMove : MonoBehaviour
     }
 
     /**
-    * Launch a ray from the camera towards the mouse position and determines if 
-    * the mesh is hit. If so, the vertices near the contact point (user param)
-    * are marked and their origin position saved.
+    * Shoot a ray in the given direction and marks all vertices 
+    * that will be affected by the deformation. It also give them
+    * an intensity value according to their distance with the impact.
     */
-    private void OnMouseDown() 
-    {
-        //zOffset = Camera.main.WorldToScreenPoint(gameObject.transform.position).z; // the z coordinate of the the mouse will be the z coordinate of the object
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    private void selectVertices(in Ray ray) {
         RaycastHit hit;
         float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
         if (Physics.Raycast(ray, out hit, 100)) {
@@ -114,7 +111,41 @@ public class MeshDeformerMove : MonoBehaviour
                     intensities[i] =  1 / ((1f + influence * distSqrMag) * transform.localScale.x);
                 //}
             }
-        } 
+        }
+    }
+
+    /**
+    * Unselect all vertices
+    */
+    private void unselectVertices() {
+        for (int i = 0; i < selectedVertices.Length; i++) {
+            selectedVertices[i] = false;
+        }
+    }
+
+    /**
+    * Move the vertices according the given displacement vector and
+    * their intensity factor (this factor is set when the vertices are
+    * marked to be moved in selectVertices)
+    */
+    private void moveVertices(in Vector3 disp) {
+        for (int i = 0; i < selectedVertices.Length; i++) {
+            if (selectedVertices[i]) {
+                vertices[i] +=  disp * intensities[i];
+            }
+        }
+    } 
+
+    /**
+    * Launch a ray from the camera towards the mouse position and determines if 
+    * the mesh is hit. If so, the vertices near the contact point (user param)
+    * are marked and their origin position saved.
+    */
+    private void OnMouseDown() 
+    {
+        //zOffset = Camera.main.WorldToScreenPoint(gameObject.transform.position).z; // the z coordinate of the the mouse will be the z coordinate of the object
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        selectVertices(ray); 
     }
 
     /**
@@ -122,9 +153,7 @@ public class MeshDeformerMove : MonoBehaviour
     */
     private void OnMouseUp()
     {
-        for (int i = 0; i < selectedVertices.Length; i++) {
-            selectedVertices[i] = false;
-        }
+        unselectVertices();
     }
 
     /**
@@ -134,11 +163,7 @@ public class MeshDeformerMove : MonoBehaviour
     {
         Vector3 currentMousePos = GetMouseWorldPos();
         Vector3 disp = currentMousePos - this.lastMousePos;
-        for (int i = 0; i < selectedVertices.Length; i++) {
-            if (selectedVertices[i]) {
-                vertices[i] +=  disp * intensities[i];
-            }
-        }
+        moveVertices(disp);
         /*if (disp.magnitude > 0)
             this.LaplacianSmooth();*/
         this.lastMousePos = currentMousePos;
