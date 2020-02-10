@@ -33,7 +33,7 @@ namespace Leap.Unity{
       void Update()
       {
         frame = controller.Frame();
-        if(frame.Hands.Count > 0){
+        if(frame.Hands.Count == 1){
           hands = frame.Hands;
           firstHand = hands [0];
 
@@ -46,14 +46,14 @@ namespace Leap.Unity{
         * Regarder les valeurs lorsque que la main est "à plat" puis regarder
         * valeur lorsque qu'elle "monte" ou "descend"
         */
-          if (firstHand.IsLeft){
+          if (firstHand.IsRight ){
             newNormal = firstHand.PalmNormal;
             direction = firstHand.Direction;
 
             Vector3 rot = new Vector3();
 
             //Debug.Log("Normal : " + newNormal +"\n");
-            Debug.Log("Direction : " + direction +"\n");
+            //Debug.Log("Direction : " + direction +"\n");
 
             if(direction.y > 0.5){
               rot.x -= rotationSpeed * Time.deltaTime;
