@@ -13,29 +13,51 @@ namespace Leap.Unity
         bool initializedLeft =  false;
         GameObject Right;
         GameObject Left;
+
         PinchDetector scriptPDL;
         PinchDetector scriptPDR;
+
+        ExtendedFingerDetector scriptEFDL;
+        ExtendedFingerDetector scriptEFDR;
+
         GameObject currentSelection;
         public Camera cam;
+        int LA_VARIABLE = 1;
+
         Vector3 lastPosition;
         Vector3 lastPositionR;
         Vector3 lastPositionL;
         float referenceWait = 1;
         float wait = 0;
-        int LA_VARIABLE = 0;
+        int Pointing = 0; // Pas un bool dans le cas où les deux mains pointent en même temps, et que l'une arrête de pointer
+        
         //float FOV;
         //float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
 
         
+    
+
+        void ExtendedFingerDetected()
+        {
+            Debug.Log("Extend detected");
+            Pointing += 1;
+        }
+
+        void ExtendedFingerEnded()
+        {
+            Pointing -= 1;
+        }
 
         void PinchDetected()
         {
+            Debug.Log("Pinch Detected");
             nb_pinch += 1;
             //Debug.Log("JE SUIS LA!");
         }
 
         void PinchEnded()
         {
+            Debug.Log("Pinch Ended");
             nb_pinch -= 1;
            // Debug.Log("JE SUIS LA!");
         }
@@ -54,10 +76,14 @@ namespace Leap.Unity
                 Left = GameObject.Find("Capsule Hand Left");
                 if (Left != null)
                 {
-                    Debug.Log("ALLO");
+                    //Debug.Log("ALLO");
                     scriptPDL = Left.GetComponent<PinchDetector>();
+                    scriptEFDL = Left.GetComponent<ExtendedFingerDetector>();
+                    //Debug.Log(scriptEFDL, scriptPDL);
                     scriptPDL.OnActivate.AddListener(PinchDetected);
                     scriptPDL.OnDeactivate.AddListener(PinchEnded);
+                    scriptEFDL.OnActivate.AddListener(ExtendedFingerDetected);
+                    scriptEFDL.OnDeactivate.AddListener(ExtendedFingerEnded);
                     initializedLeft = true;
                 }
             }
@@ -66,26 +92,72 @@ namespace Leap.Unity
                 Right = GameObject.Find("Capsule Hand Right");
                 if (Right != null)
                 {
-                    Debug.Log("ALLO");
+                    //Debug.Log("ALLO");
                     scriptPDR = Right.GetComponent<PinchDetector>();
+                    scriptEFDR = Right.GetComponent<ExtendedFingerDetector>();
+                    //Debug.Log(scriptEFDR, scriptPDR);
                     scriptPDR.OnActivate.AddListener(PinchDetected);
                     scriptPDR.OnDeactivate.AddListener(PinchEnded);
+                    scriptEFDR.OnActivate.AddListener(ExtendedFingerDetected);
+                    scriptEFDR.OnDeactivate.AddListener(ExtendedFingerEnded);
                     initializedRight = true;
                 }
             }
 
-            switch (LA_VARIABLE)
+            if (initializedLeft && initializedRight)
             {
-                case 0: //CREATION
-                    LeapCreation.creationMain(ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
-            ref lastPosition, ref lastPositionR, ref lastPositionL, referenceWait, ref wait);
-                    break;
-                case 1: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+                switch (LA_VARIABLE)
+                {
+                    case 0: //CREATION
+                        LeapCreation.creationMain(ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
+                ref lastPosition, ref lastPositionR, ref lastPositionL, referenceWait, ref wait);
+                        break;
 
-                    break;
-                case 2:
+                    case 1: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+                        Vector3 PointingDirection = new Vector3( 0, 0, 0 );
+                        Vector3 Fingertip = new Vector3(0, 0, 0);
+                        //if (currentSelection != null)
+                        //Debug.Log("CURRENT OBJECT:", currentSelection);
+                        Finger f = null;
+                        Hand hl = Left.GetComponent<HandModelBase>().GetLeapHand();
+                        Hand hr = Right.GetComponent<HandModelBase>().GetLeapHand();
+                        if (Pointing > 0)
+                        {
+                            if (hl.Fingers[1].IsExtended)
+                            {
+                                f = hl.GetIndex();
+                            }
+                            else
+                            {
+                                f = hr.GetIndex();
+                            }
+                            PointingDirection = f.Direction.ToVector3();
+                            Fingertip = f.TipPosition.ToVector3();
+                        }
+                        Collider tempo = LeapSelection.selectionMain((Pointing > 0), PointingDirection, Fingertip, ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
+                ref lastPosition, ref lastPositionR, ref lastPositionL);
+                        if (tempo != null)
+                        { 
+                            if (currentSelection != null)
+                                currentSelection.GetComponent<Renderer>().material.color = Color.white;
+                            currentSelection = tempo.gameObject; //transform.parent.
+                            currentSelection.GetComponent<Renderer>().material.color = Color.red;
+                        }
+                        else
+                        {
+                            if (currentSelection != null)
+                                currentSelection.GetComponent<Renderer>().material.color = Color.white;
+                            currentSelection = null;
+                        }
+                        
+                        break;
 
-                    break;
+                    case 2:
+
+                        break;
+                }
+                lastPositionL = scriptPDL.Position;
+                lastPositionR = scriptPDR.Position;
             }
 
 
