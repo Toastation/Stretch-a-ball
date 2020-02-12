@@ -14,8 +14,7 @@ namespace Leap.Unity{
 
       Controller controller;
 
-      Vector oldNormal;
-      Vector newNormal;
+      Vector position;
       Vector direction;
 
       Frame frame;
@@ -47,7 +46,7 @@ namespace Leap.Unity{
         * valeur lorsque qu'elle "monte" ou "descend"
         */
           if (firstHand.IsRight ){
-            newNormal = firstHand.PalmNormal;
+            position = firstHand.PalmPosition;
             direction = firstHand.Direction;
 
             Vector3 rot = new Vector3();
@@ -71,7 +70,29 @@ namespace Leap.Unity{
               rot.y -= rotationSpeed * Time.deltaTime;
             }
 
+            //Debug.Log("Position : " + position +"\n");
+            //z move forward <0 move backward >0
+            Vector3 dir = new Vector3();
+            if(position.z < -100){
+                dir += new Vector3(0, 0 , 1);
+            }
+            if(position.z > 100){
+                dir += new Vector3(0, 0 , -1);
+            }
+
+            //x right left
+            if(position.x < -100){
+                dir += new Vector3(-1, 0, 0);
+            }
+            if(position.x > 100){
+                dir += new Vector3(1, 0, 0);
+            }
+
+
+            Vector3 p = dir * translationSpeed * Time.deltaTime;
+
             transform.eulerAngles += rot;
+            transform.Translate(p);
           }
         }
       }
