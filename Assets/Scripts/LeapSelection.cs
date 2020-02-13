@@ -70,11 +70,11 @@ namespace Leap.Unity {
         public static Collider selectionMain(bool Pointing, Vector3 PointingDirection, Vector3 Fingertip, ref int nb_pinch, ref bool creating, PinchDetector scriptPDL, PinchDetector scriptPDR, ref GameObject currentSelection, Camera cam,
                 ref Vector3 lastPosition, ref Vector3 lastPositionR, ref Vector3 lastPositionL) // si le doigt pointe, un Vector3 (direction de raycast), le bout du doigt
         {
-            if (nb_pinch == 1)
+            if (nb_pinch == 1 && currentSelection != null)
             {
                 Debug.Log("1 pinch");
                 LeapCommon.deplacementMode(ref currentSelection, scriptPDL, scriptPDR, ref lastPosition, ref lastPositionR, ref lastPositionL);
-            } else if (nb_pinch == 2)
+            } else if (nb_pinch == 2  && currentSelection != null)
             {
                 Debug.Log("2 pinch");
                 LeapCommon.sizingMode(ref currentSelection, scriptPDL, scriptPDR, ref lastPosition, cam, ref lastPositionR, ref lastPositionL);

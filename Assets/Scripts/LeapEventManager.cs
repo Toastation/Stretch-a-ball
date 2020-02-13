@@ -11,11 +11,13 @@ namespace Leap.Unity
         bool creating = false;
         bool initializedRight = false;
         bool initializedLeft =  false;
+        bool initializedMenu = false;
         GameObject Right;
         GameObject Left;
-
+        CurrentMenu Menu;
         PinchDetector scriptPDL;
         PinchDetector scriptPDR;
+        CurrentMenu cMenu;
 
         ExtendedFingerDetector scriptEFDL;
         ExtendedFingerDetector scriptEFDR;
@@ -39,7 +41,7 @@ namespace Leap.Unity
 
         void ExtendedFingerDetected()
         {
-            Debug.Log("Extend detected");
+            //Debug.Log("Extend detected");
             Pointing += 1;
         }
 
@@ -50,14 +52,14 @@ namespace Leap.Unity
 
         void PinchDetected()
         {
-            Debug.Log("Pinch Detected");
+            //Debug.Log("Pinch Detected");
             nb_pinch += 1;
             //Debug.Log("JE SUIS LA!");
         }
 
         void PinchEnded()
         {
-            Debug.Log("Pinch Ended");
+            //Debug.Log("Pinch Ended");
             nb_pinch -= 1;
            // Debug.Log("JE SUIS LA!");
         }
@@ -65,12 +67,20 @@ namespace Leap.Unity
         // Start is called before the first frame update
         void Start()
         {
-
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (!initializedMenu)
+            {
+                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+                if (cMenu != null)
+                {
+                    Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    initializedMenu = true;
+                }
+            }
             if (!initializedLeft)
             {
                 Left = GameObject.Find("Capsule Hand Left");
@@ -104,16 +114,19 @@ namespace Leap.Unity
                 }
             }
 
-            if (initializedLeft && initializedRight)
+            if (initializedLeft && initializedRight && initializedMenu)
             {
-                switch (LA_VARIABLE)
+                switch (cMenu.GetCurrentMenu())
                 {
-                    case 0: //CREATION
+                    case CurrentMenu.Menu.NoMenuSelected:
+                        break;
+
+                    case CurrentMenu.Menu.Creation: //CREATION
                         LeapCreation.creationMain(ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
                 ref lastPosition, ref lastPositionR, ref lastPositionL, referenceWait, ref wait);
                         break;
 
-                    case 1: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+                    case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
                         Vector3 PointingDirection = new Vector3( 0, 0, 0 );
                         Vector3 Fingertip = new Vector3(0, 0, 0);
                         //if (currentSelection != null)
@@ -152,9 +165,6 @@ namespace Leap.Unity
                         
                         break;
 
-                    case 2:
-
-                        break;
                 }
                 lastPositionL = scriptPDL.Position;
                 lastPositionR = scriptPDR.Position;

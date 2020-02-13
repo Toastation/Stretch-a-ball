@@ -28,6 +28,7 @@ namespace Leap.Unity
                     //Debug.Log(" SIZING MODE");
                     // wait, currentSelection, scriptPDL, scriptPDR (à remplacer par des "scripts" ou direct les objets),  lastPosition[,L,R], cam,   
                     wait = 0;
+                    Debug.Log(currentSelection != null);
                     LeapCommon.sizingMode(ref currentSelection, scriptPDL, scriptPDR, ref lastPosition, cam, ref lastPositionR, ref lastPositionL);
 
                 }
