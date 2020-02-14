@@ -14,8 +14,7 @@ namespace Leap.Unity{
 
       Controller controller;
 
-      Vector oldNormal;
-      Vector newNormal;
+      Vector position;
       Vector direction;
 
       Frame frame;
@@ -33,7 +32,7 @@ namespace Leap.Unity{
       void Update()
       {
         frame = controller.Frame();
-        if(frame.Hands.Count > 0){
+        if(frame.Hands.Count == 1){
           hands = frame.Hands;
           firstHand = hands [0];
 
@@ -46,14 +45,14 @@ namespace Leap.Unity{
         * Regarder les valeurs lorsque que la main est "à plat" puis regarder
         * valeur lorsque qu'elle "monte" ou "descend"
         */
-          if (firstHand.IsLeft){
-            newNormal = firstHand.PalmNormal;
+          if (firstHand.IsRight ){
+            position = firstHand.PalmPosition;
             direction = firstHand.Direction;
 
             Vector3 rot = new Vector3();
 
             //Debug.Log("Normal : " + newNormal +"\n");
-            Debug.Log("Direction : " + direction +"\n");
+            //Debug.Log("Direction : " + direction +"\n");
 
             if(direction.y > 0.5){
               rot.x -= rotationSpeed * Time.deltaTime;
@@ -71,7 +70,29 @@ namespace Leap.Unity{
               rot.y -= rotationSpeed * Time.deltaTime;
             }
 
+            //Debug.Log("Position : " + position +"\n");
+            //z move forward <0 move backward >0
+            Vector3 dir = new Vector3();
+            if(position.z < -100){
+                dir += new Vector3(0, 0 , 1);
+            }
+            if(position.z > 100){
+                dir += new Vector3(0, 0 , -1);
+            }
+
+            //x right left
+            if(position.x < -100){
+                dir += new Vector3(-1, 0, 0);
+            }
+            if(position.x > 100){
+                dir += new Vector3(1, 0, 0);
+            }
+
+
+            Vector3 p = dir * translationSpeed * Time.deltaTime;
+
             transform.eulerAngles += rot;
+            transform.Translate(p);
           }
         }
       }
