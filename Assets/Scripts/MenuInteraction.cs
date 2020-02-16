@@ -247,7 +247,7 @@ public class MenuInteraction : MonoBehaviour
     void Start()
     {
         //Initialisation of the different menu buttons
-        cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+        cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
         ButtonCreation = GameObject.Find("Button Creation").GetComponent<InteractionButton>(); // Button for Creation/Modification/Intersection
         ButtonSelection = GameObject.Find("Button Selection").GetComponent<InteractionButton>(); // Button for Selection/Erase/Union
         ButtonStatistics = GameObject.Find("Button Statistics").GetComponent<InteractionButton>(); // Button for Statsistics/Operation/Relative Complement
