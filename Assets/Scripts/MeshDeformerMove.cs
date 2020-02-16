@@ -1,17 +1,15 @@
 
-using UnityEngine;
-using Unity.Collections;
-using Unity.Jobs;
-
 using System;
 using System.Collections.Generic;
+
+using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
 public class MeshDeformerMove : MonoBehaviour
 {
-    private MeshFilter meshFilter;
     private Mesh mesh;
+    private MeshFilter meshFilter;
     private MeshCollider meshCollider;
 
     // vertices data
@@ -72,7 +70,7 @@ public class MeshDeformerMove : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.L))
         {
-     
+
         }
     }
 
@@ -99,6 +97,7 @@ public class MeshDeformerMove : MonoBehaviour
         {
             this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
             Vector3 center = transform.InverseTransformPoint(hit.point);
+            lastMousePos = GetMouseWorldPos();
             for (int i = 0; i < selectedVertices.Length; i++)
             {
                 Vector3 dist = center - vertices[i];
@@ -167,14 +166,20 @@ public class MeshDeformerMove : MonoBehaviour
         Vector3 currentMousePos = GetMouseWorldPos();
         Vector3 disp = currentMousePos - this.lastMousePos;
         moveVertices(disp);
-        /*if (disp.magnitude > 0)
-            this.LaplacianSmooth();*/
         this.lastMousePos = currentMousePos;
     }
 
     /**
-    * Smooth the mesh using the laplacian smoothing algo
+    * Returns whether or not the given point is inside the mesh
     */
+    public bool Contains(Vector3 point)
+    {
+        return meshCollider.bounds.Contains(point);
+    }
+
+    /**
+* Smooth the mesh using the laplacian smoothing algo
+*/
     private void LaplacianSmooth()
     {
         Vector3[] origin = new Vector3[vertices.Length];
@@ -212,14 +217,6 @@ public class MeshDeformerMove : MonoBehaviour
             network[c].Add(a);
             network[c].Add(b);
         }
-    }
-
-    /**
-    * Returns whether or not the given point is inside the mesh
-    */
-    public bool Contains(Vector3 point)
-    {
-        return meshCollider.bounds.Contains(point);
     }
 
 }
