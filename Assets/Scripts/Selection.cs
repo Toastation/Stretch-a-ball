@@ -8,7 +8,7 @@ namespace Leap.Unity
     {
         private List<DataPoint> selectedPoints;
         public delegate List<DataPoint> Operator(List<DataPoint> select1, List<DataPoint> select2);
-        Operator MethodOperator;
+        private Operator MethodOperator;
 
         public BoolOperation()
         {
@@ -66,7 +66,7 @@ namespace Leap.Unity
 
         public List<DataPoint> BoolOperationMain(List<DataPoint> Data)
         {
-            if (this.selectedPoints.Count == 0)
+            if (this.selectedPoints.Count != 0)
             {
                 Data = MethodOperator(this.selectedPoints, Data);
                 this.selectedPoints.Clear();
