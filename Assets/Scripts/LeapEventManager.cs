@@ -78,12 +78,7 @@ namespace Leap.Unity
                     initializedMenu = true;
                 }
             }
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
             if (!initializedLeft)
             {
                 Left = GameObject.Find("Capsule Hand Left");
@@ -116,6 +111,13 @@ namespace Leap.Unity
                     initializedRight = true;
                 }
             }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            
+            
 
             if (initializedLeft && initializedRight && initializedMenu)
             {
