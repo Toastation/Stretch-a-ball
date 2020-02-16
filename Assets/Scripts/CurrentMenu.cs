@@ -36,6 +36,7 @@ public class CurrentMenu : MonoBehaviour
         SetIntersection,
         SetUnion,
         SetRelativeComplement,
+        Confirm,
         Return
     }
 
@@ -231,6 +232,9 @@ public class CurrentMenu : MonoBehaviour
                 case SetOperation.SetRelativeComplement:
                     textObject.text = "Set Operation - Relative Complement";
                     break;
+                case SetOperation.Confirm:
+                    textObject.text = "Set Operation - Confirm";
+                    break;
                 case SetOperation.Return:
                     textObject.text = "Set Operation - Return";
                     break;
@@ -262,6 +266,9 @@ public class CurrentMenu : MonoBehaviour
                     break;
                 case SetOperation.SetRelativeComplement:
                     textObject.text = "Set Operation - Relative Complement";
+                    break;
+                case SetOperation.Confirm:
+                    textObject.text = "Set Operation - Confirm";
                     break;
                 case SetOperation.Return:
                     textObject.text = "Set Operation - Return";

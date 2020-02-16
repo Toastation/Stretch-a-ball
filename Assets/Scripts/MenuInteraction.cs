@@ -43,6 +43,9 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetRelativeComplement);
 
                                 if (ButtonHide_Show.isPressed)
+                                    cMenu.SetSetOperation(CurrentMenu.SetOperation.Confirm);
+
+                                if (ButtonHelp_Options.isPressed)
                                 {
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.Return);
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
@@ -150,6 +153,12 @@ public class MenuInteraction : MonoBehaviour
                                 }
 
                                 if (ButtonHide_Show.isPrimaryHovered)
+                                {
+                                    cMenu.DisplaySetOperation(CurrentMenu.SetOperation.Confirm);
+                                    break;
+                                }
+
+                                if (ButtonHelp_Options.isPrimaryHovered)
                                 {
                                     cMenu.DisplaySetOperation(CurrentMenu.SetOperation.Return);
                                     break;
