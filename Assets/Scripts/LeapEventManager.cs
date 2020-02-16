@@ -71,7 +71,7 @@ namespace Leap.Unity
             if (!initializedMenu)
             {
                 //Connects to the menu
-                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+                cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
                 if (cMenu != null)
                 {
                     //Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
