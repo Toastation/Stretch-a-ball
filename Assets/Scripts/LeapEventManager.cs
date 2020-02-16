@@ -67,20 +67,23 @@ namespace Leap.Unity
         // Start is called before the first frame update
         void Start()
         {
+
+            if (!initializedMenu)
+            {
+                //Connects to the menu
+                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+                if (cMenu != null)
+                {
+                    //Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    initializedMenu = true;
+                }
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!initializedMenu)
-            {
-                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
-                if (cMenu != null)
-                {
-                    Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                    initializedMenu = true;
-                }
-            }
+            
             if (!initializedLeft)
             {
                 Left = GameObject.Find("Capsule Hand Left");
