@@ -71,20 +71,17 @@ namespace Leap.Unity
         void Start()
         {
             Operation = new BoolOperation();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
             if (!initializedMenu)
             {
-                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+                //Connects to the menu
+                cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
                 if (cMenu != null)
                 {
-                    Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    //Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                     initializedMenu = true;
                 }
             }
+
             if (!initializedLeft)
             {
                 Left = GameObject.Find("Capsule Hand Left");
@@ -117,7 +114,11 @@ namespace Leap.Unity
                     initializedRight = true;
                 }
             }
+        }
 
+        // Update is called once per frame
+        void Update()
+        {
             if (initializedLeft && initializedRight && initializedMenu)
             {
                 switch (cMenu.GetCurrentMenu())
@@ -147,6 +148,7 @@ namespace Leap.Unity
                                         break;
                                     case CurrentMenu.SetOperation.Confirm:
                                         currentSelectedDataPoints = Operation.BoolOperationMain(currentSelectedDataPoints);
+                                        break;
                                     default:
                                         break;
                                 }
@@ -196,12 +198,6 @@ namespace Leap.Unity
                 lastPositionL = scriptPDL.Position;
                 lastPositionR = scriptPDR.Position;
             }
-
-
-
-
-
-
             
         }
     }
