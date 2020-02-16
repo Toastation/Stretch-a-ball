@@ -23,6 +23,9 @@ namespace Leap.Unity
         ExtendedFingerDetector scriptEFDR;
 
         GameObject currentSelection;
+        List<DataPoint> currentSelectedDataPoints;
+        BoolOperation Operation;
+
         public Camera cam;
         int LA_VARIABLE = 1;
 
@@ -67,6 +70,7 @@ namespace Leap.Unity
         // Start is called before the first frame update
         void Start()
         {
+            Operation = new BoolOperation();
         }
 
         // Update is called once per frame
@@ -127,6 +131,29 @@ namespace Leap.Unity
                         break;
 
                     case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+                        switch (cMenu.GetCurrentMenuSelection())
+                        {
+                            case CurrentMenu.Selection.SetOperation:
+                                switch (cMenu.GetCurrentMenuSetOperation())
+                                {
+                                    case CurrentMenu.SetOperation.SetUnion:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.OrBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.SetIntersection:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.AndBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.SetRelativeComplement:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.NotInBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.Confirm:
+                                        currentSelectedDataPoints = Operation.BoolOperationMain(currentSelectedDataPoints);
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         Vector3 PointingDirection = new Vector3( 0, 0, 0 );
                         Vector3 Fingertip = new Vector3(0, 0, 0);
                         //if (currentSelection != null)
