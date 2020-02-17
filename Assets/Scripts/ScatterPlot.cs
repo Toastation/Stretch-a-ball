@@ -44,7 +44,7 @@ public class ScatterPlot : MonoBehaviour
     /**
      * Returns a list of all datapoints contained in the given volume 
      */
-    private List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
+    public List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         foreach (DataPoint dp in dataPoints) 
@@ -60,7 +60,7 @@ public class ScatterPlot : MonoBehaviour
     /**
      * Returns a list of all datapoints contained in all volumes in the scene 
      */
-    private List<DataPoint> GetAllSelectedPoints() 
+    public List<DataPoint> GetAllSelectedPoints() 
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();

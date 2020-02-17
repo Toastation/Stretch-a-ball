@@ -71,6 +71,14 @@ namespace Leap.Unity
         void Start()
         {
             Operation = new BoolOperation();
+           
+
+            
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
             if (!initializedMenu)
             {
                 //Connects to the menu
@@ -114,11 +122,8 @@ namespace Leap.Unity
                     initializedRight = true;
                 }
             }
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
+
             if (initializedLeft && initializedRight && initializedMenu)
             {
                 switch (cMenu.GetCurrentMenu())

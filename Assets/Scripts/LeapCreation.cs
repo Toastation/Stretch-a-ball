@@ -56,7 +56,7 @@ namespace Leap.Unity
                     /*
                      * The following code is supposed to do the exat same thing but with 
                      * the prefab sphereMesh instead of standard sphere
-                     */
+                     
 
                     // Gets the prefab
                     GameObject sphereMesh_Clone = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;

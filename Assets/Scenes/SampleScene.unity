@@ -173,18 +173,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39d18871c11b53c4082d8202e3db68a3, type: 3}
---- !u!114 &76921838 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11407378, guid: 39d18871c11b53c4082d8202e3db68a3,
-    type: 3}
-  m_PrefabInstance: {fileID: 76921837}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228774364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a04122797dd84ca43a07055f12d91e0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &93011459
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,12 +311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &107287530
 MonoBehaviour:
@@ -342,19 +330,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -596,12 +584,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194966206}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12001403, y: 0, z: 0.000051241368}
+  m_LocalRotation: {x: -0.6953023, y: -0.12866475, z: 0.12866469, w: 0.6953025}
+  m_LocalPosition: {x: -0.3590853, y: -0.036298394, z: -0.012599629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1642746002}
-  m_RootOrder: 0
+  m_Father: {fileID: 1683548833}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -104.698, y: 89.99999, z: -90}
 --- !u!114 &194966208
 MonoBehaviour:
@@ -627,15 +615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e933f13d48c681d48b14750922ac906d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _comment: 'We use the Ignore Collisions In Children script to prevent UI elements
-    from colliding each other, which is commonly desired when building an interface.
-
-
-    In your application, we recommend using layers instead of this script, especially
-    if your UI consists of more than just a few objects. Layers will achieve the same
-    results with a significant performance boost over the Physics.IgnoreCollision()
-    method utilized by this script.'
-  _isEditing: 0
+  _comment: 
+  _isEditing: 1
 --- !u!1 &214097368
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,12 +663,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &214097371
 MonoBehaviour:
@@ -701,19 +682,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -746,6 +727,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!1 &224491913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224491914}
+  - component: {fileID: 224491915}
+  m_Layer: 0
+  m_Name: Palm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224491914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224491913}
+  m_LocalRotation: {x: -0, y: 0.008726558, z: -0, w: 0.999962}
+  m_LocalPosition: {x: -0.15904275, y: -1.2420001, z: -2.3301916}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1000373432}
+  - {fileID: 619554152}
+  - {fileID: 929237320}
+  - {fileID: 1508670893}
+  m_Father: {fileID: 269144252}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &224491915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224491913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachmentHand: {fileID: 269144251}
+  attachmentPoint: 4
 --- !u!1 &228774364 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 188576, guid: 39d18871c11b53c4082d8202e3db68a3,
@@ -770,9 +800,9 @@ MonoBehaviour:
   OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  _handModel: {fileID: 76921838}
-  ControlsTransform: 0
-  ShowGizmos: 0
+  _handModel: {fileID: 0}
+  ControlsTransform: 1
+  ShowGizmos: 1
   ActivateDistance: 0.03
   DeactivateDistance: 0.04
 --- !u!114 &228774366
@@ -794,14 +824,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Period: 0.1
-  HandModel: {fileID: 76921838}
+  HandModel: {fileID: 0}
   Thumb: 2
-  Index: 0
-  Middle: 1
-  Ring: 1
-  Pinky: 1
-  MinimumExtendedCount: 1
-  MaximumExtendedCount: 2
+  Index: 2
+  Middle: 2
+  Ring: 2
+  Pinky: 2
+  MinimumExtendedCount: 0
+  MaximumExtendedCount: 5
   ShowGizmos: 1
 --- !u!1 &242272391
 GameObject:
@@ -994,15 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leapProvider: {fileID: 0}
-  ModelPool:
-  - GroupName: Rigged Hands
-    _handModelManager: {fileID: 0}
-    LeftModel: {fileID: 1940203643}
-    IsLeftToBeSpawned: 0
-    RightModel: {fileID: 379281173}
-    IsRightToBeSpawned: 0
-    IsEnabled: 1
-    CanDuplicate: 0
+  ModelPool: []
 --- !u!1 &269144250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,8 +1054,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f743acdc0955f349b54c7a240435271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrist: {fileID: 0}
-  palm: {fileID: 1996045346}
+  wrist: {fileID: 2055664050}
+  palm: {fileID: 224491915}
   thumbProximalJoint: {fileID: 0}
   thumbDistalJoint: {fileID: 0}
   thumbTip: {fileID: 0}
@@ -1066,7 +1088,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1996045347}
+  - {fileID: 2055664051}
+  - {fileID: 224491914}
   m_Father: {fileID: 472895501}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1987,18 +2010,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f2cce114628a448bfeaae171b4c0c0, type: 3}
---- !u!114 &288715469 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11422472, guid: 23f2cce114628a448bfeaae171b4c0c0,
-    type: 3}
-  m_PrefabInstance: {fileID: 288715468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ea79be653ce14db8969d7225d95ec6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &288715470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 475100, guid: 23f2cce114628a448bfeaae171b4c0c0,
@@ -2103,18 +2114,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 412753751}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &379281173 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114245269363414434, guid: 2276723046d707c4f94d431ceb80ab92,
-    type: 3}
-  m_PrefabInstance: {fileID: 412753751}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0ed5922e911b343b8400997c95409c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &412753751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3205,7 +3204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 269144252}
-  - {fileID: 1533520314}
+  - {fileID: 817823724}
   m_Father: {fileID: 534669905}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3221,7 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837d86160f18abd408508cb2e0279f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attachmentPoints: 4
+  _attachmentPoints: 6
 --- !u!1 &472944841
 GameObject:
   m_ObjectHideFlags: 0
@@ -3493,8 +3492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0408030bfaac3458e09a2e4038fd14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hl: {fileID: 1669239488}
-  Hr: {fileID: 76921838}
+  Hl: {fileID: 0}
+  Hr: {fileID: 0}
   translationSpeed: 2.5
   rotationSpeed: 25
 --- !u!114 &534669908
@@ -3556,12 +3555,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &597970031
 MonoBehaviour:
@@ -3575,19 +3574,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -3667,13 +3666,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619554150}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 943564493}
   - {fileID: 458633697}
-  m_Father: {fileID: 1996045347}
+  m_Father: {fileID: 224491914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &651917597
@@ -3984,6 +3983,74 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734327074}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &817823723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 817823724}
+  - component: {fileID: 817823725}
+  m_Layer: 0
+  m_Name: Attachment Hand (Right)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &817823724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817823723}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.015999993, y: -1.6000001, z: 0.9330001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1540417022}
+  - {fileID: 1683548833}
+  m_Father: {fileID: 472895501}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &817823725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817823723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f743acdc0955f349b54c7a240435271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wrist: {fileID: 1540417021}
+  palm: {fileID: 1683548834}
+  thumbProximalJoint: {fileID: 0}
+  thumbDistalJoint: {fileID: 0}
+  thumbTip: {fileID: 0}
+  indexKnuckle: {fileID: 0}
+  indexMiddleJoint: {fileID: 0}
+  indexDistalJoint: {fileID: 0}
+  indexTip: {fileID: 0}
+  middleKnuckle: {fileID: 0}
+  middleMiddleJoint: {fileID: 0}
+  middleDistalJoint: {fileID: 0}
+  middleTip: {fileID: 0}
+  ringKnuckle: {fileID: 0}
+  ringMiddleJoint: {fileID: 0}
+  ringDistalJoint: {fileID: 0}
+  ringTip: {fileID: 0}
+  pinkyKnuckle: {fileID: 0}
+  pinkyMiddleJoint: {fileID: 0}
+  pinkyDistalJoint: {fileID: 0}
+  pinkyTip: {fileID: 0}
+  _chirality: 1
+  _isTracked: 1
 --- !u!1 &838620275
 GameObject:
   m_ObjectHideFlags: 0
@@ -4009,12 +4076,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838620275}
   m_LocalRotation: {x: -0, y: -0.000000087544294, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24, y: 0, z: 0}
+  m_LocalPosition: {x: -0.23999998, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 243410780}
   - {fileID: 657295775}
-  m_Father: {fileID: 2137630816}
+  m_Father: {fileID: 1683548833}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &838620277
@@ -4029,23 +4096,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171097f00f497504da15cafb01f904f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 1642746002}
-  startTransform: {fileID: 243410780}
-  endTransform: {fileID: 657295775}
+  targetTransform: {fileID: 0}
+  startTransform: {fileID: 0}
+  endTransform: {fileID: 0}
   startAtEnd: 0
   tweenLocalPosition: 1
   tweenLocalRotation: 1
   tweenLocalScale: 1
-  tweenDuration: 0.2
+  tweenDuration: 0.25
   tweenSmoothType: 2
   _eventTable:
     _entries: []
---- !u!1 &877875951 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 531029385938256779, guid: ad9323018b2c8b943b9074742ab9af19,
-    type: 3}
-  m_PrefabInstance: {fileID: 1363449227}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &929237319
 GameObject:
   m_ObjectHideFlags: 0
@@ -4070,12 +4131,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929237319}
-  m_LocalRotation: {x: -0.6953024, y: -0.12866463, z: 0.12866464, w: 0.6953024}
-  m_LocalPosition: {x: -0.007, y: 0.0066, z: -0.0126}
+  m_LocalRotation: {x: -0.6953024, y: -0.12866464, z: 0.12866467, w: 0.6953024}
+  m_LocalPosition: {x: -0.0070000063, y: 0.0066000223, z: -0.012599816}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1508670893}
-  m_Father: {fileID: 1996045347}
+  m_Children: []
+  m_Father: {fileID: 224491914}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -69.032005, y: -90.00001, z: 90.00001}
 --- !u!114 &929237321
@@ -4090,7 +4150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e515312faef93140a27bcb9c8e30eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toFaceCamera: {fileID: 1000373432}
+  toFaceCamera: {fileID: 0}
   OnBeginFacingCamera:
     m_PersistentCalls:
       m_Calls:
@@ -4401,12 +4461,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &958024555
 MonoBehaviour:
@@ -4420,19 +4480,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -4581,11 +4641,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000373431}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1996045347}
+  m_Father: {fileID: 224491914}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1058588922
@@ -5212,7 +5272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   csvPath: Assets/Resources/circles.csv
-  PointPrefab: {fileID: 877875951}
+  PointPrefab: {fileID: 531029385938256779, guid: ad9323018b2c8b943b9074742ab9af19,
+    type: 3}
 --- !u!4 &1492856275
 Transform:
   m_ObjectHideFlags: 0
@@ -5273,12 +5334,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1506408946
 MonoBehaviour:
@@ -5292,19 +5353,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -5364,14 +5425,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508670892}
-  m_LocalRotation: {x: -0, y: -0.000000044703473, z: 0.000000014901158, w: 1}
-  m_LocalPosition: {x: -0.134, y: 0.016, z: -0.003}
+  m_LocalRotation: {x: -0.6953024, y: -0.12866467, z: 0.12866473, w: 0.6953024}
+  m_LocalPosition: {x: -0.13105322, y: -0.04415238, z: -0.028599855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 242272392}
   - {fileID: 651917598}
-  m_Father: {fileID: 929237320}
-  m_RootOrder: 0
+  m_Father: {fileID: 224491914}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -104.698, y: 89.99999, z: -90}
 --- !u!114 &1508670894
 MonoBehaviour:
@@ -5382,7 +5443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1508670892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38607d949066114ba4677525592fbad, type: 3}
+  m_Script: {fileID: 11500000, guid: 922efda65f3e2194387fc1a8b11d0927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1508670895
@@ -5394,7 +5455,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1508670892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39ba6893d9f50340bad6ecf8d92e5ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 32a8850fd5efd674784c6460e60a1684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1508670896
@@ -5421,16 +5482,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e933f13d48c681d48b14750922ac906d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _comment: 'We use the Ignore Collisions In Children script to prevent UI elements
-    from colliding each other, which is commonly desired when building an interface.
-
-
-    In your application, we recommend using layers instead of this script, especially
-    if your UI consists of more than just a few objects. Layers will achieve the same
-    results with a significant performance boost over the Physics.IgnoreCollision()
-    method utilized by this script.'
-  _isEditing: 0
---- !u!1 &1533520312
+  _comment: 
+  _isEditing: 1
+--- !u!1 &1540417020
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5438,64 +5492,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1533520314}
-  - component: {fileID: 1533520313}
+  - component: {fileID: 1540417022}
+  - component: {fileID: 1540417021}
   m_Layer: 0
-  m_Name: Attachment Hand (Right)
+  m_Name: Wrist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1533520313
+--- !u!114 &1540417021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533520312}
+  m_GameObject: {fileID: 1540417020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f743acdc0955f349b54c7a240435271, type: 3}
+  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrist: {fileID: 0}
-  palm: {fileID: 2137630815}
-  thumbProximalJoint: {fileID: 0}
-  thumbDistalJoint: {fileID: 0}
-  thumbTip: {fileID: 0}
-  indexKnuckle: {fileID: 0}
-  indexMiddleJoint: {fileID: 0}
-  indexDistalJoint: {fileID: 0}
-  indexTip: {fileID: 0}
-  middleKnuckle: {fileID: 0}
-  middleMiddleJoint: {fileID: 0}
-  middleDistalJoint: {fileID: 0}
-  middleTip: {fileID: 0}
-  ringKnuckle: {fileID: 0}
-  ringMiddleJoint: {fileID: 0}
-  ringDistalJoint: {fileID: 0}
-  ringTip: {fileID: 0}
-  pinkyKnuckle: {fileID: 0}
-  pinkyMiddleJoint: {fileID: 0}
-  pinkyDistalJoint: {fileID: 0}
-  pinkyTip: {fileID: 0}
-  _chirality: 1
-  _isTracked: 1
---- !u!4 &1533520314
+  attachmentHand: {fileID: 817823725}
+  attachmentPoint: 2
+--- !u!4 &1540417022
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533520312}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1540417020}
+  m_LocalRotation: {x: -0, y: 0.008726645, z: -0, w: 0.999962}
+  m_LocalPosition: {x: 0.06874269, y: 0.36450005, z: -3.2984626}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2137630816}
-  m_Father: {fileID: 472895501}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 817823724}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1560459424
 GameObject:
@@ -5619,23 +5651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leapProvider: {fileID: 0}
-  ModelPool:
-  - GroupName: Graphics_Hands
-    _handModelManager: {fileID: 0}
-    LeftModel: {fileID: 1669239488}
-    IsLeftToBeSpawned: 0
-    RightModel: {fileID: 76921838}
-    IsRightToBeSpawned: 0
-    IsEnabled: 1
-    CanDuplicate: 1
-  - GroupName: Physics_Hands
-    _handModelManager: {fileID: 0}
-    LeftModel: {fileID: 288715469}
-    IsLeftToBeSpawned: 0
-    RightModel: {fileID: 2123077953}
-    IsRightToBeSpawned: 0
-    IsEnabled: 1
-    CanDuplicate: 1
+  ModelPool: []
 --- !u!4 &1598121833
 Transform:
   m_ObjectHideFlags: 0
@@ -5768,12 +5784,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642746001}
-  m_LocalRotation: {x: -0.6953024, y: -0.1286647, z: 0.12866461, w: 0.69530237}
-  m_LocalPosition: {x: -0.24700001, y: 0.0066000223, z: -0.012599911}
+  m_LocalRotation: {x: -0.69530237, y: -0.12866472, z: 0.12866466, w: 0.69530237}
+  m_LocalPosition: {x: -0.24700002, y: 0.0066000223, z: -0.012599911}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 194966207}
-  m_Father: {fileID: 2137630816}
+  m_Children: []
+  m_Father: {fileID: 1683548833}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -69.032005, y: -90.00001, z: 90.00001}
 --- !u!114 &1642746003
@@ -5848,18 +5863,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 869d20cdda15af24aab9e72b5f2eec78, type: 3}
---- !u!114 &1669239488 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11407378, guid: 869d20cdda15af24aab9e72b5f2eec78,
-    type: 3}
-  m_PrefabInstance: {fileID: 1669239487}
+--- !u!1 &1683548832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009263870}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683548833}
+  - component: {fileID: 1683548834}
+  m_Layer: 0
+  m_Name: Palm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1683548833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683548832}
+  m_LocalRotation: {x: -0, y: 0.008726645, z: -0, w: 0.999962}
+  m_LocalPosition: {x: 0.064920716, y: 0.35800004, z: -3.2673802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1944917437}
+  - {fileID: 838620276}
+  - {fileID: 1642746002}
+  - {fileID: 194966207}
+  m_Father: {fileID: 817823724}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1683548834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683548832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a04122797dd84ca43a07055f12d91e0f, type: 3}
+  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attachmentHand: {fileID: 817823725}
+  attachmentPoint: 4
 --- !u!1 &1746824183
 GameObject:
   m_ObjectHideFlags: 0
@@ -6987,12 +7039,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29207d17cdd06e84d9fecbdef2401c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 524476350}
+  manager: {fileID: 0}
   _hoverEnabled: 1
   _contactEnabled: 1
   _graspingEnabled: 1
   _leapProvider: {fileID: 0}
-  _handDataMode: 1
+  _handDataMode: 0
   enabledPrimaryHoverFingertips: 0101010000
 --- !u!4 &1933344536
 Transform:
@@ -7014,18 +7066,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1899870058}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1940203643 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1899870058}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0ed5922e911b343b8400997c95409c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1944917436
 GameObject:
   m_ObjectHideFlags: 0
@@ -7053,7 +7093,7 @@ Transform:
   m_LocalPosition: {x: -0.23999998, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2137630816}
+  m_Father: {fileID: 1683548833}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1982015923
@@ -7102,12 +7142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b02e2f8ae628ac4f9faca951fe12db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useHover: 0
-  usePrimaryHover: 1
+  useHover: 1
+  usePrimaryHover: 0
   defaultColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   suspendedColor: {r: 1, g: 0, b: 0, a: 1}
   hoverColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  primaryHoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  primaryHoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   pressedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1982015926
 MonoBehaviour:
@@ -7121,19 +7161,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cba520a60e47274cb1e5afbb57aae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 524476350}
-  _ignoreHoverMode: 1
+  _manager: {fileID: 0}
+  _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
   _ignoreContact: 0
-  _ignoreGrasping: 1
-  _contactForceMode: 1
+  _ignoreGrasping: 0
+  _contactForceMode: 0
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  _overrideInteractionLayer: 1
+  _overrideInteractionLayer: 0
   _interactionLayer:
-    layerIndex: 5
+    layerIndex: 0
   _overrideNoContactLayer: 0
   _noContactLayer:
     layerIndex: 0
@@ -7166,54 +7206,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!1 &1996045345
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1996045347}
-  - component: {fileID: 1996045346}
-  m_Layer: 0
-  m_Name: Palm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1996045346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996045345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attachmentHand: {fileID: 0}
-  attachmentPoint: 4
---- !u!4 &1996045347
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996045345}
-  m_LocalRotation: {x: -0, y: 0.008726558, z: -0, w: 0.999962}
-  m_LocalPosition: {x: -0.15904275, y: -1.2420001, z: -2.3301916}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1000373432}
-  - {fileID: 619554152}
-  - {fileID: 929237320}
-  m_Father: {fileID: 269144252}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2009263870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 188576, guid: 869d20cdda15af24aab9e72b5f2eec78,
@@ -7238,8 +7230,8 @@ MonoBehaviour:
   OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  _handModel: {fileID: 1669239488}
-  ControlsTransform: 0
+  _handModel: {fileID: 0}
+  ControlsTransform: 1
   ShowGizmos: 1
   ActivateDistance: 0.03
   DeactivateDistance: 0.04
@@ -7262,14 +7254,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Period: 0.1
-  HandModel: {fileID: 1669239488}
+  HandModel: {fileID: 0}
   Thumb: 2
-  Index: 0
-  Middle: 1
-  Ring: 1
-  Pinky: 1
-  MinimumExtendedCount: 1
-  MaximumExtendedCount: 2
+  Index: 2
+  Middle: 2
+  Ring: 2
+  Pinky: 2
+  MinimumExtendedCount: 0
+  MaximumExtendedCount: 5
   ShowGizmos: 1
 --- !u!1 &2027725242
 GameObject:
@@ -7300,7 +7292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29207d17cdd06e84d9fecbdef2401c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 524476350}
+  manager: {fileID: 0}
   _hoverEnabled: 1
   _contactEnabled: 1
   _graspingEnabled: 1
@@ -7319,6 +7311,51 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 524476349}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2055664049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055664051}
+  - component: {fileID: 2055664050}
+  m_Layer: 0
+  m_Name: Wrist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2055664050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055664049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachmentHand: {fileID: 269144251}
+  attachmentPoint: 2
+--- !u!4 &2055664051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055664049}
+  m_LocalRotation: {x: -0, y: 0.008726558, z: -0, w: 0.999962}
+  m_LocalPosition: {x: -0.16394715, y: -1.2355001, z: -2.361122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 269144252}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2123077952
@@ -8238,69 +8275,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8515ebee271c0649b9db1321f3026a4, type: 3}
---- !u!114 &2123077953 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11406422, guid: c8515ebee271c0649b9db1321f3026a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 2123077952}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ea79be653ce14db8969d7225d95ec6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2123077954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 415952, guid: c8515ebee271c0649b9db1321f3026a4,
     type: 3}
   m_PrefabInstance: {fileID: 2123077952}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2137630814
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2137630816}
-  - component: {fileID: 2137630815}
-  m_Layer: 0
-  m_Name: Palm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2137630815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137630814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12011a4b27c58f4f8969e87c61ab8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attachmentHand: {fileID: 0}
-  attachmentPoint: 4
---- !u!4 &2137630816
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137630814}
-  m_LocalRotation: {x: -0, y: 0.008726645, z: -0, w: 0.999962}
-  m_LocalPosition: {x: 0.08092071, y: -1.2420001, z: -2.3343801}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1944917437}
-  - {fileID: 838620276}
-  - {fileID: 1642746002}
-  m_Father: {fileID: 1533520314}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
