@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 /**
@@ -20,6 +18,8 @@ public class DataPoint
     private Dictionary<string, Object> attributes;
 
     private GameObject gameObject;
+
+    private SphereCollider collider;
 
     /**
      * Creates a DataPoint from a position, the default color is black
@@ -42,6 +42,11 @@ public class DataPoint
         this.gameObject = gameObject;
     }
 
+    public void setColor(Color color)
+    {
+        this.color = color;
+    }
+
     public Vector3 GetPos()
     {
         return this.pos;
@@ -52,9 +57,15 @@ public class DataPoint
         return this.color;
     }
 
+    public Dictionary<string, Object> GetAttributes()
+    {
+        return this.attributes;
+    }
+
     public Renderer GetRenderer()
     {
         if (this.gameObject == null) Debug.LogError("undefined gameObject in DataPoint");
         return this.gameObject.GetComponent<Renderer>();
     }
+
 }

@@ -30,6 +30,8 @@ public class MeshDeformerMove : MonoBehaviour
 
     private void Start()
     {
+        gameObject.layer = 9;
+
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
         mesh.MarkDynamic(); // optimize mesh for frequent update
@@ -67,11 +69,6 @@ public class MeshDeformerMove : MonoBehaviour
         // bug with the mesh collider, the mesh is updated as expected but internally it still uses the unmodified mesh.
         meshCollider.enabled = false;
         meshCollider.enabled = true;
-
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-
-        }
     }
 
     /**
@@ -93,7 +90,7 @@ public class MeshDeformerMove : MonoBehaviour
     {
         RaycastHit hit;
         //float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
-        if (Physics.Raycast(ray, out hit, 100))
+        if (meshCollider.Raycast(ray, out hit, 100))
         {
             this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
             Vector3 center = transform.InverseTransformPoint(hit.point);
@@ -130,10 +127,20 @@ public class MeshDeformerMove : MonoBehaviour
     */
     private void moveVertices(in Vector3 disp)
     {
+        Vector3 newPos;
         for (int i = 0; i < selectedVertices.Length; i++)
         {
             if (selectedVertices[i])
             {
+                //newPos = vertices[i] + disp * intensities[i];
+                //if (isInside(newPos - normals[i] * 0.01f))
+                //{
+                //    vertices[i] = newPos;
+                //}
+                //else
+                //{
+                //    Debug.Log("-");
+                //}
                 vertices[i] += disp * intensities[i];
             }
         }
@@ -217,6 +224,64 @@ public class MeshDeformerMove : MonoBehaviour
             network[c].Add(a);
             network[c].Add(b);
         }
+    }
+
+    /**
+    * Returns true if the given point is inside the mesh.
+    * Principle: cast a ray from a faraway point towards the
+    * given point and count how many hit with the mesh there are.
+    * If the number is odd the ray has entered the mesh but not
+    * exited => the point is inside.
+    */
+    public bool isInside(Vector3 point)
+    {
+        if (!meshCollider.bounds.Contains(point)) return false;
+        Vector3 cur, start;
+        cur = start = new Vector3(100, 0, 0);
+        Vector3 dir = point - start;
+        dir.Normalize();
+        int nbHit = 0;
+        RaycastHit hit;
+        int meshMask = 1 << 9;
+        int c = 0;
+        while (cur != point)
+        {
+            if (Physics.Linecast(cur, point, out hit, meshMask))
+            {
+                nbHit++;
+                cur = hit.point + dir * 0.01f;
+            }
+            else
+            {
+                cur = point;
+            }
+            c++;
+            if (c >= 1000)
+            {
+                Debug.Log("overflow 1");
+                break;
+            }
+        }
+        c = 0;
+        while (cur != start)
+        {
+            if (Physics.Linecast(cur, start, out hit, meshMask))
+            {
+                nbHit++;
+                cur = hit.point - dir * 0.01f;
+            }
+            else
+            {
+                cur = start;
+            }
+            c++;
+            if (c >= 1000)
+            {
+                Debug.Log("overflow 1");
+                break;
+            }
+        }
+        return nbHit % 2 == 1;
     }
 
 }
