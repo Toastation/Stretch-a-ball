@@ -15,6 +15,8 @@ public class DataPoint
     /** Dictionary of possible attributes, the key is the name of the attribute */
     private Dictionary<string, Object> attributes;
 
+    private bool selected;
+
     private GameObject gameObject;
 
     private SphereCollider collider;
@@ -23,8 +25,9 @@ public class DataPoint
      * Creates a DataPoint from a position, the default color is black
      */
     public DataPoint(Vector3 pos) : this(pos, new Vector4(0, 0, 0, 1)) {
-        
+    
     }
+
 
     /**
      * Creates a DataPoint from a position and a color
@@ -33,6 +36,7 @@ public class DataPoint
         this.pos = pos;
         this.color = color;
         this.attributes = new Dictionary<string, Object>();
+        this.selected = false;
     }
 
     public void SetGameObject(GameObject gameObject) 
@@ -40,9 +44,14 @@ public class DataPoint
         this.gameObject = gameObject;
     }
 
-    public void setColor(Color color)
+    public void SetColor(Color color)
     {
         this.color = color;
+    }
+
+    public void SetSelected(bool selected)
+    {
+        this.selected = selected;
     }
 
     public Vector3 GetPos()
@@ -53,6 +62,11 @@ public class DataPoint
     public Color GetColor()
     {
         return this.color;
+    }
+
+    public bool isSelected()
+    {
+        return this.selected;
     }
 
     public Dictionary<string, Object> GetAttributes()

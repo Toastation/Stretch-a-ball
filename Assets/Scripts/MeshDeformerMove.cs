@@ -27,7 +27,7 @@ public class MeshDeformerMove : MonoBehaviour
     // user data
     [SerializeField, Range(0f, 1f)] public float deformArea = 0.2f;
     [SerializeField, Range(1f, 1000f)] public float influence = 30.0f;
-    
+
     private void Start()
     {
         gameObject.layer = 9;
@@ -102,12 +102,13 @@ public class MeshDeformerMove : MonoBehaviour
         {
             this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
             Vector3 center = transform.InverseTransformPoint(hit.point);
+            float distSqrMag = 0.0f;
             lastMousePos = GetMouseWorldPos();
             for (int i = 0; i < selectedVertices.Length; i++)
             {
                 Vector3 dist = center - vertices[i];
                 dist *= transform.localScale.x;
-                float distSqrMag = dist.sqrMagnitude;
+                distSqrMag = dist.sqrMagnitude;
                 //if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
                 selectedVertices[i] = true;
                 originPos[i] = vertices[i];
@@ -186,7 +187,8 @@ public class MeshDeformerMove : MonoBehaviour
     }
 
     /**
-    * Returns whether or not the given point is inside the mesh
+    * Returns whether or not the given point is the bounding box of the mesh (NOT the inside
+    * the mesh itself)
     */
     public bool Contains(Vector3 point)
     {
@@ -194,8 +196,62 @@ public class MeshDeformerMove : MonoBehaviour
     }
 
     /**
-* Smooth the mesh using the laplacian smoothing algo
-*/
+    * Returns true if the given point is inside the mesh.
+    * Principle: cast a ray from a faraway point towards the
+    * given point and count how many hit with the mesh there are.
+    * If the number is odd the ray has entered the mesh but not
+    * exited => the point is inside.
+    */
+    public bool isInside(Vector3 point)
+    {
+        if (!meshCollider.bounds.Contains(point)) return false;
+        Vector3 cur, start;
+        float dist, distSave;
+        cur = start = new Vector3(100, 0, 0);
+        Vector3 dir = point - start;
+        dist = distSave = dir.magnitude;
+        dir.Normalize();
+        int nbHit = 0;
+        RaycastHit hit;
+        Ray ray = new Ray(cur, dir);
+        // count how many times the ray entered the mesh
+        while (cur != point)
+        {
+            if (meshCollider.Raycast(ray, out hit, dist))
+            {
+                nbHit++;
+                cur = hit.point + dir * 0.05f;
+                dist -= hit.distance + 0.05f;
+            }
+            else
+            {
+                cur = point;
+            }
+            ray.origin = cur;
+        }
+        ray.direction = -dir;
+        dist = distSave;
+        // count how many times the ray exited the mesh
+        while (cur != start)
+        {
+            if (meshCollider.Raycast(ray, out hit, dist))
+            {
+                nbHit++;
+                cur = hit.point - dir * 0.05f;
+                dist -= hit.distance + 0.05f;
+            }
+            else
+            {
+                cur = start;
+            }
+            ray.origin = cur;
+        }
+        return nbHit % 2 == 1;
+    }
+
+    /**
+    * Smooth the mesh using the laplacian smoothing algo
+    */
     private void LaplacianSmooth()
     {
         Vector3[] origin = new Vector3[vertices.Length];
@@ -233,64 +289,6 @@ public class MeshDeformerMove : MonoBehaviour
             network[c].Add(a);
             network[c].Add(b);
         }
-    }
-
-    /**
-    * Returns true if the given point is inside the mesh.
-    * Principle: cast a ray from a faraway point towards the
-    * given point and count how many hit with the mesh there are.
-    * If the number is odd the ray has entered the mesh but not
-    * exited => the point is inside.
-    */
-    public bool isInside(Vector3 point)
-    {
-        if (!meshCollider.bounds.Contains(point)) return false;
-        Vector3 cur, start;
-        cur = start = new Vector3(100, 0, 0);
-        Vector3 dir = point - start;
-        dir.Normalize();
-        int nbHit = 0;
-        RaycastHit hit;
-        int meshMask = 1 << 9;
-        int c = 0; // TODO: remove overflow failsafe
-        while (cur != point)
-        {
-            if (Physics.Linecast(cur, point, out hit, meshMask))
-            {
-                nbHit++;
-                cur = hit.point + dir * 0.05f;
-            }
-            else
-            {
-                cur = point;
-            }
-            c++;
-            if (c >= 1000)
-            {
-                Debug.Log("overflow 1");
-                break;
-            }
-        }
-        c = 0;
-        while (cur != start)
-        {
-            if (Physics.Linecast(cur, start, out hit, meshMask))
-            {
-                nbHit++;
-                cur = hit.point - dir * 0.05f;
-            }
-            else
-            {
-                cur = start;
-            }
-            c++;
-            if (c >= 1000)
-            {
-                Debug.Log("overflow 1");
-                break;
-            }
-        }
-        return nbHit % 2 == 1;
     }
 
 }

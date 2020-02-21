@@ -40,14 +40,6 @@ public class ScatterPlot : MonoBehaviour
         {
             MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
             List<DataPoint> selection = GetSelectedPoints(ref volumes[0]);
-            foreach(DataPoint dp in dataPoints)
-            {
-                dp.setColor(dp.GetColor());
-            }
-            foreach (DataPoint dp in selection)
-            {
-                dp.setColor(Color.magenta);
-            }
             InitParticles();
         }
     }
@@ -68,7 +60,10 @@ public class ScatterPlot : MonoBehaviour
         for (int i = 0; i < dataPoints.Count; i++)
         {
             dataParticles[i].position = dataPoints[i].GetPos();
-            dataParticles[i].startColor = dataPoints[i].GetColor();
+            if (dataPoints[i].isSelected())
+                dataParticles[i].startColor = Color.magenta;
+            else
+                dataParticles[i].startColor = dataPoints[i].GetColor();
             dataParticles[i].startSize = 0.01f;
         }
         pSystem.SetParticles(dataParticles, dataParticles.Length);
@@ -85,6 +80,11 @@ public class ScatterPlot : MonoBehaviour
             if (volume.isInside(dp.GetPos())) 
             {
                 pointsInVolume.Add(dp);
+                dp.SetSelected(true);
+            }
+            else
+            {
+                dp.SetSelected(false);
             }
         }
         return pointsInVolume;
