@@ -34,24 +34,41 @@ public class MenuInteraction : MonoBehaviour
                         case CurrentMenu.Selection.SetOperation: // Set Operation Menu behavior
                             {
                                 if (ButtonCreation.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetIntersection);
+                                }
+            
 
                                 if (ButtonSelection.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetUnion);
+                                }
 
                                 if (ButtonStatistics.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetRelativeComplement);
+                                }
 
                                 if (ButtonHide_Show.isPressed)
-                                    cMenu.SetSetOperation(CurrentMenu.SetOperation.Confirm);
+                                {
+                                    cMenu.ConfirmSetOperation();
+                                    cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
+                                }
+                               
 
                                 if (ButtonHelp_Options.isPressed)
                                 {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.Return);
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
                                     return true;
                                 }
+
+
 
                                 break;
                             }

@@ -51,6 +51,7 @@ public class CurrentMenu : MonoBehaviour
     private Selection currentSelection;
     private SetOperation currentSetOperation;
 
+    bool flagIsConfirmed;
     //GetCurrentMenuSetOperation returns the current SetOperation
 
     #endregion
@@ -282,6 +283,21 @@ public class CurrentMenu : MonoBehaviour
         return 0;
     }
 
+    public bool SetOperationIsConfirmed()
+    {
+        return flagIsConfirmed;
+    }
+
+    public void ConfirmSetOperation()
+    {
+        flagIsConfirmed = true;
+    }
+
+    public void ResetSetOperation()
+    {
+        flagIsConfirmed = false;
+    }
+
     #endregion
 
     #region Unity Methods
@@ -296,6 +312,7 @@ public class CurrentMenu : MonoBehaviour
         SetMenu(Menu.NoMenuSelected);
         SetSelection(Selection.NoSelection);
         SetSetOperation(SetOperation.NoOperation);
+        ResetSetOperation();
 
         
     }
