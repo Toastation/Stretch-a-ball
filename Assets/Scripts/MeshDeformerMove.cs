@@ -27,7 +27,7 @@ public class MeshDeformerMove : MonoBehaviour
     // user data
     [SerializeField, Range(0f, 1f)] public float deformArea = 0.2f;
     [SerializeField, Range(1f, 1000f)] public float influence = 30.0f;
-
+    
     private void Start()
     {
         gameObject.layer = 9;
@@ -69,6 +69,14 @@ public class MeshDeformerMove : MonoBehaviour
         // bug with the mesh collider, the mesh is updated as expected but internally it still uses the unmodified mesh.
         meshCollider.enabled = false;
         meshCollider.enabled = true;
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("1");
+            Debug.Log(Physics.Linecast(Vector3.zero, new Vector3(2, 0, 0), 1 << 9));
+            Debug.Log("2");
+            Debug.Log(Physics.Linecast(new Vector3(2, 0, 0), Vector3.zero, 1 << 9));
+        }
     }
 
     /**
@@ -144,6 +152,7 @@ public class MeshDeformerMove : MonoBehaviour
                 vertices[i] += disp * intensities[i];
             }
         }
+        // todo update selection
     }
 
     /**
@@ -243,13 +252,13 @@ public class MeshDeformerMove : MonoBehaviour
         int nbHit = 0;
         RaycastHit hit;
         int meshMask = 1 << 9;
-        int c = 0;
+        int c = 0; // TODO: remove overflow failsafe
         while (cur != point)
         {
             if (Physics.Linecast(cur, point, out hit, meshMask))
             {
                 nbHit++;
-                cur = hit.point + dir * 0.01f;
+                cur = hit.point + dir * 0.05f;
             }
             else
             {
@@ -268,7 +277,7 @@ public class MeshDeformerMove : MonoBehaviour
             if (Physics.Linecast(cur, start, out hit, meshMask))
             {
                 nbHit++;
-                cur = hit.point - dir * 0.01f;
+                cur = hit.point - dir * 0.05f;
             }
             else
             {

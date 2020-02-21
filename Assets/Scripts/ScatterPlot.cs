@@ -40,7 +40,11 @@ public class ScatterPlot : MonoBehaviour
         {
             MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
             List<DataPoint> selection = GetSelectedPoints(ref volumes[0]);
-            foreach(DataPoint dp in selection)
+            foreach(DataPoint dp in dataPoints)
+            {
+                dp.setColor(dp.GetColor());
+            }
+            foreach (DataPoint dp in selection)
             {
                 dp.setColor(Color.magenta);
             }

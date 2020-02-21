@@ -3,8 +3,6 @@ using UnityEngine;
 
 /**
  * This class represents data points in a 3D scatterplot.
- * 
- * TODO: maybe link each instance of this class to a game object, if so it should inherit MonoBehavior
  */
 public class DataPoint
 {
