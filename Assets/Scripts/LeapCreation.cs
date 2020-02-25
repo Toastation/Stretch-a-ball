@@ -46,24 +46,28 @@ namespace Leap.Unity
             {
                 if (nb_pinch == 2)
                 {
+                    /*
                     //Debug.Log(" CREATION MODE");
                     creating = true;
                     currentSelection = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     currentSelection.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
                     float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
                     currentSelection.transform.localScale = new Vector3(tmp, tmp, tmp);
+                    */
 
                     /*
                      * The following code is supposed to do the exat same thing but with 
                      * the prefab sphereMesh instead of standard sphere
-                     
+                     */
 
+                    //Debug.Log(" CREATION MODE with mesh");
+                    creating = true;
                     // Gets the prefab
-                    GameObject sphereMesh_Clone = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
                     //Modifies the position and scale
-                    sphereMesh_Clone.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
-                    tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
-                    sphereMesh_Clone.transform.localScale = new Vector3(tmp, tmp, tmp);
+                    currentSelection.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
+                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
+                    currentSelection.transform.localScale = new Vector3(tmp, tmp, tmp);
                     /* End here*/
 
                     lastPosition = currentSelection.transform.position;
