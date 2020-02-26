@@ -35,12 +35,15 @@ namespace Leap.Unity
         float referenceWait = 1;
         float wait = 0;
         int Pointing = 0; // Pas un bool dans le cas où les deux mains pointent en même temps, et que l'une arrête de pointer
-        
+
+        private static Vector3 PointingDirection;
+        private static Vector3 Fingertip;
+
         //float FOV;
         //float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
 
-        
-    
+
+
 
         void ExtendedFingerDetected()
         {
@@ -66,6 +69,20 @@ namespace Leap.Unity
             nb_pinch -= 1;
            // Debug.Log("JE SUIS LA!");
         }
+
+        
+        //retourne la valeur du vecteur 3 PointingDirection
+        public static Vector3 GetPointingDirection()
+        {
+            return PointingDirection;
+        }
+
+        //retourne la valeur du vecteur 3 Fingertip
+        public static Vector3 GetFingertip()
+        {
+            return Fingertip;
+        }
+
 
         // Start is called before the first frame update
         void Start()
@@ -161,8 +178,8 @@ namespace Leap.Unity
                             default:
                                 break;
                         }
-                        Vector3 PointingDirection = new Vector3( 0, 0, 0 );
-                        Vector3 Fingertip = new Vector3(0, 0, 0);
+                        PointingDirection = new Vector3( 0, 0, 0 );
+                        Fingertip = new Vector3(0, 0, 0);
                         //if (currentSelection != null)
                         //Debug.Log("CURRENT OBJECT:", currentSelection);
                         Finger f = null;
