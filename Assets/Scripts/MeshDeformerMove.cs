@@ -23,6 +23,7 @@ public class MeshDeformerMove : MonoBehaviour
     // drag data
     private float zOffset;
     private Vector3 lastMousePos;
+    private bool meshUpdated;
 
     // user data
     [SerializeField, Range(0f, 1f)] public float deformArea = 0.2f;
@@ -35,7 +36,6 @@ public class MeshDeformerMove : MonoBehaviour
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
         mesh.MarkDynamic(); // optimize mesh for frequent update
-
         meshCollider = gameObject.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
 
@@ -47,6 +47,8 @@ public class MeshDeformerMove : MonoBehaviour
         for (int i = 0; i < selectedVertices.Length; i++) selectedVertices[i] = false;
         network = new Dictionary<int, HashSet<int>>();
         this.ComputeNetwork();
+
+        meshUpdated = false;
     }
 
     private void Update()
@@ -61,22 +63,23 @@ public class MeshDeformerMove : MonoBehaviour
     // The deformation should always take place after the main update
     private void LateUpdate()
     {
+        if (meshUpdated)
+        {
+            updateMesh();
+            meshUpdated = false;
+        }
+    }
+
+    private void updateMesh()
+    {
+        mesh.MarkDynamic();
         mesh.vertices = vertices;
-        // no need to update normals since the displacement is colinear to the normal
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
         normals = mesh.normals;
         // bug with the mesh collider, the mesh is updated as expected but internally it still uses the unmodified mesh.
         meshCollider.enabled = false;
         meshCollider.enabled = true;
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("1");
-            Debug.Log(Physics.Linecast(Vector3.zero, new Vector3(2, 0, 0), 1 << 9));
-            Debug.Log("2");
-            Debug.Log(Physics.Linecast(new Vector3(2, 0, 0), Vector3.zero, 1 << 9));
-        }
     }
 
     /**
@@ -94,27 +97,23 @@ public class MeshDeformerMove : MonoBehaviour
     * that will be affected by the deformation. It also give them
     * an intensity value according to their distance with the impact.
     */
-    private void selectVertices(in Ray ray)
+    public void selectVertices(RaycastHit hit)
     {
-        RaycastHit hit;
         //float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
-        if (meshCollider.Raycast(ray, out hit, 100))
+        this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
+        Vector3 center = transform.InverseTransformPoint(hit.point);
+        float distSqrMag = 0.0f;
+        lastMousePos = GetMouseWorldPos();
+        for (int i = 0; i < vertices.Length; i++)
         {
-            this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
-            Vector3 center = transform.InverseTransformPoint(hit.point);
-            float distSqrMag = 0.0f;
-            lastMousePos = GetMouseWorldPos();
-            for (int i = 0; i < selectedVertices.Length; i++)
-            {
-                Vector3 dist = center - vertices[i];
-                dist *= transform.localScale.x;
-                distSqrMag = dist.sqrMagnitude;
-                //if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
-                selectedVertices[i] = true;
-                originPos[i] = vertices[i];
-                intensities[i] = 1 / ((1f + influence * distSqrMag) * transform.localScale.x);
-                //}
-            }
+            Vector3 dist = center - vertices[i];
+            dist *= transform.localScale.x;
+            distSqrMag = dist.sqrMagnitude;
+            //if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
+            selectedVertices[i] = true;
+            originPos[i] = vertices[i];
+            intensities[i] = 1 / ((1f + influence * distSqrMag) * transform.localScale.x);
+            //}
         }
     }
 
@@ -153,6 +152,7 @@ public class MeshDeformerMove : MonoBehaviour
                 vertices[i] += disp * intensities[i];
             }
         }
+        meshUpdated = true;
         // todo update selection
     }
 
@@ -164,7 +164,11 @@ public class MeshDeformerMove : MonoBehaviour
     private void OnMouseDown()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectVertices(ray);
+        RaycastHit hit;
+        if (meshCollider.Raycast(ray, out hit, 100))
+        {
+            selectVertices(hit);
+        }
     }
 
     /**
