@@ -140,7 +140,7 @@ namespace Leap.Unity
                             {
                                 f = hl.GetIndex();
                             }
-                            else
+                            if (hr.Fingers[1].IsExtended)
                             {
                                 f = hr.GetIndex();
                             }
@@ -148,7 +148,7 @@ namespace Leap.Unity
                             Fingertip = f.TipPosition.ToVector3();
                         }
                         Collider tempo = LeapSelection.selectionMain((Pointing > 0), PointingDirection, Fingertip, ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
-                ref lastPosition, ref lastPositionR, ref lastPositionL);
+                ref lastPosition, ref lastPositionR, ref lastPositionL, cMenu.GetCurrentMenuSelection());
                         if (tempo != null)
                         { 
                             if (currentSelection != null)

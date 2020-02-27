@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Leap.Unity {
     public class LeapSelection : MonoBehaviour
     {
+        #region functions
 
         static RaycastHit[] SphereArray;
         static RaycastHit[] AlreadyHit = { };
@@ -67,9 +68,34 @@ namespace Leap.Unity {
             return currentCollider;
         }
 
-        public static Collider selectionMain(bool Pointing, Vector3 PointingDirection, Vector3 Fingertip, ref int nb_pinch, ref bool creating, PinchDetector scriptPDL, PinchDetector scriptPDR, ref GameObject currentSelection, Camera cam,
-                ref Vector3 lastPosition, ref Vector3 lastPositionR, ref Vector3 lastPositionL) // si le doigt pointe, un Vector3 (direction de raycast), le bout du doigt
+        static void eraseMode() 
         {
+            Object.Destroy(currentCollider.gameObject);
+            currentCollider = null;
+        }
+
+        #endregion
+
+        public static Collider selectionMain(bool Pointing, Vector3 PointingDirection, Vector3 Fingertip, ref int nb_pinch, ref bool creating, PinchDetector scriptPDL, PinchDetector scriptPDR, ref GameObject currentSelection, Camera cam,
+                ref Vector3 lastPosition, ref Vector3 lastPositionR, ref Vector3 lastPositionL, CurrentMenu.Selection sel) // si le doigt pointe, un Vector3 (direction de raycast), le bout du doigt
+        {
+            switch (sel)
+            {
+                case CurrentMenu.Selection.Erase:
+                    eraseMode();
+                    break;
+
+                case CurrentMenu.Selection.Modification:
+
+                    break;
+
+                case CurrentMenu.Selection.SetOperation:
+
+                    break;
+
+                default:
+                    break;
+            }
             if (nb_pinch == 1 && currentSelection != null)
             {
                 Debug.Log("1 pinch");
@@ -102,7 +128,7 @@ namespace Leap.Unity {
                 timer = timerDelay;
                 return currentCollider;
             }
-
+            
         }
     }
 }
