@@ -34,21 +34,41 @@ public class MenuInteraction : MonoBehaviour
                         case CurrentMenu.Selection.SetOperation: // Set Operation Menu behavior
                             {
                                 if (ButtonCreation.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetIntersection);
+                                }
+            
 
                                 if (ButtonSelection.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetUnion);
+                                }
 
                                 if (ButtonStatistics.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetRelativeComplement);
+                                }
 
                                 if (ButtonHide_Show.isPressed)
                                 {
+                                    cMenu.ConfirmSetOperation();
+                                    cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
+                                }
+                               
+
+                                if (ButtonHelp_Options.isPressed)
+                                {
+                                    cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.Return);
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
                                     return true;
                                 }
+
+
 
                                 break;
                             }
@@ -151,6 +171,12 @@ public class MenuInteraction : MonoBehaviour
 
                                 if (ButtonHide_Show.isPrimaryHovered)
                                 {
+                                    cMenu.DisplaySetOperation(CurrentMenu.SetOperation.Confirm);
+                                    break;
+                                }
+
+                                if (ButtonHelp_Options.isPrimaryHovered)
+                                {
                                     cMenu.DisplaySetOperation(CurrentMenu.SetOperation.Return);
                                     break;
                                 }
@@ -247,7 +273,7 @@ public class MenuInteraction : MonoBehaviour
     void Start()
     {
         //Initialisation of the different menu buttons
-        cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+        cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
         ButtonCreation = GameObject.Find("Button Creation").GetComponent<InteractionButton>(); // Button for Creation/Modification/Intersection
         ButtonSelection = GameObject.Find("Button Selection").GetComponent<InteractionButton>(); // Button for Selection/Erase/Union
         ButtonStatistics = GameObject.Find("Button Statistics").GetComponent<InteractionButton>(); // Button for Statsistics/Operation/Relative Complement

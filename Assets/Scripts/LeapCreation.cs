@@ -10,7 +10,6 @@ namespace Leap.Unity
 
 
 
-
         public static void creationMain(ref int nb_pinch, ref bool creating, PinchDetector scriptPDL, PinchDetector scriptPDR, ref GameObject currentSelection, Camera cam,
             ref Vector3 lastPosition, ref Vector3 lastPositionR, ref Vector3 lastPositionL, float referenceWait, ref float wait)
         {
@@ -47,12 +46,30 @@ namespace Leap.Unity
             {
                 if (nb_pinch == 2)
                 {
+                    /*
                     //Debug.Log(" CREATION MODE");
                     creating = true;
                     currentSelection = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     currentSelection.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
                     float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
                     currentSelection.transform.localScale = new Vector3(tmp, tmp, tmp);
+                    */
+
+                    /*
+                     * The following code is supposed to do the exat same thing but with 
+                     * the prefab sphereMesh instead of standard sphere
+                     */
+
+                    //Debug.Log(" CREATION MODE with mesh");
+                    creating = true;
+                    // Gets the prefab
+                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    //Modifies the position and scale
+                    currentSelection.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
+                    float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));
+                    currentSelection.transform.localScale = new Vector3(tmp, tmp, tmp);
+                    /* End here*/
+
                     lastPosition = currentSelection.transform.position;
                 }
             }

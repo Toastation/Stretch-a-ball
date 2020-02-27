@@ -36,6 +36,7 @@ public class CurrentMenu : MonoBehaviour
         SetIntersection,
         SetUnion,
         SetRelativeComplement,
+        Confirm,
         Return
     }
 
@@ -50,6 +51,7 @@ public class CurrentMenu : MonoBehaviour
     private Selection currentSelection;
     private SetOperation currentSetOperation;
 
+    bool flagIsConfirmed;
     //GetCurrentMenuSetOperation returns the current SetOperation
 
     #endregion
@@ -231,6 +233,9 @@ public class CurrentMenu : MonoBehaviour
                 case SetOperation.SetRelativeComplement:
                     textObject.text = "Set Operation - Relative Complement";
                     break;
+                case SetOperation.Confirm:
+                    textObject.text = "Set Operation - Confirm";
+                    break;
                 case SetOperation.Return:
                     textObject.text = "Set Operation - Return";
                     break;
@@ -263,6 +268,9 @@ public class CurrentMenu : MonoBehaviour
                 case SetOperation.SetRelativeComplement:
                     textObject.text = "Set Operation - Relative Complement";
                     break;
+                case SetOperation.Confirm:
+                    textObject.text = "Set Operation - Confirm";
+                    break;
                 case SetOperation.Return:
                     textObject.text = "Set Operation - Return";
                     break;
@@ -273,6 +281,21 @@ public class CurrentMenu : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public bool SetOperationIsConfirmed()
+    {
+        return flagIsConfirmed;
+    }
+
+    public void ConfirmSetOperation()
+    {
+        flagIsConfirmed = true;
+    }
+
+    public void ResetSetOperation()
+    {
+        flagIsConfirmed = false;
     }
 
     #endregion
@@ -289,6 +312,7 @@ public class CurrentMenu : MonoBehaviour
         SetMenu(Menu.NoMenuSelected);
         SetSelection(Selection.NoSelection);
         SetSetOperation(SetOperation.NoOperation);
+        ResetSetOperation();
 
         
     }

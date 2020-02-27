@@ -2,55 +2,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointSelection
+namespace Leap.Unity
 {
-    private List<DataPoint> selectedPoints;
-
-    public PointSelection()
+    public class BoolOperation
     {
-        selectedPoints = new List<DataPoint>();
-    }
+        private List<DataPoint> selectedPoints;
+        public delegate List<DataPoint> Operator(List<DataPoint> select1, List<DataPoint> select2);
+        private Operator MethodOperator;
 
-    public PointSelection AndBoolOperation(PointSelection selec1, PointSelection selec2)
-    {   
-        PointSelection newSelection = new PointSelection();
-        foreach (DataPoint dp in selec1.selectedPoints)
+        public BoolOperation()
         {
-            if (selec1.selectedPoints.Contains(dp))
-            {
-                newSelection.selectedPoints.Add(dp);
-            }
+            selectedPoints = new List<DataPoint>();
         }
-        return newSelection;
-    }
+        public void BoolUpdate(List<DataPoint> DataPoint, Operator Method)
+        {
+            // selectedPoints = new List<DataPoint>();
+            this.selectedPoints = DataPoint;
+            this.MethodOperator = Method;
+        }
 
-    public PointSelection OrBoolOperation(PointSelection selec1, PointSelection selec2)
-    {
-        PointSelection newSelection = new PointSelection();
-        foreach (DataPoint dp in selec1.selectedPoints)
+        public List<DataPoint> AndBoolOperation(List<DataPoint> selec1, List<DataPoint> selec2)
         {
-            newSelection.selectedPoints.Add(dp);
-        }
-        foreach (DataPoint dp in selec2.selectedPoints)
-        {
-            if (!newSelection.selectedPoints.Contains(dp))
+            List<DataPoint> newSelection = new List<DataPoint>();
+            foreach (DataPoint dp in selec1)
             {
-                newSelection.selectedPoints.Add(dp);
+                if (selec1.Contains(dp))
+                {
+                    newSelection.Add(dp);
+                }
             }
+            return newSelection;
         }
-        return newSelection;
-    }
 
-    public PointSelection NotInBoolOperation(PointSelection selec1, PointSelection selec2)
-    {
-        PointSelection newSelection = new PointSelection();
-        foreach (DataPoint dp in selec1.selectedPoints)
+        public List<DataPoint> OrBoolOperation(List<DataPoint> selec1, List<DataPoint> selec2)
         {
-            if (!selec2.selectedPoints.Contains(dp))
+            List<DataPoint> newSelection = new List<DataPoint>();
+            foreach (DataPoint dp in selec1)
             {
-                newSelection.selectedPoints.Add(dp);
+                newSelection.Add(dp);
             }
+            foreach (DataPoint dp in selec2)
+            {
+                if (!newSelection.Contains(dp))
+                {
+                    newSelection.Add(dp);
+                }
+            }
+            return newSelection;
         }
-        return newSelection;
+
+        public List<DataPoint> NotInBoolOperation(List<DataPoint> selec1, List<DataPoint> selec2)
+        {
+            List<DataPoint> newSelection = new List<DataPoint>();
+            foreach (DataPoint dp in selec1)
+            {
+                if (!selec2.Contains(dp))
+                {
+                    newSelection.Add(dp);
+                }
+            }
+            return newSelection;
+        }
+
+        public List<DataPoint> BoolOperationMain(List<DataPoint> Data)
+        {
+            if (this.selectedPoints.Count != 0)
+            {
+                Data = MethodOperator(this.selectedPoints, Data);
+                this.selectedPoints.Clear();
+            }
+            return Data;
+        }
     }
 }

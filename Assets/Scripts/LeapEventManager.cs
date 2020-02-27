@@ -23,6 +23,9 @@ namespace Leap.Unity
         ExtendedFingerDetector scriptEFDR;
 
         GameObject currentSelection;
+        List<DataPoint> currentSelectedDataPoints;
+        BoolOperation Operation;
+
         public Camera cam;
         int LA_VARIABLE = 1;
 
@@ -67,6 +70,10 @@ namespace Leap.Unity
         // Start is called before the first frame update
         void Start()
         {
+            Operation = new BoolOperation();
+           
+
+            
         }
 
         // Update is called once per frame
@@ -74,13 +81,15 @@ namespace Leap.Unity
         {
             if (!initializedMenu)
             {
-                cMenu = GameObject.Find("Palm UI 1").GetComponent<CurrentMenu>();
+                //Connects to the menu
+                cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
                 if (cMenu != null)
                 {
-                    Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    //Debug.Log("IL EST INITIALISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                     initializedMenu = true;
                 }
             }
+
             if (!initializedLeft)
             {
                 Left = GameObject.Find("Capsule Hand Left");
@@ -114,6 +123,7 @@ namespace Leap.Unity
                 }
             }
 
+
             if (initializedLeft && initializedRight && initializedMenu)
             {
                 switch (cMenu.GetCurrentMenu())
@@ -127,6 +137,30 @@ namespace Leap.Unity
                         break;
 
                     case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
+                        switch (cMenu.GetCurrentMenuSelection())
+                        {
+                            case CurrentMenu.Selection.SetOperation:
+                                switch (cMenu.GetCurrentMenuSetOperation())
+                                {
+                                    case CurrentMenu.SetOperation.SetUnion:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.OrBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.SetIntersection:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.AndBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.SetRelativeComplement:
+                                        Operation.BoolUpdate(currentSelectedDataPoints, Operation.NotInBoolOperation);
+                                        break;
+                                    case CurrentMenu.SetOperation.Confirm:
+                                        currentSelectedDataPoints = Operation.BoolOperationMain(currentSelectedDataPoints);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         Vector3 PointingDirection = new Vector3( 0, 0, 0 );
                         Vector3 Fingertip = new Vector3(0, 0, 0);
                         //if (currentSelection != null)
@@ -169,12 +203,6 @@ namespace Leap.Unity
                 lastPositionL = scriptPDL.Position;
                 lastPositionR = scriptPDR.Position;
             }
-
-
-
-
-
-
             
         }
     }
