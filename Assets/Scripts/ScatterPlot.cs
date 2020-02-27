@@ -12,7 +12,7 @@ public class ScatterPlot : MonoBehaviour
 
     /** The list of points in the scatterplot and their particle representation */
     private ParticleSystem pSystem;
-    private List<DataPoint> dataPoints;
+    public static List<DataPoint> dataPoints;
     private ParticleSystem.Particle[] dataParticles;
 
     void Start()
@@ -72,12 +72,12 @@ public class ScatterPlot : MonoBehaviour
     /**
      * Returns a list of all datapoints contained in the given volume 
      */
-    public List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
+    public static List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         foreach (DataPoint dp in dataPoints) 
         {
-            if (volume.isInside(dp.GetPos())) 
+            if (volume.IsInside(dp.GetPos())) 
             {
                 pointsInVolume.Add(dp);
                 dp.SetSelected(true);
