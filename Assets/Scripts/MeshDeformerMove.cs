@@ -16,6 +16,7 @@ public class MeshDeformerMove : MonoBehaviour
     private Vector3[] vertices;
     private Vector3[] normals;
     private Vector3[] originPos;
+    private int[] triangles;
     private bool[] selectedVertices;
     private float[] intensities;
     private Dictionary<int, HashSet<int>> network; // (k,v) where k is a vertex index and v the set of its neighbors index
@@ -28,6 +29,9 @@ public class MeshDeformerMove : MonoBehaviour
     // user data
     [SerializeField, Range(0f, 1f)] public float deformArea = 0.2f;
     [SerializeField, Range(1f, 1000f)] public float influence = 30.0f;
+
+    Vector3 ppp;
+    bool b;
 
     private void Start()
     {
@@ -42,6 +46,7 @@ public class MeshDeformerMove : MonoBehaviour
         vertices = mesh.vertices;
         normals = mesh.normals;
         originPos = new Vector3[vertices.Length];
+        triangles = mesh.triangles;
         selectedVertices = new bool[vertices.Length];
         intensities = new float[vertices.Length];
         for (int i = 0; i < selectedVertices.Length; i++) selectedVertices[i] = false;
@@ -57,7 +62,13 @@ public class MeshDeformerMove : MonoBehaviour
         // if (Input.GetMouseButton(0)) {
         // Debug.DrawLine(Camera.main.transform.position, transform.position, Color.red);
         // }    
-
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (!IsInside(vertices[i] - normals[i] * 0.5f)) Debug.Log("not in bounds");
+            }
+        }
     }
 
     // The deformation should always take place after the main update
@@ -65,21 +76,18 @@ public class MeshDeformerMove : MonoBehaviour
     {
         if (meshUpdated)
         {
-            updateMesh();
+            UpdateMeshVertices();
             meshUpdated = false;
         }
     }
 
-    private void updateMesh()
+    private void UpdateMeshVertices()
     {
         mesh.MarkDynamic();
         mesh.vertices = vertices;
-        mesh.RecalculateBounds();
         mesh.RecalculateNormals();
-        normals = mesh.normals;
-        // bug with the mesh collider, the mesh is updated as expected but internally it still uses the unmodified mesh.
-        meshCollider.enabled = false;
-        meshCollider.enabled = true;
+        mesh.RecalculateBounds();
+        meshFilter.sharedMesh = mesh;
     }
 
     /**
@@ -97,9 +105,9 @@ public class MeshDeformerMove : MonoBehaviour
     * that will be affected by the deformation. It also give them
     * an intensity value according to their distance with the impact.
     */
-    public void selectVertices(RaycastHit hit)
+    public void SelectVertices(RaycastHit hit)
     {
-        //float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
+        float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
         this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
         Vector3 center = transform.InverseTransformPoint(hit.point);
         float distSqrMag = 0.0f;
@@ -109,18 +117,18 @@ public class MeshDeformerMove : MonoBehaviour
             Vector3 dist = center - vertices[i];
             dist *= transform.localScale.x;
             distSqrMag = dist.sqrMagnitude;
-            //if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
-            selectedVertices[i] = true;
-            originPos[i] = vertices[i];
-            intensities[i] = 1 / ((1f + influence * distSqrMag) * transform.localScale.x);
-            //}
+            if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
+                selectedVertices[i] = true;
+                originPos[i] = vertices[i];
+                intensities[i] = Mathf.Clamp01(Mathf.Pow(360.0f, -Mathf.Pow(dist.magnitude / radiusOfEffect, 2.5f) - 0.01f));
+            }
         }
     }
 
     /**
     * Unselect all vertices
     */
-    private void unselectVertices()
+    private void UnselectVertices()
     {
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -131,29 +139,35 @@ public class MeshDeformerMove : MonoBehaviour
     /**
     * Move the vertices according the given displacement vector and
     * their intensity factor (this factor is set when the vertices are
-    * marked to be moved in selectVertices)
+    * marked to be moved in SelectVertices)
     */
-    private void moveVertices(in Vector3 disp)
+    private void MoveVertices(in Vector3 disp)
     {
-        Vector3 newPos;
+        Vector3[] old = mesh.vertices;
         for (int i = 0; i < selectedVertices.Length; i++)
         {
             if (selectedVertices[i])
             {
-                //newPos = vertices[i] + disp * intensities[i];
-                //if (isInside(newPos - normals[i] * 0.01f))
-                //{
-                //    vertices[i] = newPos;
-                //}
-                //else
-                //{
-                //    Debug.Log("-");
-                //}
+
                 vertices[i] += disp * intensities[i];
             }
         }
-        meshUpdated = true;
-        // todo update selection
+        UpdateMeshVertices();
+    }
+
+    private bool DetectSelfIntersection()
+    {
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            if (!selectedVertices[i]) continue;
+            if (IsInside(vertices[i] + transform.position - normals[i] * 0.01f) == false)
+            {
+                ppp = vertices[i] + transform.position - normals[i] * 0.01f;
+                b = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -167,7 +181,7 @@ public class MeshDeformerMove : MonoBehaviour
         RaycastHit hit;
         if (meshCollider.Raycast(ray, out hit, 100))
         {
-            selectVertices(hit);
+            SelectVertices(hit);
         }
     }
 
@@ -176,7 +190,9 @@ public class MeshDeformerMove : MonoBehaviour
     */
     private void OnMouseUp()
     {
-        unselectVertices();
+        UnselectVertices();
+        meshFilter.sharedMesh = mesh;
+        meshCollider.sharedMesh = mesh;
     }
 
     /**
@@ -186,7 +202,7 @@ public class MeshDeformerMove : MonoBehaviour
     {
         Vector3 currentMousePos = GetMouseWorldPos();
         Vector3 disp = currentMousePos - this.lastMousePos;
-        moveVertices(disp);
+        MoveVertices(disp);
         this.lastMousePos = currentMousePos;
     }
 
@@ -206,7 +222,7 @@ public class MeshDeformerMove : MonoBehaviour
     * If the number is odd the ray has entered the mesh but not
     * exited => the point is inside.
     */
-    public bool isInside(Vector3 point)
+    public bool IsInside(Vector3 point)
     {
         if (!meshCollider.bounds.Contains(point)) return false;
         Vector3 cur, start;
@@ -292,6 +308,15 @@ public class MeshDeformerMove : MonoBehaviour
             network[b].Add(c);
             network[c].Add(a);
             network[c].Add(b);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (b)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(ppp, 0.01f);
         }
     }
 
