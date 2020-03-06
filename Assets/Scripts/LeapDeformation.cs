@@ -17,6 +17,7 @@ namespace Leap.Unity
 
         Finger index_right;
         Finger index_left;
+        Hand hand;
 
         public void PinchRightDetected()
         {
@@ -25,7 +26,7 @@ namespace Leap.Unity
             pinch_right = true;
             if (Right == null)
                 return;
-            Hand hand = Right.GetComponent<HandModelBase>().GetLeapHand();
+            hand = Right.GetComponent<HandModelBase>().GetLeapHand();
             index_right = hand.GetThumb();
             Vector3 origin = index_right.TipPosition.ToVector3();
             Vector3 dir = index_right.Direction.ToVector3();
@@ -40,7 +41,7 @@ namespace Leap.Unity
             pinch_left = true;
             if (Left == null)
                 return;
-            Hand hand = Left.GetComponent<HandModelBase>().GetLeapHand();
+            hand = Left.GetComponent<HandModelBase>().GetLeapHand();
             index_left = hand.GetThumb();
             Vector3 origin = index_left.TipPosition.ToVector3();
             Vector3 dir = index_left.Direction.ToVector3();
@@ -91,6 +92,7 @@ namespace Leap.Unity
                 meshHit.MoveVertices(diff);
                 lastPosLeft = index_left.TipPosition.ToVector3();
             }
+            //Debug.DrawLine(hand.PalmPosition.ToVector3(), hand.PalmPosition.ToVector3() + hand.Direction.ToVector3()*10);
         }
 
         void LaunchRay(Vector3 origin, Vector3 dir)
@@ -99,7 +101,7 @@ namespace Leap.Unity
             Ray ray = new Ray(origin, dir.normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100, 1 << 9))
+            if (Physics.Raycast(ray, out hit, 0.05f, 1 << 9))
             {
                 Debug.Log("je suis dans le premier if");
                 MeshDeformerMove current_mesh = hit.collider.GetComponent<MeshDeformerMove>();
