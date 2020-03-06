@@ -8,6 +8,8 @@ namespace Leap.Unity
     public class LeapEventManager : MonoBehaviour
     {
         int nb_pinch = 0;
+        bool pinch_left = false;
+        bool pinch_right = false;
         bool creating = false;
         bool initializedRight = false;
         bool initializedLeft =  false;
@@ -35,6 +37,8 @@ namespace Leap.Unity
         float referenceWait = 1;
         float wait = 0;
         int Pointing = 0; // Pas un bool dans le cas où les deux mains pointent en même temps, et que l'une arrête de pointer
+
+        LeapDeformation LeapDeformation;
         
         //float FOV;
         //float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
@@ -53,25 +57,57 @@ namespace Leap.Unity
             Pointing -= 1;
         }
 
-        void PinchDetected()
+        void PinchRightDetected()
         {
-            //Debug.Log("Pinch Detected");
+            Debug.Log("Pinch R Detected");
             nb_pinch += 1;
+            pinch_right = true;
+            if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
+            {
+                LeapDeformation.PinchRightDetected();
+            }
             //Debug.Log("JE SUIS LA!");
         }
 
-        void PinchEnded()
+        void PinchLeftDetected()
         {
-            //Debug.Log("Pinch Ended");
+            Debug.Log("Pinch L Detected");
+            nb_pinch += 1;
+            pinch_left = true;
+            if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
+            {
+                LeapDeformation.PinchLeftDetected();
+            }
+        }
+
+        void PinchRightEnded()
+        {
+            //Debug.Log("Pinch Right Ended");
             nb_pinch -= 1;
-           // Debug.Log("JE SUIS LA!");
+            pinch_right = false;
+            if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
+            {
+                LeapDeformation.PinchRightEnded();
+            }
+        }
+
+        void PinchLeftEnded()
+        {
+            //Debug.Log("Pinch Left Ended");
+            nb_pinch -= 1;
+            pinch_left = false;
+            if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
+            {
+                LeapDeformation.PinchLeftEnded();
+            }
         }
 
         // Start is called before the first frame update
         void Start()
         {
             Operation = new BoolOperation();
-           
+
+            LeapDeformation = new LeapDeformation();
 
             
         }
@@ -99,8 +135,8 @@ namespace Leap.Unity
                     scriptPDL = Left.GetComponent<PinchDetector>();
                     scriptEFDL = Left.GetComponent<ExtendedFingerDetector>();
                     //Debug.Log(scriptEFDL, scriptPDL);
-                    scriptPDL.OnActivate.AddListener(PinchDetected);
-                    scriptPDL.OnDeactivate.AddListener(PinchEnded);
+                    scriptPDL.OnActivate.AddListener(PinchLeftDetected);
+                    scriptPDL.OnDeactivate.AddListener(PinchLeftEnded);
                     scriptEFDL.OnActivate.AddListener(ExtendedFingerDetected);
                     scriptEFDL.OnDeactivate.AddListener(ExtendedFingerEnded);
                     initializedLeft = true;
@@ -115,8 +151,8 @@ namespace Leap.Unity
                     scriptPDR = Right.GetComponent<PinchDetector>();
                     scriptEFDR = Right.GetComponent<ExtendedFingerDetector>();
                     //Debug.Log(scriptEFDR, scriptPDR);
-                    scriptPDR.OnActivate.AddListener(PinchDetected);
-                    scriptPDR.OnDeactivate.AddListener(PinchEnded);
+                    scriptPDR.OnActivate.AddListener(PinchRightDetected);
+                    scriptPDR.OnDeactivate.AddListener(PinchRightEnded);
                     scriptEFDR.OnActivate.AddListener(ExtendedFingerDetected);
                     scriptEFDR.OnDeactivate.AddListener(ExtendedFingerEnded);
                     initializedRight = true;
@@ -157,6 +193,8 @@ namespace Leap.Unity
                                     default:
                                         break;
                                 }
+                                break;
+                            case CurrentMenu.Selection.Modification:
                                 break;
                             default:
                                 break;

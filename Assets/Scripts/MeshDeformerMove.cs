@@ -320,4 +320,6 @@ public class MeshDeformerMove : MonoBehaviour
         }
     }
 
+    //public Collider getCollider
+
 }
