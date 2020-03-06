@@ -128,7 +128,7 @@ public class MeshDeformerMove : MonoBehaviour
     /**
     * Unselect all vertices
     */
-    private void UnselectVertices()
+    public void UnselectVertices()
     {
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -141,8 +141,9 @@ public class MeshDeformerMove : MonoBehaviour
     * their intensity factor (this factor is set when the vertices are
     * marked to be moved in SelectVertices)
     */
-    private void MoveVertices(in Vector3 disp)
+    public void MoveVertices(in Vector3 disp)
     {
+        Debug.Log("je suis dans MoveVertices" + disp);
         Vector3[] old = mesh.vertices;
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -181,7 +182,7 @@ public class MeshDeformerMove : MonoBehaviour
         RaycastHit hit;
         if (meshCollider.Raycast(ray, out hit, 100))
         {
-            SelectVertices(hit);
+            SelectVertices(hit.point);
         }
     }
 

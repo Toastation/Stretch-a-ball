@@ -8,8 +8,6 @@ namespace Leap.Unity
     public class LeapEventManager : MonoBehaviour
     {
         int nb_pinch = 0;
-        bool pinch_left = false;
-        bool pinch_right = false;
         bool creating = false;
         bool initializedRight = false;
         bool initializedLeft =  false;
@@ -59,9 +57,8 @@ namespace Leap.Unity
 
         void PinchRightDetected()
         {
-            Debug.Log("Pinch R Detected");
+            //Debug.Log("Pinch R Detected");
             nb_pinch += 1;
-            pinch_right = true;
             if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
             {
                 LeapDeformation.PinchRightDetected();
@@ -71,9 +68,8 @@ namespace Leap.Unity
 
         void PinchLeftDetected()
         {
-            Debug.Log("Pinch L Detected");
+            //Debug.Log("Pinch L Detected");
             nb_pinch += 1;
-            pinch_left = true;
             if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
             {
                 LeapDeformation.PinchLeftDetected();
@@ -82,9 +78,8 @@ namespace Leap.Unity
 
         void PinchRightEnded()
         {
-            //Debug.Log("Pinch Right Ended");
+            //Debug.Log("Pinch R Ended");
             nb_pinch -= 1;
-            pinch_right = false;
             if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
             {
                 LeapDeformation.PinchRightEnded();
@@ -93,9 +88,8 @@ namespace Leap.Unity
 
         void PinchLeftEnded()
         {
-            //Debug.Log("Pinch Left Ended");
+            //Debug.Log("Pinch L Ended");
             nb_pinch -= 1;
-            pinch_left = false;
             if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Selection && cMenu.GetCurrentMenuSelection() == CurrentMenu.Selection.Modification)
             {
                 LeapDeformation.PinchLeftEnded();
@@ -195,6 +189,7 @@ namespace Leap.Unity
                                 }
                                 break;
                             case CurrentMenu.Selection.Modification:
+                                LeapDeformation.Update();
                                 break;
                             default:
                                 break;
