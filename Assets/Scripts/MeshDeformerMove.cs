@@ -105,11 +105,11 @@ public class MeshDeformerMove : MonoBehaviour
     * that will be affected by the deformation. It also give them
     * an intensity value according to their distance with the impact.
     */
-    public void SelectVertices(RaycastHit hit)
+    public void SelectVertices(Vector3 hitPoint)
     {
         float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
-        this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
-        Vector3 center = transform.InverseTransformPoint(hit.point);
+        this.zOffset = Camera.main.WorldToScreenPoint(hitPoint).z;
+        Vector3 center = transform.InverseTransformPoint(hitPoint);
         float distSqrMag = 0.0f;
         lastMousePos = GetMouseWorldPos();
         for (int i = 0; i < vertices.Length; i++)
