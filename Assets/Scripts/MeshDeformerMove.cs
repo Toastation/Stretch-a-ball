@@ -105,11 +105,11 @@ public class MeshDeformerMove : MonoBehaviour
     * that will be affected by the deformation. It also give them
     * an intensity value according to their distance with the impact.
     */
-    public void SelectVertices(RaycastHit hit)
+    public void SelectVertices(Vector3 hitPoint)
     {
         float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
-        this.zOffset = Camera.main.WorldToScreenPoint(hit.point).z;
-        Vector3 center = transform.InverseTransformPoint(hit.point);
+        this.zOffset = Camera.main.WorldToScreenPoint(hitPoint).z;
+        Vector3 center = transform.InverseTransformPoint(hitPoint);
         float distSqrMag = 0.0f;
         lastMousePos = GetMouseWorldPos();
         for (int i = 0; i < vertices.Length; i++)
@@ -128,7 +128,7 @@ public class MeshDeformerMove : MonoBehaviour
     /**
     * Unselect all vertices
     */
-    private void UnselectVertices()
+    public void UnselectVertices()
     {
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -141,8 +141,9 @@ public class MeshDeformerMove : MonoBehaviour
     * their intensity factor (this factor is set when the vertices are
     * marked to be moved in SelectVertices)
     */
-    private void MoveVertices(in Vector3 disp)
+    public void MoveVertices(in Vector3 disp)
     {
+        Debug.Log("je suis dans MoveVertices" + disp);
         Vector3[] old = mesh.vertices;
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -181,7 +182,7 @@ public class MeshDeformerMove : MonoBehaviour
         RaycastHit hit;
         if (meshCollider.Raycast(ray, out hit, 100))
         {
-            SelectVertices(hit);
+            SelectVertices(hit.point);
         }
     }
 
@@ -319,5 +320,7 @@ public class MeshDeformerMove : MonoBehaviour
             Gizmos.DrawSphere(ppp, 0.01f);
         }
     }
+
+    //public Collider getCollider
 
 }
