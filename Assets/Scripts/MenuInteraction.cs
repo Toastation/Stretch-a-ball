@@ -67,15 +67,16 @@ public class MenuInteraction : MonoBehaviour
                                     return true;
                                 }
 
-
-
+                                Debug.Log(cMenu.GetCurrentMenuSetOperation());
                                 break;
                             }
 
                         default: //Selection Menu behavior
                             {
                                 if (ButtonCreation.isPressed || Input.GetKey("c"))
+                                {
                                     cMenu.SetSelection(CurrentMenu.Selection.Modification);
+                                }
 
                                 if (ButtonSelection.isPressed || Input.GetKey("s"))
                                     cMenu.SetSelection(CurrentMenu.Selection.Erase);
@@ -94,42 +95,43 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
                                     return true;
                                 }
-
+                                Debug.Log(cMenu.GetCurrentMenuSelection());
                                 break;
                             }
                     }
-
                     break;
                     
                 }
 
             default: // General Menu Behavior
                 {
-                    if (ButtonCreation.isPressed || Input.GetKey("c"))
+                    if (ButtonCreation.isPressed || Input.GetKeyDown("c"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Creation);
                     }
 
-                    if (ButtonSelection.isPressed || Input.GetKey("s"))
+                    if (ButtonSelection.isPressed || Input.GetKeyDown("s"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Selection);
                         return true;
                     }
 
-                    if (ButtonStatistics.isPressed || Input.GetKey("t"))
+                    if (ButtonStatistics.isPressed || Input.GetKeyDown("t"))
                         cMenu.SetMenu(CurrentMenu.Menu.Statistics);
 
-                    if (ButtonHide_Show.isPressed || Input.GetKey("h"))
+                    if (ButtonHide_Show.isPressed || Input.GetKeyDown("h"))
                         cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected); // returns to the main menu (No page in itself)
 
-                    if (ButtonHelp_Options.isPressed || Input.GetKey("o"))
+                    if (ButtonHelp_Options.isPressed || Input.GetKeyDown("o"))
                         cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
 
-                    if (ButtonQuit.isPressed || Input.GetKey("q"))
+                    if (ButtonQuit.isPressed || Input.GetKeyDown("escape"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Quit);
+                        Application.Quit();
                         UnityEditor.EditorApplication.isPlaying = false;
                     }
+                    Debug.Log(cMenu.GetCurrentMenu());
                     break;
                 }
                 
