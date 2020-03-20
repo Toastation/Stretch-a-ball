@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap.Unity.Interaction;
 using System.Timers;
-using System.Diagnostics;
 using System;
 
 public class MenuInteraction : MonoBehaviour
@@ -33,33 +32,33 @@ public class MenuInteraction : MonoBehaviour
                     {
                         case CurrentMenu.Selection.SetOperation: // Set Operation Menu behavior
                             {
-                                if (ButtonCreation.isPressed)
+                                if (ButtonCreation.isPressed || Input.GetKey("c"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetIntersection);
                                 }
             
 
-                                if (ButtonSelection.isPressed)
+                                if (ButtonSelection.isPressed || Input.GetKey("s"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetUnion);
                                 }
 
-                                if (ButtonStatistics.isPressed)
+                                if (ButtonStatistics.isPressed || Input.GetKey("t"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetRelativeComplement);
                                 }
 
-                                if (ButtonHide_Show.isPressed)
+                                if (ButtonHide_Show.isPressed || Input.GetKey("h"))
                                 {
                                     cMenu.ConfirmSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
                                 }
                                
 
-                                if (ButtonHelp_Options.isPressed)
+                                if (ButtonHelp_Options.isPressed || Input.GetKey("o"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.Return);
@@ -75,20 +74,20 @@ public class MenuInteraction : MonoBehaviour
 
                         default: //Selection Menu behavior
                             {
-                                if (ButtonCreation.isPressed)
+                                if (ButtonCreation.isPressed || Input.GetKey("c"))
                                     cMenu.SetSelection(CurrentMenu.Selection.Modification);
 
-                                if (ButtonSelection.isPressed)
+                                if (ButtonSelection.isPressed || Input.GetKey("s"))
                                     cMenu.SetSelection(CurrentMenu.Selection.Erase);
                                     
 
-                                if (ButtonStatistics.isPressed)
+                                if (ButtonStatistics.isPressed || Input.GetKey("t"))
                                 {
                                     cMenu.SetSelection(CurrentMenu.Selection.SetOperation);
                                     return true;
                                 }
 
-                                if (ButtonHide_Show.isPressed)
+                                if (ButtonHide_Show.isPressed || Input.GetKey("h"))
                                 {
                                     cMenu.SetSelection(CurrentMenu.Selection.Return);
                                     cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
@@ -106,25 +105,27 @@ public class MenuInteraction : MonoBehaviour
 
             default: // General Menu Behavior
                 {
-                    if (ButtonCreation.isPressed)
+                    if (ButtonCreation.isPressed || Input.GetKey("c"))
+                    {
                         cMenu.SetMenu(CurrentMenu.Menu.Creation);
+                    }
 
-                    if (ButtonSelection.isPressed)
+                    if (ButtonSelection.isPressed || Input.GetKey("s"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Selection);
                         return true;
                     }
 
-                    if (ButtonStatistics.isPressed)
+                    if (ButtonStatistics.isPressed || Input.GetKey("t"))
                         cMenu.SetMenu(CurrentMenu.Menu.Statistics);
 
-                    if (ButtonHide_Show.isPressed)
-                        cMenu.SetMenu(CurrentMenu.Menu.Hide_Show);
+                    if (ButtonHide_Show.isPressed || Input.GetKey("h"))
+                        cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected); // returns to the main menu (No page in itself)
 
-                    if (ButtonHelp_Options.isPressed)
+                    if (ButtonHelp_Options.isPressed || Input.GetKey("o"))
                         cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
 
-                    if (ButtonQuit.isPressed)
+                    if (ButtonQuit.isPressed || Input.GetKey("q"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Quit);
                         UnityEditor.EditorApplication.isPlaying = false;
