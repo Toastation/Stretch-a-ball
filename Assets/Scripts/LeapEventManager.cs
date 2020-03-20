@@ -12,6 +12,7 @@ namespace Leap.Unity
         bool initializedRight = false;
         bool initializedLeft =  false;
         bool initializedMenu = false;
+        bool HideOrShow = true;
         GameObject Right;
         GameObject Left;
         CurrentMenu Menu;
@@ -25,6 +26,8 @@ namespace Leap.Unity
         GameObject currentSelection;
         List<DataPoint> currentSelectedDataPoints;
         BoolOperation Operation;
+        
+        Hide_Show HS;
 
         public Camera cam;
         int LA_VARIABLE = 1;
@@ -164,6 +167,19 @@ namespace Leap.Unity
                     case CurrentMenu.Menu.Creation: //CREATION
                         LeapCreation.creationMain(ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
                 ref lastPosition, ref lastPositionR, ref lastPositionL, referenceWait, ref wait);
+                        break;
+
+                    case CurrentMenu.Menu.Hide_Show: //HIDE_SHOW
+                        if (HideOrShow)
+                        {
+                            HS = new Hide_Show(currentSelectedDataPoints, 10);
+                            HS.Show();
+                            HideOrShow = false;
+                        } else
+                        {
+                            HS.Hide();
+                            HideOrShow = true;
+                        }
                         break;
 
                     case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
