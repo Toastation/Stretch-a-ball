@@ -35,13 +35,24 @@ namespace Leap.Unity
         float referenceWait = 1;
         float wait = 0;
         int Pointing = 0; // Pas un bool dans le cas où les deux mains pointent en même temps, et que l'une arrête de pointer
+        bool removeOn = false;
 
         LeapDeformation LeapDeformation;
         
         //float FOV;
         //float referenceSize = 48.86F; //Calculated thanks to trigonometry and Thales theorem (angle of Leap Motion: 150°)
 
-        
+        void RemoveSignalDetected()
+        {
+            removeOn = true;
+            Debug.Log("JE DOIS SUPPRIMER");
+        }
+
+        void RemoveSignalEnded()
+        {
+            removeOn = false;
+            Debug.Log("La suppression est finie");
+        }
     
 
         void ExtendedFingerDetected()
@@ -52,6 +63,7 @@ namespace Leap.Unity
 
         void ExtendedFingerEnded()
         {
+           // Debug.Log("Extend ended");
             Pointing -= 1;
         }
 
@@ -128,11 +140,14 @@ namespace Leap.Unity
                     //Debug.Log("ALLO");
                     scriptPDL = Left.GetComponent<PinchDetector>();
                     scriptEFDL = Left.GetComponent<ExtendedFingerDetector>();
+                    DetectorLogicGate scriptREML = Left.transform.GetChild(0).GetComponent<DetectorLogicGate>(); //RemoveSignalDetected
                     //Debug.Log(scriptEFDL, scriptPDL);
                     scriptPDL.OnActivate.AddListener(PinchLeftDetected);
                     scriptPDL.OnDeactivate.AddListener(PinchLeftEnded);
                     scriptEFDL.OnActivate.AddListener(ExtendedFingerDetected);
                     scriptEFDL.OnDeactivate.AddListener(ExtendedFingerEnded);
+                    scriptREML.OnActivate.AddListener(RemoveSignalDetected);
+                    scriptREML.OnDeactivate.AddListener(RemoveSignalEnded);
                     initializedLeft = true;
                 }
             }
@@ -144,11 +159,14 @@ namespace Leap.Unity
                     //Debug.Log("ALLO");
                     scriptPDR = Right.GetComponent<PinchDetector>();
                     scriptEFDR = Right.GetComponent<ExtendedFingerDetector>();
+                    DetectorLogicGate scriptREMR = Right.transform.GetChild(0).GetComponent<DetectorLogicGate>();
                     //Debug.Log(scriptEFDR, scriptPDR);
                     scriptPDR.OnActivate.AddListener(PinchRightDetected);
                     scriptPDR.OnDeactivate.AddListener(PinchRightEnded);
                     scriptEFDR.OnActivate.AddListener(ExtendedFingerDetected);
                     scriptEFDR.OnDeactivate.AddListener(ExtendedFingerEnded);
+                    scriptREMR.OnActivate.AddListener(RemoveSignalDetected);
+                    scriptREMR.OnDeactivate.AddListener(RemoveSignalEnded);
                     initializedRight = true;
                 }
             }
@@ -169,6 +187,12 @@ namespace Leap.Unity
                     case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
                         switch (cMenu.GetCurrentMenuSelection())
                         {
+                            case CurrentMenu.Selection.Modification:
+                                LeapDeformation.Update();
+                                break;
+                            case CurrentMenu.Selection.Erase:
+                                LeapSelection.eraseMode(removeOn);
+                                break;
                             case CurrentMenu.Selection.SetOperation:
                                 switch (cMenu.GetCurrentMenuSetOperation())
                                 {
@@ -188,9 +212,7 @@ namespace Leap.Unity
                                         break;
                                 }
                                 break;
-                            case CurrentMenu.Selection.Modification:
-                                LeapDeformation.Update();
-                                break;
+                            
                             default:
                                 break;
                         }
@@ -201,32 +223,40 @@ namespace Leap.Unity
                         Finger f = null;
                         Hand hl = Left.GetComponent<HandModelBase>().GetLeapHand();
                         Hand hr = Right.GetComponent<HandModelBase>().GetLeapHand();
-                        if (Pointing > 0)
+                        bool stillCorrect = Pointing > 0;
+                        if (stillCorrect)
                         {
-                            if (hl.Fingers[1].IsExtended)
+                            if (hl.Fingers[1].IsExtended && !hl.Fingers[2].IsExtended && !hl.Fingers[3].IsExtended && !hl.Fingers[4].IsExtended && nb_pinch == 0) //pinch prioritaire
                             {
                                 f = hl.GetIndex();
                             }
-                            if (hr.Fingers[1].IsExtended)
+                            if (hr.Fingers[1].IsExtended && !hr.Fingers[2].IsExtended && !hr.Fingers[3].IsExtended && !hr.Fingers[4].IsExtended && nb_pinch == 0) //de même
                             {
                                 f = hr.GetIndex();
                             }
-                            PointingDirection = f.Direction.ToVector3();
-                            Fingertip = f.TipPosition.ToVector3();
+                            else
+                            {
+                                stillCorrect = false;
+                            }
+                            if (stillCorrect)
+                            {
+                                PointingDirection = f.Direction.ToVector3();
+                                Fingertip = f.TipPosition.ToVector3();
+                            }
                         }
-                        Collider tempo = LeapSelection.selectionMain((Pointing > 0), PointingDirection, Fingertip, ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
+                        Collider tempo = LeapSelection.selectionMain(stillCorrect, PointingDirection, Fingertip, ref nb_pinch, ref creating, scriptPDL, scriptPDR, ref currentSelection, cam,
                 ref lastPosition, ref lastPositionR, ref lastPositionL, cMenu.GetCurrentMenuSelection());
                         if (tempo != null)
-                        { 
-                            if (currentSelection != null)
-                                currentSelection.GetComponent<Renderer>().material.color = Color.white;
-                            currentSelection = tempo.gameObject; //transform.parent.
-                            currentSelection.GetComponent<Renderer>().material.color = Color.red;
+                        {
+                            /*if (currentSelection != null)
+                                currentSelection.transform.GetChild(0).gameObject.GetComponent<Material>().color = Color.blue;*/
+                            currentSelection = tempo.gameObject.transform.parent.gameObject;
+                           // currentSelection.transform.GetChild(0).gameObject.GetComponent<Material>().color = Color.red;
                         }
                         else
                         {
-                            if (currentSelection != null)
-                                currentSelection.GetComponent<Renderer>().material.color = Color.white;
+                            /*if (currentSelection != null)
+                                currentSelection.transform.GetChild(0).gameObject.GetComponent<Material>().color = Color.blue;*/
                             currentSelection = null;
                         }
                         

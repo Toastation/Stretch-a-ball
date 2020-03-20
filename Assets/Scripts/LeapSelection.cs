@@ -68,10 +68,17 @@ namespace Leap.Unity {
             return currentCollider;
         }
 
-        static void eraseMode() 
+        static public void eraseMode(bool removeOn) 
         {
-            Object.Destroy(currentCollider.gameObject);
-            currentCollider = null;
+            Debug.Log("Je suis dans eraseMode");
+            if (currentCollider != null && removeOn)
+            {
+                Debug.Log("Je devrais supprimer");
+                Destroy(currentCollider.gameObject.transform.parent.gameObject);
+                currentCollider = null;
+                AlreadyHit = new RaycastHit[]{ };
+            }
+            
         }
 
         #endregion
@@ -79,30 +86,13 @@ namespace Leap.Unity {
         public static Collider selectionMain(bool Pointing, Vector3 PointingDirection, Vector3 Fingertip, ref int nb_pinch, ref bool creating, PinchDetector scriptPDL, PinchDetector scriptPDR, ref GameObject currentSelection, Camera cam,
                 ref Vector3 lastPosition, ref Vector3 lastPositionR, ref Vector3 lastPositionL, CurrentMenu.Selection sel) // si le doigt pointe, un Vector3 (direction de raycast), le bout du doigt
         {
-            switch (sel)
-            {
-                case CurrentMenu.Selection.Erase:
-                    eraseMode();
-                    break;
-
-                case CurrentMenu.Selection.Modification:
-
-                    break;
-
-                case CurrentMenu.Selection.SetOperation:
-
-                    break;
-
-                default:
-                    break;
-            }
             if (nb_pinch == 1 && currentSelection != null)
             {
-                Debug.Log("1 pinch");
+                //Debug.Log("1 pinch");
                 LeapCommon.deplacementMode(ref currentSelection, scriptPDL, scriptPDR, ref lastPosition, ref lastPositionR, ref lastPositionL);
             } else if (nb_pinch == 2  && currentSelection != null)
             {
-                Debug.Log("2 pinch");
+                //Debug.Log("2 pinch");
                 LeapCommon.sizingMode(ref currentSelection, scriptPDL, scriptPDR, ref lastPosition, cam, ref lastPositionR, ref lastPositionL);
             }
             //LineRenderer lr = new LineRenderer();
@@ -116,7 +106,8 @@ namespace Leap.Unity {
                     timer = 0;
                     Ray r = new Ray(Fingertip, PointingDirection);
                     SphereArray = Physics.RaycastAll(r); // PTET FAIRE GAFFE AU MASK UTILISE POUR PAS SELECTIONNER LES POINTS
-                    Debug.Log(SphereArray.Length);
+                    //Debug.Log(SphereArray.Length);
+                    Debug.Log("Rien au Raycast");
                     return chooseSphere();
                 } else // le cas où je dois attendre avant de changer de couche
                 {
