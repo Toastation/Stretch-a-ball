@@ -39,7 +39,7 @@ public class MenuInteraction : MonoBehaviour
                                 }
             
 
-                                if (ButtonSelection.isPressed || Input.GetKey("s"))
+                                if (ButtonSelection.isPressed || Input.GetKey("e"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetUnion);
@@ -78,7 +78,7 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSelection(CurrentMenu.Selection.Modification);
                                 }
 
-                                if (ButtonSelection.isPressed || Input.GetKey("s"))
+                                if (ButtonSelection.isPressed || Input.GetKey("e"))
                                     cMenu.SetSelection(CurrentMenu.Selection.Erase);
                                     
 
@@ -110,7 +110,7 @@ public class MenuInteraction : MonoBehaviour
                         cMenu.SetMenu(CurrentMenu.Menu.Creation);
                     }
 
-                    if (ButtonSelection.isPressed || Input.GetKeyDown("s"))
+                    if (ButtonSelection.isPressed || Input.GetKeyDown("e"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Selection);
                         return true;
