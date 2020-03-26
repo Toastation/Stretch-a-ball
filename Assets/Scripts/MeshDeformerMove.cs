@@ -134,6 +134,9 @@ public class MeshDeformerMove : MonoBehaviour
         {
             selectedVertices[i] = false;
         }
+        meshCollider.enabled = false;
+        meshCollider.enabled = true;
+        ScatterPlot.GetSelectedPoints(this);
     }
 
     /**
@@ -143,7 +146,6 @@ public class MeshDeformerMove : MonoBehaviour
     */
     public void MoveVertices(in Vector3 disp)
     {
-        Debug.Log("je suis dans MoveVertices" + disp);
         Vector3[] old = mesh.vertices;
         for (int i = 0; i < selectedVertices.Length; i++)
         {

@@ -14,9 +14,10 @@ public class ScatterPlot : MonoBehaviour
 
 
     /** The list of points in the scatterplot and their particle representation */
-    private ParticleSystem pSystem;
+    private static ParticleSystem pSystem;
     public static List<DataPoint> dataPoints;
     private ParticleSystem.Particle[] dataParticles;
+    private List<ParticleCollisionEvent> collisionEvents;
 
     void Start()
     {
@@ -34,6 +35,8 @@ public class ScatterPlot : MonoBehaviour
         watch.Stop();
         elapsedMs = watch.ElapsedMilliseconds;
         Debug.Log("Instanciated point prefabs in " + elapsedMs + " ms");
+
+        PreprocessData();
     }
 
     void Update()
@@ -42,13 +45,13 @@ public class ScatterPlot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
-            List<DataPoint> selection = GetSelectedPoints(ref volumes[0]);
+            List<DataPoint> selection = GetSelectedPoints(volumes[0]);
             InitParticles();
         }
     }
 
     /**
-     * Initialize the particles or prefab and preprocess the data
+     * Initialize the prefab (if the scatterplot is not using particles)
      */
     private void InitDataPoints()
     {
@@ -58,10 +61,11 @@ public class ScatterPlot : MonoBehaviour
             dpInstance.GetComponent<Renderer>().material.color = dp.GetColor();
             dp.SetGameObject(dpInstance);
         }
-
-        PreprocessData();
     }
 
+    /**
+     * Initialize the particles or prefab and preprocess the data
+     */
     private void InitParticles()
     {
         dataParticles = new ParticleSystem.Particle[dataPoints.Count];
@@ -73,8 +77,11 @@ public class ScatterPlot : MonoBehaviour
             else
                 dataParticles[i].startColor = dataPoints[i].GetColor();
             dataParticles[i].startSize = 0.01f;
+            dataParticles[i].remainingLifetime = i; // since lifetime isn't used, we can store the corresponding datapoint id in it
         }
         pSystem.SetParticles(dataParticles, dataParticles.Length);
+
+        collisionEvents = new List<ParticleCollisionEvent>();
     }
 
     /**
@@ -107,9 +114,9 @@ public class ScatterPlot : MonoBehaviour
     }
 
     /**
- * Returns a list of all datapoints contained in the given volume 
- */
-    public static List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
+     * Returns a list of all datapoints contained in the given volume 
+     */
+    public static List<DataPoint> GetSelectedPoints(MeshDeformerMove volume)
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         foreach (DataPoint dp in dataPoints)
@@ -147,6 +154,5 @@ public class ScatterPlot : MonoBehaviour
         }
         return pointsInVolume;
     }
-
 
 }

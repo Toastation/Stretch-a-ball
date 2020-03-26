@@ -9,7 +9,7 @@ public class DataPoint
     /** The position of the point in 3D space */
     private Vector3 pos;
 
-    /** Normalized position of the point [0,1] (based on the max value of the current scatterplot) */
+    /** Normalized position of the point [-1,1] (based on the max value of the current scatterplot) */
     private Vector3 normalizedPos;
 
     /** The color of the point */
