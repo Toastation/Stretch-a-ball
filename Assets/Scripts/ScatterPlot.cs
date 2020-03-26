@@ -8,7 +8,10 @@ public class ScatterPlot : MonoBehaviour
     /** The path to the CSV file containing the data. Set by the user */
     public string csvPath;
 
+
+    /** Prefab used to instanciate data point (if not in particles mode) */
     public GameObject PointPrefab;
+
 
     /** The list of points in the scatterplot and their particle representation */
     private ParticleSystem pSystem;
@@ -44,6 +47,9 @@ public class ScatterPlot : MonoBehaviour
         }
     }
 
+    /**
+     * Initialize the particles or prefab and preprocess the data
+     */
     private void InitDataPoints()
     {
         foreach (DataPoint dp in dataPoints)
@@ -52,6 +58,8 @@ public class ScatterPlot : MonoBehaviour
             dpInstance.GetComponent<Renderer>().material.color = dp.GetColor();
             dp.SetGameObject(dpInstance);
         }
+
+        PreprocessData();
     }
 
     private void InitParticles()
@@ -70,14 +78,43 @@ public class ScatterPlot : MonoBehaviour
     }
 
     /**
-     * Returns a list of all datapoints contained in the given volume 
+     * Preprocess the scatterplot data : find the max and min values and compute normalized coordinates.
      */
+    private void PreprocessData()
+    {
+        Vector3 maxValues = GetMaxPlotValues();
+        
+        // compute and store normalized coordinates of each data points
+        foreach (DataPoint dp in dataPoints)
+        {
+            dp.SetNormalizedPos(dp.GetPos().x / maxValues.x, dp.GetPos().y / maxValues.y, dp.GetPos().z / maxValues.z);
+        }
+    }
+
+    /**
+     * Return a vec3 containing the maximum value of each coordinate in the scatterplot
+     */
+    private Vector3 GetMaxPlotValues()
+    {
+        Vector3 max = Vector3.zero;
+        foreach (DataPoint dp in dataPoints)
+        {
+            if (dp.GetPos().x > max.x) max.x = dp.GetPos().x;
+            if (dp.GetPos().y > max.y) max.y = dp.GetPos().y;
+            if (dp.GetPos().z > max.z) max.z = dp.GetPos().z;
+        }
+        return max;
+    }
+
+    /**
+ * Returns a list of all datapoints contained in the given volume 
+ */
     public static List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
-        foreach (DataPoint dp in dataPoints) 
+        foreach (DataPoint dp in dataPoints)
         {
-            if (volume.IsInside(dp.GetPos())) 
+            if (volume.IsInside(dp.GetPos()))
             {
                 pointsInVolume.Add(dp);
                 dp.SetSelected(true);
@@ -93,11 +130,11 @@ public class ScatterPlot : MonoBehaviour
     /**
      * Returns a list of all datapoints contained in all volumes in the scene 
      */
-    public List<DataPoint> GetAllSelectedPoints() 
+    public List<DataPoint> GetAllSelectedPoints()
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
-        foreach (DataPoint dp in dataPoints) 
+        foreach (DataPoint dp in dataPoints)
         {
             foreach (MeshDeformerMove volume in volumes)
             {
@@ -105,10 +142,11 @@ public class ScatterPlot : MonoBehaviour
                 {
                     pointsInVolume.Add(dp);
                     break;
-                } 
+                }
             }
         }
         return pointsInVolume;
     }
+
 
 }

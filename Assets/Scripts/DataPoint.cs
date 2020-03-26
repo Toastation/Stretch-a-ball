@@ -9,16 +9,22 @@ public class DataPoint
     /** The position of the point in 3D space */
     private Vector3 pos;
 
+    /** Normalized position of the point [0,1] (based on the max value of the current scatterplot) */
+    private Vector3 normalizedPos;
+
     /** The color of the point */
     private Color color;
 
     /** Dictionary of possible attributes, the key is the name of the attribute */
     private Dictionary<string, Object> attributes;
 
+    /** True if the point is selected (inside a bounding volume) */
     private bool selected;
 
+    /** The game object representing the data point (not used if in particles mode) */
     private GameObject gameObject;
 
+    /** Collider of the data point */
     private SphereCollider collider;
 
     /**
@@ -44,6 +50,11 @@ public class DataPoint
         this.gameObject = gameObject;
     }
 
+    public void SetNormalizedPos(float x, float y, float z)
+    {
+        this.normalizedPos = new Vector3(x, y, z);
+    }
+
     public void SetColor(Color color)
     {
         this.color = color;
@@ -57,6 +68,11 @@ public class DataPoint
     public Vector3 GetPos()
     {
         return this.pos;
+    }
+
+    public Vector3 GetNormalizedPos()
+    {
+        return this.normalizedPos;
     }
 
     public Color GetColor()
