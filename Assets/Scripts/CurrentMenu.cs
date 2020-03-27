@@ -95,13 +95,13 @@ public class CurrentMenu : MonoBehaviour
                 textObject.text = "Selection";
                 break;
             case Menu.Statistics:
-                textObject.text = "Statistics";
+                textObject.text = "Statistics & Save";
                 break;
             case Menu.Hide_Show:
                 textObject.text = "Hide/Show";
                 break;
             case Menu.Help_Options:
-                textObject.text = "Help/Options";
+                textObject.text = "Help/Credits";
                 break;
             case Menu.Quit:
                 textObject.text = "Quit";
@@ -129,13 +129,13 @@ public class CurrentMenu : MonoBehaviour
                 textObject.text = "Selection";
                 break;
             case Menu.Statistics:
-                textObject.text = "Statistics";
+                textObject.text = "Statistics & Save";
                 break;
             case Menu.Hide_Show:
                 textObject.text = "Hide/Show";
                 break;
             case Menu.Help_Options:
-                textObject.text = "Help/Options";
+                textObject.text = "Help/Credits";
                 break;
             case Menu.Quit:
                 textObject.text = "Quit";
