@@ -74,6 +74,7 @@ public class ScatterPlot : MonoBehaviour
      */
     public static List<DataPoint> GetSelectedPoints(ref MeshDeformerMove volume)
     {
+        Debug.Log("Je fonctionne sc");
         List<DataPoint> pointsInVolume = new List<DataPoint>();
         foreach (DataPoint dp in dataPoints) 
         {

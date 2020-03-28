@@ -112,6 +112,8 @@ public class Statistics : MonoBehaviour
                 DynamicStats.text = "THESE ARE THE MESHES YOU HAVE CREATED SO FAR :\n \n \n";
                 List<List<DataPoint>> selectionSets = new List<List<DataPoint>>();
                 Debug.Log("volumes " + volumes.Length);
+                Debug.Log("Je fonctionne st");
+
 
                 for (int i = 0; i < volumes.Length; i++)
                 {
