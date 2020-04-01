@@ -155,4 +155,8 @@ public class ScatterPlot : MonoBehaviour
         return pointsInVolume;
     }
 
+    public int GetLoadedPointsCount()
+    {
+        return dataPoints.Count;
+    }
 }
