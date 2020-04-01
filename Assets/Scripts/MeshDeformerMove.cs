@@ -1,37 +1,37 @@
 
 using System;
 using System.Collections.Generic;
-
 using UnityEngine;
+using Unity.Jobs;
 
+/**
+ * Attach to a bounding volume. Handles the deformation of the mesh.
+ */
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
 public class MeshDeformerMove : MonoBehaviour
 {
-    private Mesh mesh;
-    private MeshFilter meshFilter;
-    private MeshCollider meshCollider;
+    private Mesh mesh;                  // mesh data
+    private MeshFilter meshFilter;      // mesh renderer
+    private MeshCollider meshCollider;  // collision mesh
 
-    // vertices data
-    private Vector3[] vertices;
-    private Vector3[] normals;
-    private Vector3[] originPos;
-    private int[] triangles;
-    private bool[] selectedVertices;
-    private float[] intensities;
+    private Vector3[] vertices;         // mesh vertices
+    private Vector3[] normals;          // mesh normals
+    private Vector3[] originPos;        // saved vertices before each deformation
+    private int[] triangles;            // mesh triangles
+    private bool[] selectedVertices;    // vertices that are affected by the deformation
+    private float[] intensities;        // intensity of the deformation for each vertices
     private Dictionary<int, HashSet<int>> network; // (k,v) where k is a vertex index and v the set of its neighbors index
 
-    // drag data
-    private float zOffset;
-    private Vector3 lastMousePos;
-    private bool meshUpdated;
+    private float zOffset;              // z-coord of the deformation point when the mouse is used
+    private Vector3 lastMousePos;       // save of the last mouse coordinate (TODO: outsource)
+    private bool meshUpdated;           // true if the mesh needs to be updated
 
-    // user data
-    [SerializeField, Range(0f, 1f)] public float deformArea = 0.2f;
-    [SerializeField, Range(1f, 1000f)] public float influence = 30.0f;
+    //private JobHandle handle;
+    //private SelfIntersectionJob job;
 
-    Vector3 ppp;
-    bool b;
+    // user data (can be adjusted in unity editor)
+    [SerializeField, Range(0f, 1f)] public float deformArea = 0.4f;     // size of the deformation zone [0,1]
 
     private void Start()
     {
@@ -130,10 +130,23 @@ public class MeshDeformerMove : MonoBehaviour
     */
     public void UnselectVertices()
     {
+/*        if (DetectSelfIntersection())
+        {
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (selectedVertices[i])
+                    vertices[i] = originPos[i];
+            }
+            Debug.Log("Self intersection detected");
+            UpdateMeshVertices();
+        }*/
+
         for (int i = 0; i < selectedVertices.Length; i++)
         {
             selectedVertices[i] = false;
         }
+
+        // update collider, update point selected
         meshCollider.enabled = false;
         meshCollider.enabled = true;
         ScatterPlot.GetSelectedPoints(this);
@@ -160,16 +173,25 @@ public class MeshDeformerMove : MonoBehaviour
 
     private bool DetectSelfIntersection()
     {
-        for (int i = 0; i < vertices.Length; i++)
+        /*for (int i = 0; i < triangles.Length; i += 3)
         {
-            if (!selectedVertices[i]) continue;
-            if (IsInside(vertices[i] + transform.position - normals[i] * 0.01f) == false)
+            if (!selectedVertices[triangles[i]] || !selectedVertices[triangles[i + 1]] || !selectedVertices[triangles[i + 2]]) continue;
+            for (int j = 0; j < triangles.Length; j += 3)
             {
-                ppp = vertices[i] + transform.position - normals[i] * 0.01f;
-                b = true;
-                return true;
+                if (i == j) continue;
+                bool cont = false;
+                for (int k = 0; k < 3; k++)
+                {
+                    if (triangles[i + k] == triangles[j] || triangles[i + k] == triangles[j + 1] || triangles[i + k] == triangles[j + 2]) cont = true;
+                }
+                if (selectedVertices[triangles[j]] || selectedVertices[triangles[j + 1]] || selectedVertices[triangles[j + 2]]) continue; 
+                if (cont) continue;
+                if (TriTriOverlap.TriTriIntersect(vertices[triangles[i]], vertices[triangles[i+1]], vertices[triangles[i+2]], vertices[triangles[j]], vertices[triangles[j + 1]], vertices[triangles[j + 2]]))
+                {
+                    return true;
+                }
             }
-        }
+        }*/
         return false;
     }
 
@@ -313,16 +335,5 @@ public class MeshDeformerMove : MonoBehaviour
             network[c].Add(b);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        if (b)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(ppp, 0.01f);
-        }
-    }
-
-    //public Collider getCollider
 
 }

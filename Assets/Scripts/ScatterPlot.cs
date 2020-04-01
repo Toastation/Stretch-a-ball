@@ -15,8 +15,8 @@ public class ScatterPlot : MonoBehaviour
 
     /** The list of points in the scatterplot and their particle representation */
     private static ParticleSystem pSystem;
-    public static List<DataPoint> dataPoints;
-    private ParticleSystem.Particle[] dataParticles;
+    private static List<DataPoint> dataPoints;
+    private static ParticleSystem.Particle[] dataParticles;
     private List<ParticleCollisionEvent> collisionEvents;
 
     void Start()
@@ -41,13 +41,7 @@ public class ScatterPlot : MonoBehaviour
 
     void Update()
     {
-        /** TEMPORARY **/
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
-            List<DataPoint> selection = GetSelectedPoints(volumes[0]);
-            InitParticles();
-        }
+
     }
 
     /**
@@ -80,7 +74,6 @@ public class ScatterPlot : MonoBehaviour
             dataParticles[i].remainingLifetime = i; // since lifetime isn't used, we can store the corresponding datapoint id in it
         }
         pSystem.SetParticles(dataParticles, dataParticles.Length);
-
         collisionEvents = new List<ParticleCollisionEvent>();
     }
 
@@ -119,40 +112,31 @@ public class ScatterPlot : MonoBehaviour
     public static List<DataPoint> GetSelectedPoints(MeshDeformerMove volume)
     {
         List<DataPoint> pointsInVolume = new List<DataPoint>();
-        foreach (DataPoint dp in dataPoints)
+        for (int i = 0; i < dataPoints.Count; i++)
         {
+            DataPoint dp = dataPoints[i];
             if (volume.IsInside(dp.GetPos()))
             {
                 pointsInVolume.Add(dp);
                 dp.SetSelected(true);
+                dataParticles[i].startColor = Color.magenta;
             }
             else
             {
                 dp.SetSelected(false);
+                dataParticles[i].startColor = dp.GetColor();
             }
         }
+        pSystem.SetParticles(dataParticles);
         return pointsInVolume;
     }
 
     /**
-     * Returns a list of all datapoints contained in all volumes in the scene 
+     * Returns the list of all datapoints in the scatterplot
      */
-    public List<DataPoint> GetAllSelectedPoints()
+    public static List<DataPoint> GetDataPoints()
     {
-        List<DataPoint> pointsInVolume = new List<DataPoint>();
-        MeshDeformerMove[] volumes = FindObjectsOfType<MeshDeformerMove>();
-        foreach (DataPoint dp in dataPoints)
-        {
-            foreach (MeshDeformerMove volume in volumes)
-            {
-                if (volume.Contains(dp.GetPos()))
-                {
-                    pointsInVolume.Add(dp);
-                    break;
-                }
-            }
-        }
-        return pointsInVolume;
+        return dataPoints;
     }
 
 }
