@@ -67,7 +67,9 @@ public class MenuInteraction : MonoBehaviour
                                     return true;
                                 }
 
-                                Debug.Log(cMenu.GetCurrentMenuSetOperation());
+                                if (Input.GetKeyDown("$"))
+                                    Debug.Log(cMenu.GetCurrentMenuSetOperation());
+
                                 break;
                             }
 
@@ -95,7 +97,10 @@ public class MenuInteraction : MonoBehaviour
                                     cMenu.SetSelection(CurrentMenu.Selection.NoSelection);
                                     return true;
                                 }
-                                Debug.Log(cMenu.GetCurrentMenuSelection());
+
+                                if (Input.GetKeyDown("$"))
+                                    Debug.Log(cMenu.GetCurrentMenuSelection());
+
                                 break;
                             }
                     }
@@ -117,13 +122,39 @@ public class MenuInteraction : MonoBehaviour
                     }
 
                     if (ButtonStatistics.isPressed || Input.GetKeyDown("t"))
-                        cMenu.SetMenu(CurrentMenu.Menu.Statistics);
+                    {
+                        /* For the statistics, press once the button to show the stats.
+                         * Press it again to hide the stats
+                         */
+
+                        if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Statistics)
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
+                        }
+                        else
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.Statistics);
+                        }
+                    }
 
                     if (ButtonHide_Show.isPressed || Input.GetKeyDown("h"))
                         cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected); // returns to the main menu (No page in itself)
 
                     if (ButtonHelp_Options.isPressed || Input.GetKeyDown("o"))
-                        cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
+                    {
+                        /* For the help, press once the button to show the them.
+                         * Press it again to hide the stats
+                         */
+
+                        if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Help_Options)
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
+                        }
+                        else
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
+                        }
+                    }
 
                     if (ButtonQuit.isPressed || Input.GetKeyDown("escape"))
                     {
@@ -131,7 +162,10 @@ public class MenuInteraction : MonoBehaviour
                         Application.Quit();
                         UnityEditor.EditorApplication.isPlaying = false;
                     }
-                    Debug.Log(cMenu.GetCurrentMenu());
+
+                    if(Input.GetKeyDown("$"))
+                        Debug.Log(cMenu.GetCurrentMenu());
+
                     break;
                 }
                 
