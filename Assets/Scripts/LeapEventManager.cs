@@ -101,7 +101,7 @@ public class LeapEventManager : MonoBehaviour
     {
         Operation = new BoolOperation();
 
-        LeapDeformation = new LeapDeformation();
+        LeapDeformation = gameObject.AddComponent<LeapDeformation>();
 
             
     }
