@@ -128,6 +128,7 @@ public class ScatterPlot : MonoBehaviour
             }
         }
         pSystem.SetParticles(dataParticles);
+        BoolOperation.currentVolume = volume;
         return pointsInVolume;
     }
 

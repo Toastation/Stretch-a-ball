@@ -99,7 +99,6 @@ public class LeapEventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Operation = new BoolOperation();
 
         LeapDeformation = gameObject.AddComponent<LeapDeformation>();
 
@@ -169,25 +168,6 @@ public class LeapEventManager : MonoBehaviour
                 case CurrentMenu.Menu.Selection: //SELECTION (!!! ptet avec un modulo pour gérer les différents sous-cas de la sélection)
                     switch (cMenu.GetCurrentMenuSelection())
                     {
-                        case CurrentMenu.Selection.SetOperation:
-                            switch (cMenu.GetCurrentMenuSetOperation())
-                            {
-                                case CurrentMenu.SetOperation.SetUnion:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.OrBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.SetIntersection:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.AndBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.SetRelativeComplement:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.NotInBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.Confirm:
-                                    currentSelectedDataPoints = Operation.BoolOperationMain(currentSelectedDataPoints);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
                         case CurrentMenu.Selection.Modification:
                             LeapDeformation.Update();
                             break;
