@@ -12,14 +12,14 @@ public class Hide_Show : MonoBehaviour
     List<DataPoint> dataPoints;
 
     //List of axis
-    List<GameObject> L1 = new List<GameObject>();
-    List<GameObject> L2 = new List<GameObject>();
-    List<GameObject> L3 = new List<GameObject>();
+    List<GameObject> L1;
+    List<GameObject> L2;
+    List<GameObject> L3;
 
     //Main Axis
-    GameObject AxeX = new GameObject();
-    GameObject AxeY = new GameObject();
-    GameObject AxeZ = new GameObject();
+    GameObject AxeX;
+    GameObject AxeY;
+    GameObject AxeZ; 
 
     CurrentMenu cMenu;
     bool HS;
@@ -54,20 +54,20 @@ public class Hide_Show : MonoBehaviour
             j++;
 
         }
-        AxeX.transform.localScale = new Vector3((float)0.5, Moy.x, (float)0.5);
-        AxeY.transform.localScale = new Vector3((float)0.5, Moy.y, (float)0.5);
-        AxeZ.transform.localScale = new Vector3((float)0.5, Moy.z, (float)0.5);
+        AxeX.transform.localScale = new Vector3((float)0.01, Moy.x, (float)0.01);
+        AxeY.transform.localScale = new Vector3((float)0.01, Moy.y, (float)0.01);
+        AxeZ.transform.localScale = new Vector3((float)0.01, Moy.z, (float)0.01);
         foreach (GameObject i in L1)
         {
-            i.transform.localScale = new Vector3((float)0.05, Moy.x, (float)0.05);
+            i.transform.localScale = new Vector3((float)0.005, Moy.x, (float)0.005);
         }
         foreach (GameObject i in L2)
         {
-            i.transform.localScale = new Vector3((float)0.05, Moy.y, (float)0.05);
+            i.transform.localScale = new Vector3((float)0.005, Moy.y, (float)0.005);
         }
         foreach (GameObject i in L3)
         {
-            i.transform.localScale = new Vector3((float)0.05, Moy.z, (float)0.05);
+            i.transform.localScale = new Vector3((float)0.005, Moy.z, (float)0.005);
         }
     }
 
@@ -93,6 +93,12 @@ public class Hide_Show : MonoBehaviour
 
     void Start()
     {
+        L1 = new List<GameObject>();
+        L2 = new List<GameObject>();
+        L3 = new List<GameObject>();
+        AxeX = new GameObject();
+        AxeY = new GameObject();
+        AxeZ = new GameObject();
         HS = false;
         selectedpoints = false;
         cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
