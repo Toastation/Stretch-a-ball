@@ -3,27 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BoolOperation: MonoBehaviour
 {
-    private List<DataPoint> selectedPoints;
     private delegate List<DataPoint> Operator(List<DataPoint> select1, List<DataPoint> select2);
     private Operator MethodOperator;
+    private List<List<DataPoint>> OperationData;
 
+    public static List<DataPoint> selectedPoints;
     public static MeshDeformerMove currentVolume;
     public static List<DataPoint> currentSelectedDataPoints;
     CurrentMenu cMenu;
 
+    int test;
+
    private void BoolUpdate(Operator Method)
    {
         // selectedPoints = new List<DataPoint>();
-        this.selectedPoints = ScatterPlot.GetSelectedPoints(currentVolume);
-        this.MethodOperator = Method;
+       // selectedPoints = ScatterPlot.GetSelectedPoints(currentVolume);
+        MethodOperator = Method;
    }
+
+   public List<List<DataPoint>> GetOperationData()
+    {
+        return OperationData;
+    }
 
    public List<DataPoint> AndBoolOperation(List<DataPoint> selec1, List<DataPoint> selec2)
     {
         List<DataPoint> newSelection = new List<DataPoint>();
         foreach (DataPoint dp in selec1)
          {
-             if (selec1.Contains(dp))
+             if (selec2.Contains(dp))
               {
                 newSelection.Add(dp);
               }
@@ -63,16 +71,38 @@ public class BoolOperation: MonoBehaviour
 
     public List<DataPoint> BoolOperationMain(List<DataPoint> Data)
      {
-        if (this.selectedPoints.Count != 0)
+        if (selectedPoints.Count != 0)
          {
-            Data = MethodOperator(this.selectedPoints, Data);
-            this.selectedPoints.Clear();
+            Data = MethodOperator(selectedPoints, Data);
+            selectedPoints.Clear();
          }
          return Data;
      }
 
+    public void Coloration(List<DataPoint> point) 
+    {
+        for (int i = 0; i < ScatterPlot.dataPoints.Count; i++)
+        {
+            DataPoint dp = ScatterPlot.dataPoints[i];
+            if (point.Contains(dp))
+            {
+                dp.SetSelected(true);
+                ScatterPlot.dataParticles[i].startColor = Color.magenta;
+            }
+            else
+            {
+                dp.SetSelected(false);
+                ScatterPlot.dataParticles[i].startColor = dp.GetColor();
+            }
+        }
+        ScatterPlot.pSystem.SetParticles(ScatterPlot.dataParticles);
+    }
+
     void Start()
     {
+        currentSelectedDataPoints = new List<DataPoint>();
+        OperationData = new List<List<DataPoint>>();
+        test = 3;
         cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
     }
 
@@ -83,30 +113,50 @@ public class BoolOperation: MonoBehaviour
                 switch(cMenu.GetCurrentMenuSetOperation())
                 {
                     case CurrentMenu.SetOperation.SetUnion:
-                        BoolUpdate(OrBoolOperation);
-                        Debug.Log("Or");
+                        if (test != 0)
+                        {
+                            if (currentSelectedDataPoints.Count == 0)
+                                selectedPoints = ScatterPlot.GetSelectedPoints(currentVolume);
+                            else
+                                selectedPoints = currentSelectedDataPoints;
+                            BoolUpdate(OrBoolOperation);
+                            test = 0;
+                        }
                         break;
                     case CurrentMenu.SetOperation.SetIntersection:
-                        BoolUpdate(AndBoolOperation);
-                        Debug.Log("And");
+                        if (test != 1)
+                        {
+                            if (currentSelectedDataPoints.Count == 0)
+                                selectedPoints = ScatterPlot.GetSelectedPoints(currentVolume);
+                            else
+                                selectedPoints = currentSelectedDataPoints;
+                            BoolUpdate(AndBoolOperation);
+                            test = 1;
+                        }
                         break;
                     case CurrentMenu.SetOperation.SetRelativeComplement:
-                        BoolUpdate(NotInBoolOperation);
-                        Debug.Log("Without");
-                        break;
-                    case CurrentMenu.SetOperation.Confirm:
-                        Debug.Log("Confirmation");
-                        currentSelectedDataPoints = ScatterPlot.GetSelectedPoints(currentVolume);
-                        currentSelectedDataPoints = BoolOperationMain(currentSelectedDataPoints);
-                        Hide_Show.selectedpoints = true;
-                        foreach (DataPoint datap in currentSelectedDataPoints) 
+                        if (test != 2)
                         {
-                            datap.SetSelected(true);
-                            datap.SetColor(Color.magenta);
+                            if (currentSelectedDataPoints.Count == 0)
+                                selectedPoints = ScatterPlot.GetSelectedPoints(currentVolume);
+                            else
+                                selectedPoints = currentSelectedDataPoints;
+                            BoolUpdate(NotInBoolOperation);
+                            test = 2;
                         }
-
                         break;
                     default:
+                        if (cMenu.SetOperationIsConfirmed() && test != 3)
+                        {
+                            currentSelectedDataPoints = ScatterPlot.GetSelectedPoints(currentVolume);
+                            currentSelectedDataPoints = BoolOperationMain(currentSelectedDataPoints);
+                            OperationData.Add(currentSelectedDataPoints);
+                            Coloration(currentSelectedDataPoints);
+                            // Hide_Show.selectedpoints = true;
+                            cMenu.ResetSetOperation();
+                            test = 3;
+
+                        }
                         break;
                 }
     }
