@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hide_Show : MonoBehaviour
 {
+    public float sharpness;
+
     Vector3 Min;
     Vector3 Max;
     Vector3 Moy;
@@ -27,6 +29,10 @@ public class Hide_Show : MonoBehaviour
 
     public void Show()
     {
+        L1 = new List<GameObject>();
+        L2 = new List<GameObject>();
+        L3 = new List<GameObject>();
+
         dataPoints = ScatterPlot.GetDataPoints();
         if (selectedpoints)
             dataPoints = BoolOperation.currentSelectedDataPoints;
@@ -37,8 +43,11 @@ public class Hide_Show : MonoBehaviour
         }
         Moy = (Max - Min) / 2;
         AxeX = Instantiate(Resources.Load("Prefab/MainCylinder", typeof(GameObject)), new Vector3(Moy.x, 0, 0) + Min, Quaternion.Euler(0, 0, 90)) as GameObject;
+        AxeX.transform.parent = gameObject.transform;
         AxeY = Instantiate(Resources.Load("Prefab/MainCylinder", typeof(GameObject)), new Vector3(0, Moy.y, 0) + Min, Quaternion.Euler(0, 90, 0)) as GameObject;
+        AxeY.transform.parent = gameObject.transform;
         AxeZ = Instantiate(Resources.Load("Prefab/MainCylinder", typeof(GameObject)), new Vector3(0, 0, Moy.z) + Min, Quaternion.Euler(90, 0, 0)) as GameObject;
+        AxeZ.transform.parent = gameObject.transform;
         Vector3 ecart = Max - Min;
         Vector3 increm = ecart / nbGraduation;
         int j = 0;
@@ -54,20 +63,23 @@ public class Hide_Show : MonoBehaviour
             j++;
 
         }
-        AxeX.transform.localScale = new Vector3((float)0.01, Moy.x, (float)0.01);
-        AxeY.transform.localScale = new Vector3((float)0.01, Moy.y, (float)0.01);
-        AxeZ.transform.localScale = new Vector3((float)0.01, Moy.z, (float)0.01);
+        AxeX.transform.localScale = new Vector3((float)2*sharpness, Moy.x, (float)2*sharpness);
+        AxeY.transform.localScale = new Vector3((float)2*sharpness, Moy.y, (float)2*sharpness);
+        AxeZ.transform.localScale = new Vector3((float)2*sharpness, Moy.z, (float)2*sharpness);
         foreach (GameObject i in L1)
         {
-            i.transform.localScale = new Vector3((float)0.005, Moy.x, (float)0.005);
+            i.transform.localScale = new Vector3((float)sharpness, Moy.x, (float)sharpness);
+            i.transform.parent = gameObject.transform;
         }
         foreach (GameObject i in L2)
         {
-            i.transform.localScale = new Vector3((float)0.005, Moy.y, (float)0.005);
+            i.transform.localScale = new Vector3((float)sharpness, Moy.y, (float)sharpness);
+            i.transform.parent = gameObject.transform;
         }
         foreach (GameObject i in L3)
         {
-            i.transform.localScale = new Vector3((float)0.005, Moy.z, (float)0.005);
+            i.transform.localScale = new Vector3((float)sharpness, Moy.z, (float)sharpness);
+            i.transform.parent = gameObject.transform;
         }
     }
 
@@ -89,32 +101,37 @@ public class Hide_Show : MonoBehaviour
         {
             Destroy(i);
         }
+
+
     }
 
     void Start()
     {
-        L1 = new List<GameObject>();
-        L2 = new List<GameObject>();
-        L3 = new List<GameObject>();
-        AxeX = new GameObject();
-        AxeY = new GameObject();
-        AxeZ = new GameObject();
         HS = false;
         selectedpoints = false;
         cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
         nbGraduation = 10;
-
     }
 
     public void Update()
     {
         if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Hide_Show)
-            HS = !HS;
-        if (HS)
-            Hide();
+        {
+            if (!HS)
+            {
+                HS = !HS;
+                Show();
+            }
+        }
         else
-            Show();
-            
+        {
+            if (HS)
+            {
+                HS = !HS;
+                Hide();
+            }
+        }
+
     }
 
 }

@@ -138,7 +138,16 @@ public class MenuInteraction : MonoBehaviour
                     }
 
                     if (ButtonHide_Show.isPressed || Input.GetKeyDown("h"))
-                        cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected); // returns to the main menu (No page in itself)
+                    {
+                        if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Hide_Show)
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
+                        }
+                        else
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.Hide_Show);
+                        }
+                    }
 
                     if (ButtonHelp_Options.isPressed || Input.GetKeyDown("o"))
                     {
