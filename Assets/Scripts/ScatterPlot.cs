@@ -128,7 +128,9 @@ public class ScatterPlot : MonoBehaviour
             }
         }
         pSystem.SetParticles(dataParticles);
+        // Add the volume in BoolOperation et clear the last volume
         BoolOperation.currentVolume = volume;
+        BoolOperation.currentSelectedDataPoints.Clear();
         return pointsInVolume;
     }
 
