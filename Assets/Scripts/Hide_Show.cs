@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Hide_Show : MonoBehaviour
 {
-    public float sharpness;
+    public float sharpness; //used to size the axis 
+    public uint nbGraduation; //Graduation for each axis
 
+    //Varibles used to adapt the size the length of the axis
     Vector3 Min;
     Vector3 Max;
     Vector3 Moy;
-    int nbGraduation;
 
-    List<DataPoint> dataPoints;
+    List<DataPoint> dataPoints; //DataPoint in the grid pattern
 
     //List of axis
     List<GameObject> L1;
@@ -23,10 +24,11 @@ public class Hide_Show : MonoBehaviour
     GameObject AxeY;
     GameObject AxeZ; 
 
-    CurrentMenu cMenu;
-    bool HS;
-    public static bool selectedpoints;
+    CurrentMenu cMenu; //The Menu variable
+    bool HS; //Indicate when to enable/disable the display
+    public static bool selectedpoints; //The point selected in order to 
 
+    //Create and show the axis
     public void Show()
     {
         L1 = new List<GameObject>();
@@ -34,13 +36,14 @@ public class Hide_Show : MonoBehaviour
         L3 = new List<GameObject>();
 
         dataPoints = ScatterPlot.GetDataPoints();
-     
+        //Compute the max and min position
         foreach (DataPoint dp in dataPoints)
         {
             Min = Vector3.Min(dp.GetPos(), Min);
             Max = Vector3.Max(dp.GetPos(), Max);
         }
         Moy = (Max - Min) / 2;
+        //Creation of the main axis in black
         AxeX = Instantiate(Resources.Load("Prefab/MainCylinder", typeof(GameObject)), new Vector3(Moy.x, 0, 0) + Min, Quaternion.Euler(0, 0, 90)) as GameObject;
         AxeX.transform.parent = gameObject.transform;
         AxeY = Instantiate(Resources.Load("Prefab/MainCylinder", typeof(GameObject)), new Vector3(0, Moy.y, 0) + Min, Quaternion.Euler(0, 90, 0)) as GameObject;
@@ -50,6 +53,7 @@ public class Hide_Show : MonoBehaviour
         Vector3 ecart = Max - Min;
         Vector3 increm = ecart / nbGraduation;
         int j = 0;
+        //Creation of the numbered axis in white
         while (j < nbGraduation)
         {
             L1.Add(Instantiate(Resources.Load("Prefab/Cylinder", typeof(GameObject)), new Vector3(Moy.x, 0, increm.z) + Min, Quaternion.Euler(0, 0, 90)) as GameObject);
@@ -62,6 +66,7 @@ public class Hide_Show : MonoBehaviour
             j++;
 
         }
+        //Resize of the different axis
         AxeX.transform.localScale = new Vector3((float)2*sharpness, Moy.x, (float)2*sharpness);
         AxeY.transform.localScale = new Vector3((float)2*sharpness, Moy.y, (float)2*sharpness);
         AxeZ.transform.localScale = new Vector3((float)2*sharpness, Moy.z, (float)2*sharpness);
@@ -82,7 +87,7 @@ public class Hide_Show : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // Hide the axis
     public void Hide()
     {
         Destroy(AxeX);
@@ -104,14 +109,15 @@ public class Hide_Show : MonoBehaviour
 
     }
 
+    //Initialisation function
     void Start()
     {
         HS = false;
         selectedpoints = false;
         cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
-        nbGraduation = 10;
     }
 
+    //Update function that able/enable the display of axis
     public void Update()
     {
         if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Hide_Show)
