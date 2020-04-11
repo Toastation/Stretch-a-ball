@@ -120,7 +120,7 @@ public class BoolOperation: MonoBehaviour
     //Update function with the Menu
     private void Update()
     {
-        if(CurrentMenu.Menu.Selection == cMenu.GetCurrentMenu())
+        if(CurrentMenu.Menu.Selection == cMenu.GetCurrentMenu() && currentVolume != null)
             if(CurrentMenu.Selection.SetOperation == cMenu.GetCurrentMenuSelection())
                 switch(cMenu.GetCurrentMenuSetOperation())
                 {
