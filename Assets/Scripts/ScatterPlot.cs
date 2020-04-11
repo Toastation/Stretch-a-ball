@@ -14,9 +14,9 @@ public class ScatterPlot : MonoBehaviour
 
 
     /** The list of points in the scatterplot and their particle representation */
-    private static ParticleSystem pSystem;
-    private static List<DataPoint> dataPoints;
-    private static ParticleSystem.Particle[] dataParticles;
+    public static ParticleSystem pSystem;
+    public static List<DataPoint> dataPoints;
+    public static ParticleSystem.Particle[] dataParticles;
     private List<ParticleCollisionEvent> collisionEvents;
 
     void Start()
@@ -128,6 +128,7 @@ public class ScatterPlot : MonoBehaviour
             }
         }
         pSystem.SetParticles(dataParticles);
+        BoolOperation.currentVolume = volume;
         return pointsInVolume;
     }
 

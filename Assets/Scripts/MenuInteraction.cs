@@ -98,7 +98,7 @@ public class MenuInteraction : MonoBehaviour
                                     return true;
                                 }
 
-                                if (Input.GetKeyDown("$"))
+                                if (Input.GetKeyDown("m"))
                                     Debug.Log(cMenu.GetCurrentMenuSelection());
 
                                 break;

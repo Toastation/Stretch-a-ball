@@ -24,7 +24,6 @@ public class LeapEventManager : MonoBehaviour
 
     GameObject currentSelection;
     List<DataPoint> currentSelectedDataPoints;
-    BoolOperation Operation;
 
     public Camera cam;
     int LA_VARIABLE = 1;
@@ -99,7 +98,6 @@ public class LeapEventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Operation = new BoolOperation();
 
         LeapDeformation = gameObject.AddComponent<LeapDeformation>();
 
@@ -170,23 +168,7 @@ public class LeapEventManager : MonoBehaviour
                     switch (cMenu.GetCurrentMenuSelection())
                     {
                         case CurrentMenu.Selection.SetOperation:
-                            switch (cMenu.GetCurrentMenuSetOperation())
-                            {
-                                case CurrentMenu.SetOperation.SetUnion:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.OrBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.SetIntersection:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.AndBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.SetRelativeComplement:
-                                    Operation.BoolUpdate(currentSelectedDataPoints, Operation.NotInBoolOperation);
-                                    break;
-                                case CurrentMenu.SetOperation.Confirm:
-                                    currentSelectedDataPoints = Operation.BoolOperationMain(currentSelectedDataPoints);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            
                             break;
                         case CurrentMenu.Selection.Modification:
                             LeapDeformation.Update();
