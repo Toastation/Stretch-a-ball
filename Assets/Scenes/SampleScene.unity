@@ -3823,6 +3823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922efda65f3e2194387fc1a8b11d0927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ButtonDelay: 120
 --- !u!1 &717949043
 GameObject:
   m_ObjectHideFlags: 0
