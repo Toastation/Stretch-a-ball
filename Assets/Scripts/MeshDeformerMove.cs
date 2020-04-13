@@ -35,7 +35,7 @@ public class MeshDeformerMove : MonoBehaviour
 
     private void Start()
     {
-        gameObject.layer = 9;
+        gameObject.layer = 9; // volume layer
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
@@ -61,7 +61,7 @@ public class MeshDeformerMove : MonoBehaviour
         // Draw a line from the camera to the mouse position when the left mouse button is pressed
         // if (Input.GetMouseButton(0)) {
         // Debug.DrawLine(Camera.main.transform.position, transform.position, Color.red);
-        // }    
+        // }
         if (Input.GetKeyDown(KeyCode.L))
         {
             for (int i = 0; i < vertices.Length; i++)
@@ -120,7 +120,7 @@ public class MeshDeformerMove : MonoBehaviour
             if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
                 selectedVertices[i] = true;
                 originPos[i] = vertices[i];
-                intensities[i] = Mathf.Clamp01(Mathf.Pow(360.0f, -Mathf.Pow(dist.magnitude / radiusOfEffect, 2.5f) - 0.01f));
+                intensities[i] = Mathf.Clamp01(Mathf.Pow(360.0f, -Mathf.Pow(dist.magnitude / radiusOfEffect, 2.5f)));
             }
         }
     }
@@ -130,16 +130,16 @@ public class MeshDeformerMove : MonoBehaviour
     */
     public void UnselectVertices()
     {
-/*        if (DetectSelfIntersection())
-        {
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                if (selectedVertices[i])
-                    vertices[i] = originPos[i];
-            }
-            Debug.Log("Self intersection detected");
-            UpdateMeshVertices();
-        }*/
+        //if (DetectSelfIntersection())
+        //{
+        //    for (int i = 0; i < vertices.Length; i++)
+        //    {
+        //        if (selectedVertices[i])
+        //            vertices[i] = originPos[i];
+        //    }
+        //    Debug.Log("Self intersection detected");
+        //    UpdateMeshVertices();
+        //}
 
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -159,6 +159,7 @@ public class MeshDeformerMove : MonoBehaviour
     */
     public void MoveVertices(in Vector3 disp)
     {
+        //Debug.Log(disp);
         Vector3[] old = mesh.vertices;
         for (int i = 0; i < selectedVertices.Length; i++)
         {
@@ -173,25 +174,25 @@ public class MeshDeformerMove : MonoBehaviour
 
     private bool DetectSelfIntersection()
     {
-        /*for (int i = 0; i < triangles.Length; i += 3)
-        {
-            if (!selectedVertices[triangles[i]] || !selectedVertices[triangles[i + 1]] || !selectedVertices[triangles[i + 2]]) continue;
-            for (int j = 0; j < triangles.Length; j += 3)
-            {
-                if (i == j) continue;
-                bool cont = false;
-                for (int k = 0; k < 3; k++)
-                {
-                    if (triangles[i + k] == triangles[j] || triangles[i + k] == triangles[j + 1] || triangles[i + k] == triangles[j + 2]) cont = true;
-                }
-                if (selectedVertices[triangles[j]] || selectedVertices[triangles[j + 1]] || selectedVertices[triangles[j + 2]]) continue; 
-                if (cont) continue;
-                if (TriTriOverlap.TriTriIntersect(vertices[triangles[i]], vertices[triangles[i+1]], vertices[triangles[i+2]], vertices[triangles[j]], vertices[triangles[j + 1]], vertices[triangles[j + 2]]))
-                {
-                    return true;
-                }
-            }
-        }*/
+        //for (int i = 0; i < triangles.Length; i += 3)
+        //{
+        //    if (!selectedVertices[triangles[i]] || !selectedVertices[triangles[i + 1]] || !selectedVertices[triangles[i + 2]]) continue;
+        //    for (int j = 0; j < triangles.Length; j += 3)
+        //    {
+        //        if (i == j) continue;
+        //        bool cont = false;
+        //        for (int k = 0; k < 3; k++)
+        //        {
+        //            if (triangles[i + k] == triangles[j] || triangles[i + k] == triangles[j + 1] || triangles[i + k] == triangles[j + 2]) cont = true;
+        //        }
+        //        if (selectedVertices[triangles[j]] || selectedVertices[triangles[j + 1]] || selectedVertices[triangles[j + 2]]) continue; 
+        //        if (cont) continue;
+        //        if (TriTriOverlap.TriTriIntersect(vertices[triangles[i]], vertices[triangles[i+1]], vertices[triangles[i+2]], vertices[triangles[j]], vertices[triangles[j + 1]], vertices[triangles[j + 2]]))
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //}
         return false;
     }
 
@@ -227,6 +228,7 @@ public class MeshDeformerMove : MonoBehaviour
     {
         Vector3 currentMousePos = GetMouseWorldPos();
         Vector3 disp = currentMousePos - this.lastMousePos;
+        disp *= 1.0f / transform.localScale.x;
         MoveVertices(disp);
         this.lastMousePos = currentMousePos;
     }
