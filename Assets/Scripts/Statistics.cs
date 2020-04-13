@@ -10,10 +10,12 @@ public class Statistics : MonoBehaviour
     private Canvas StatisticsCanvas; // Assign in inspector
     CurrentMenu cMenu;
     ScatterPlot pointCloud;
+    BoolOperation boolOperation;
     int pointCount;
     MeshDeformerMove[] volumes;
     Text GeneralStats;
     Text DynamicStats;
+    Text BoolStats;
 
     Vector3 AveragePosition(List<DataPoint> points)
     {
@@ -61,10 +63,10 @@ public class Statistics : MonoBehaviour
         return Max;
     }
 
-    int toCSV(List<DataPoint> points, int number)
+    int toCSV(List<DataPoint> points, string type, int number)
     {
         //Writes a list of DataPoints to a csv file
-        string path = "Assets/Resources/selection" + number + ".csv";
+        string path = "Assets/Resources/" + type + number + ".csv";
         File.WriteAllText(path, "x,y,z,color");
         StreamWriter sr = new StreamWriter(path, true);
         sr.WriteLine("");
@@ -91,8 +93,10 @@ public class Statistics : MonoBehaviour
         StatisticsCanvas = GetComponent<Canvas>();
         cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
         pointCloud = GameObject.Find("ScatterPlot").GetComponent<ScatterPlot>();
+        boolOperation = GameObject.Find("BooleanOperation").GetComponent<BoolOperation>();
         GeneralStats = GameObject.Find("GeneralStats").GetComponent<Text>();
         DynamicStats = GameObject.Find("DynamicStats").GetComponent<Text>();
+        BoolStats = GameObject.Find("BoolStats").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -113,7 +117,9 @@ public class Statistics : MonoBehaviour
                 volumes = FindObjectsOfType<MeshDeformerMove>();
                 GeneralStats.text += "NUMBER OF MESHES : " + volumes.Length + "\n";
                 DynamicStats.text = "THESE ARE THE MESHES YOU HAVE CREATED SO FAR :\n \n \n";
+                BoolStats.text = "THESE ARE THE OPERATIONS YOU HAVE MADE SO FAR : \n \n \n";
                 List<List<DataPoint>> selectionSets = new List<List<DataPoint>>();
+                List<List<DataPoint>> boolSets = new List<List<DataPoint>>();
 
 
                 for (int i = 0; i < volumes.Length; i++)
@@ -125,10 +131,18 @@ public class Statistics : MonoBehaviour
                     DynamicStats.text += (" Dominant color : " + DominantColor(selectionSets[i]) +  "\n \n");
 
                     //Saves a csv file
-                    toCSV(selectionSets[i], i);
+                    toCSV(selectionSets[i], "selection", i);
                 }
 
+                boolSets = boolOperation.GetOperationData();
+                for (int i = 0; i < boolSets.Count; i++)
+                {
+                    BoolStats.text += (" - Operation number " + i + " contains : " + boolSets[i].Count + " points \n");
+                    BoolStats.text += (" Average position of the points : " + AveragePosition(boolSets[i]) + "\n");
+                    BoolStats.text += (" Dominant color : " + DominantColor(boolSets[i]) + "\n \n");
 
+                    toCSV(boolSets[i], "booloperation", i);
+                }
             }
 
 

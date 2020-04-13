@@ -8,7 +8,8 @@ using System;
 public class MenuInteraction : MonoBehaviour
 {
     static int FrameCounter;
-    static bool ChangeMenuPage;
+    static bool ButtonWasPressed;
+    public int ButtonDelay;
 
     CurrentMenu cMenu;
     //Listing of all the buttons
@@ -36,6 +37,7 @@ public class MenuInteraction : MonoBehaviour
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetIntersection);
+                                    return true;
                                 }
             
 
@@ -43,20 +45,23 @@ public class MenuInteraction : MonoBehaviour
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetUnion);
+                                    return true;
                                 }
 
                                 if (ButtonStatistics.isPressed || Input.GetKey("t"))
                                 {
                                     cMenu.ResetSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.SetRelativeComplement);
+                                    return true;
                                 }
 
                                 if (ButtonHide_Show.isPressed || Input.GetKey("h"))
                                 {
                                     cMenu.ConfirmSetOperation();
                                     cMenu.SetSetOperation(CurrentMenu.SetOperation.NoOperation);
+                                    return true;
                                 }
-                               
+
 
                                 if (ButtonHelp_Options.isPressed || Input.GetKey("o"))
                                 {
@@ -67,9 +72,6 @@ public class MenuInteraction : MonoBehaviour
                                     return true;
                                 }
 
-                                if (Input.GetKeyDown("$"))
-                                    Debug.Log(cMenu.GetCurrentMenuSetOperation());
-
                                 break;
                             }
 
@@ -78,11 +80,15 @@ public class MenuInteraction : MonoBehaviour
                                 if (ButtonCreation.isPressed || Input.GetKey("c"))
                                 {
                                     cMenu.SetSelection(CurrentMenu.Selection.Modification);
+                                    return true;
                                 }
 
                                 if (ButtonSelection.isPressed || Input.GetKey("e"))
+                                {
                                     cMenu.SetSelection(CurrentMenu.Selection.Erase);
-                                    
+                                    return true;
+                                }
+
 
                                 if (ButtonStatistics.isPressed || Input.GetKey("t"))
                                 {
@@ -98,9 +104,6 @@ public class MenuInteraction : MonoBehaviour
                                     return true;
                                 }
 
-                                if (Input.GetKeyDown("$"))
-                                    Debug.Log(cMenu.GetCurrentMenuSelection());
-
                                 break;
                             }
                     }
@@ -113,6 +116,7 @@ public class MenuInteraction : MonoBehaviour
                     if (ButtonCreation.isPressed || Input.GetKeyDown("c"))
                     {
                         cMenu.SetMenu(CurrentMenu.Menu.Creation);
+                        return true;
                     }
 
                     if (ButtonSelection.isPressed || Input.GetKeyDown("e"))
@@ -135,10 +139,21 @@ public class MenuInteraction : MonoBehaviour
                         {
                             cMenu.SetMenu(CurrentMenu.Menu.Statistics);
                         }
+                        return true;
                     }
 
                     if (ButtonHide_Show.isPressed || Input.GetKeyDown("h"))
-                        cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected); // returns to the main menu (No page in itself)
+                    {
+                        if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Hide_Show)
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.NoMenuSelected);
+                        }
+                        else
+                        {
+                            cMenu.SetMenu(CurrentMenu.Menu.Hide_Show);
+                        }
+                        return true;
+                    }
 
                     if (ButtonHelp_Options.isPressed || Input.GetKeyDown("o"))
                     {
@@ -154,6 +169,7 @@ public class MenuInteraction : MonoBehaviour
                         {
                             cMenu.SetMenu(CurrentMenu.Menu.Help_Options);
                         }
+                        return true;
                     }
 
                     if (ButtonQuit.isPressed || Input.GetKeyDown("escape"))
@@ -162,9 +178,6 @@ public class MenuInteraction : MonoBehaviour
                         Application.Quit();
                         UnityEditor.EditorApplication.isPlaying = false;
                     }
-
-                    if(Input.GetKeyDown("$"))
-                        Debug.Log(cMenu.GetCurrentMenu());
 
                     break;
                 }
@@ -326,17 +339,17 @@ public class MenuInteraction : MonoBehaviour
     {
         
         /*
-            Important notice : when changing pages, the menu waits 120 frames before allowing the user to change current mode or page.
+            Important notice : when changing pages, the menu waits 120 frames when a button is pressed to smooth out the experience
          */
 
-        if(ChangeMenuPage && FrameCounter < 120) // 120 should be defined according to system specs.
+        if(ButtonWasPressed && FrameCounter < ButtonDelay) // 120 should be defined according to system specs.
         {
             FrameCounter++;
         }
         else
         {
             FrameCounter = 0;
-            ChangeMenuPage = MenuManager();
+            ButtonWasPressed = MenuManager();
         }
 
         MenuPreview();
