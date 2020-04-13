@@ -63,7 +63,12 @@ namespace Leap.Unity
                     //Debug.Log(" CREATION MODE with mesh");
                     creating = true;
                     // Gets the prefab
+                    GameObject volumesNode = GameObject.Find("Volumes");
                     currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    if (volumesNode != null)
+                    {
+                        currentSelection.transform.parent = volumesNode.transform;
+                    }
                     //Modifies the position and scale
                     currentSelection.transform.position = (scriptPDL.Position + scriptPDR.Position) / 2;
                     float tmp = (Vector3.Distance(scriptPDL.Position, scriptPDR.Position));

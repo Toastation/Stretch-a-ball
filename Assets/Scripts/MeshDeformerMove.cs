@@ -71,7 +71,9 @@ public class MeshDeformerMove : MonoBehaviour
         }
     }
 
-    // The deformation should always take place after the main update
+    /**
+     * Update done after all event handling: update mesh geometry
+     */
     private void LateUpdate()
     {
         if (meshUpdated)
@@ -81,6 +83,9 @@ public class MeshDeformerMove : MonoBehaviour
         }
     }
 
+    /**
+     * Update the mesh geometry and collider
+     */
     private void UpdateMeshVertices()
     {
         mesh.MarkDynamic();
@@ -107,15 +112,15 @@ public class MeshDeformerMove : MonoBehaviour
     */
     public void SelectVertices(Vector3 hitPoint)
     {
-        float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.localScale.x;
+        float radiusOfEffect = deformArea * Mathf.Min(mesh.bounds.size.x, mesh.bounds.size.y, mesh.bounds.size.z) * transform.parent.localScale.x;
         this.zOffset = Camera.main.WorldToScreenPoint(hitPoint).z;
-        Vector3 center = transform.InverseTransformPoint(hitPoint);
+        Vector3 center = transform.parent.InverseTransformPoint(hitPoint);
         float distSqrMag = 0.0f;
         lastMousePos = GetMouseWorldPos();
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 dist = center - vertices[i];
-            dist *= transform.localScale.x;
+            dist *= transform.parent.localScale.x;
             distSqrMag = dist.sqrMagnitude;
             if (distSqrMag < Mathf.Pow(radiusOfEffect, 2)) {
                 selectedVertices[i] = true;
@@ -228,7 +233,7 @@ public class MeshDeformerMove : MonoBehaviour
     {
         Vector3 currentMousePos = GetMouseWorldPos();
         Vector3 disp = currentMousePos - this.lastMousePos;
-        disp *= 1.0f / transform.localScale.x;
+        disp *= 1.0f / transform.parent.localScale.x;
         MoveVertices(disp);
         this.lastMousePos = currentMousePos;
     }
