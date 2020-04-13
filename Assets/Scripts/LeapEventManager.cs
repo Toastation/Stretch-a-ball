@@ -23,10 +23,8 @@ public class LeapEventManager : MonoBehaviour
     ExtendedFingerDetector scriptEFDR;
 
     GameObject currentSelection;
-    List<DataPoint> currentSelectedDataPoints;
 
     public Camera cam;
-    int LA_VARIABLE = 1;
 
     Vector3 lastPosition;
     Vector3 lastPositionR;
@@ -202,7 +200,7 @@ public class LeapEventManager : MonoBehaviour
                     { 
                         if (currentSelection != null)
                             currentSelection.GetComponent<Renderer>().material.color = Color.white;
-                        currentSelection = tempo.gameObject; //transform.parent.
+                        currentSelection = tempo.gameObject;
                         currentSelection.GetComponent<Renderer>().material.color = Color.red;
                     }
                     else

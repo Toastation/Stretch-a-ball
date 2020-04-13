@@ -75,6 +75,10 @@ public class ScatterPlot : MonoBehaviour
         }
         pSystem.SetParticles(dataParticles, dataParticles.Length);
         collisionEvents = new List<ParticleCollisionEvent>();
+
+        // if there are already some volume, select the first and show the selection
+        MeshDeformerMove volume = (MeshDeformerMove)GameObject.FindObjectOfType(typeof(MeshDeformerMove));
+        if (volume != null) GetSelectedPoints(volume);
     }
 
     /**

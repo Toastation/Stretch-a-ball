@@ -63,7 +63,6 @@ public class LeapDeformation : MonoBehaviour
         //Debug.Log("Pinch Left Ended");
         pinch_left = false;
         meshHit.UnselectVertices();
-        // Debug.Log("JE SUIS LA!");
     }
 
     /*
