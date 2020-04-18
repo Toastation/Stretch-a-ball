@@ -1,0 +1,19 @@
+{
+  "name": "com.pfa.stretch-a-ball",
+  "version": "0.1.0",
+  "displayName": "Stretch-a-ball",
+  "description": "Stretch-a-ball package",
+  "unity": "2019.2",
+  "unityRelease": "10f1",
+  "author" : {"name": "Aubin Claire  Chapal Victor  Even Melvin  Herrero Victor  Hertay Dylan  Lanneau Quentin  Mazue Julien  Trocherie Lucas  Responsable : Sansen Joris"},
+
+  "samples": [
+   {
+     "displayName": "Stretch-a-ball",
+     "description": "Appli Stretch-a-ball",
+     "path": "Samples/Stretch-a-ball"
+   }
+
+ ]
+
+}
