@@ -99,16 +99,16 @@ You can also go forward or backward by moving your right hand in the same direct
 This project was made for AKKA RESEARCH and delivered in April 2020.
 
 Special thanks to the developping team :
-Aubin Claire
-Chapal Victor
-Even Melvin
-Hertay Dylan
-Lanneau Quentin
-Trocherie Lucas
+- Aubin Claire
+- Chapal Victor
+- Even Melvin
+- Hertay Dylan
+- Lanneau Quentin
+- Trocherie Lucas
 
 And for those who helped along the way :
-Herrero Victor
-Mazue Julien
+- Herrero Victor
+- Mazue Julien
 
 # Links 
 * [Manual for scripting with Unity](https://docs.unity3d.com/Manual/ScriptingSection.html)
