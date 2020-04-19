@@ -153,7 +153,7 @@ namespace StretchABall
                             {
                                 currentSelectedDataPoints = ScatterPlot.GetSelectedPoints(currentVolume);
                                 currentSelectedDataPoints = BoolOperationMain(currentSelectedDataPoints);
-                                OperationData.Add(currentSelectedDataPoints);
+                                OperationData.Add(new List<DataPoint>(currentSelectedDataPoints));
                                 Coloration(currentSelectedDataPoints);
                                 cMenu.ResetSetOperation();
                                 test = 3;
