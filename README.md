@@ -1,10 +1,10 @@
-### Stretch-a-ball
+# Stretch-a-ball
 
 * Unity version used : 2019.2.10f1
 * Check the dev branch for the latest update
 * Scripts are located in Assets/Scripts
 
-### Presentation
+# Presentation
 
 Welcome to the project Stretch-A-Ball !
 
@@ -19,14 +19,14 @@ Points can be selected by these Meshes whose shape can be changed for maximum ac
 
 This project was made from October 2019 to April 2020.
 
-### Instructions
+# Instructions
 
 These instructions are valid once the scene is played.
 If you have not made it there, you can check the Installation part.
 You will be welcome with all the points that were present in your csv file.
 You can now open you left hand to find a menu, made of six buttons and a screen.
 
-# Menu
+### Menu
 
 The main page is composed of these options :
 - Creation : in which you can instantiate a Mesh by pinching your thumb and your index in both hands.
@@ -51,7 +51,7 @@ The SetOPeration page is composed of these options :
 
 Once the scene is played, no further action from a keyboard is required.
 
-# Creation
+### Creation
 
 To create a Mesh, you first need to click on Creation.
 You now need to pinch your right thumb with your right index, and do the same with your left hand. 
@@ -59,7 +59,7 @@ A new Mesh should appear, you can rescale it by increasing or decreasing the len
 You can also change the depth at which the Mesh was created, by alternating a left pinch and a right pinch and moving your hands like if you were pulling on a string.
 
 
-# Boolean Operations
+### Boolean Operations
 
 To select a Mesh either to delete it or for boolean operations, you must point your index at it (the use of both hands is valid).
 
@@ -72,7 +72,7 @@ To make a boolean operation, follow the following instructions :
 6. You can now go back to point 2 or point 3 if you wish to use the result of the last operation.
 7. You can also return to do something else
 
-# Save 
+### Save 
 
 You can save your work by clicking on the button Statistics & Save. 
 This will display statistics on the Meshes that are in the scene and the operations made so far.
@@ -81,12 +81,12 @@ One CSV file will be created for each Mesh and for each operation.
 Be careful, as the data will be overwritten if you start the scene several times. 
 You may want to copy your work in another folder before leaving Unity or before replaying the scene.
 
-# Camera Motions
+### Camera Motions
 
 You can pivote the camera right or left by moving your hands to the edges of the screen.
 You can also go forward or backward by moving your right hand in the same directions.
 
-### Installation
+# Installation
 1. Download the Leap Motion V4 SDK here : https://developer.leapmotion.com/setup/desktop
 2. Download the StretchABall package or clone the project.
 3. In Unity Hub, select "import a project" if you have cloned the project
@@ -94,7 +94,7 @@ You can also go forward or backward by moving your right hand in the same direct
 4. Choose your CSV file in the gameObject ScatterPlot
 5. Play the scene
 
-### Credits
+# Credits
 
 This project was made for AKKA RESEARCH and delivered in April 2020.
 
@@ -110,7 +110,7 @@ And for those who helped along the way :
 Herrero Victor
 Mazue Julien
 
-### Links 
+# Links 
 * [Manual for scripting with Unity](https://docs.unity3d.com/Manual/ScriptingSection.html)
 * [Leap Motion Unity SDK ](https://developer.leapmotion.com/unity)
 * [How to git with Unity](https://thoughtbot.com/blog/how-to-git-with-unity)
