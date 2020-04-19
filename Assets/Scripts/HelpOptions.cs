@@ -2,32 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelpOptions : MonoBehaviour
+namespace StretchABall
 {
-    private Canvas helpOptionsCanvas; // Assign in inspector
-    CurrentMenu cMenu;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public class HelpOptions : MonoBehaviour
     {
-        helpOptionsCanvas = GetComponent<Canvas>();
-        cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
-    }
+        private Canvas helpOptionsCanvas; // Assign in inspector
+        CurrentMenu cMenu;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Help_Options)
+
+        // Start is called before the first frame update
+        void Start()
         {
-            if (!helpOptionsCanvas.enabled)
-                helpOptionsCanvas.enabled = !helpOptionsCanvas.enabled;
-
+            helpOptionsCanvas = GetComponent<Canvas>();
+            cMenu = GameObject.Find("Palm UI L").GetComponent<CurrentMenu>();
         }
-        else
+
+        // Update is called once per frame
+        void Update()
         {
-            if (helpOptionsCanvas.enabled)
-                helpOptionsCanvas.enabled = !helpOptionsCanvas.enabled;
+            if (cMenu.GetCurrentMenu() == CurrentMenu.Menu.Help_Options)
+            {
+                if (!helpOptionsCanvas.enabled)
+                    helpOptionsCanvas.enabled = !helpOptionsCanvas.enabled;
+
+            }
+            else
+            {
+                if (helpOptionsCanvas.enabled)
+                    helpOptionsCanvas.enabled = !helpOptionsCanvas.enabled;
+            }
         }
     }
 }
