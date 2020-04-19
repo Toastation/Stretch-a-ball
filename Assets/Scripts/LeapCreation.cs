@@ -66,7 +66,7 @@ namespace StretchABall
                     creating = true;
                     // Gets the prefab
                     GameObject volumesNode = GameObject.Find("Volumes");
-                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    currentSelection = Instantiate(Resources.Load("Prefab/sphereMesh", typeof(GameObject))) as GameObject;
                     if (volumesNode != null)
                     {
                         currentSelection.transform.parent = volumesNode.transform;

@@ -31,7 +31,7 @@ namespace StretchABall
                 for (i = -20; i < 20; i++)
                 {
                     // Gets the prefab
-                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    currentSelection = Instantiate(Resources.Load("Prefab/sphereMesh", typeof(GameObject))) as GameObject;
                     //Modifies the position and scale
                     currentSelection.transform.position = new Vector3(i, 0, 0);
                     currentSelection.transform.localScale = new Vector3(1, 1, 1);
@@ -40,7 +40,7 @@ namespace StretchABall
                 for (i = -20; i < 20; i++)
                 {
                     // Gets the prefab
-                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    currentSelection = Instantiate(Resources.Load("Prefab/sphereMesh", typeof(GameObject))) as GameObject;
                     //Modifies the position and scale
                     currentSelection.transform.position = new Vector3(0, i, 0);
                     currentSelection.transform.localScale = new Vector3(1, 1, 1);
@@ -49,7 +49,7 @@ namespace StretchABall
                 for (i = -20; i < 20; i++)
                 {
                     // Gets the prefab
-                    currentSelection = Instantiate(Resources.Load("sphereMesh", typeof(GameObject))) as GameObject;
+                    currentSelection = Instantiate(Resources.Load("Prefab/sphereMesh", typeof(GameObject))) as GameObject;
                     //Modifies the position and scale
                     currentSelection.transform.position = new Vector3(0, 0, i);
                     currentSelection.transform.localScale = new Vector3(1, 1, 1);
