@@ -54,7 +54,7 @@ Once the scene is played, no further action from a keyboard is required.
 ### Creation
 
 To create a Mesh, you first need to click on Creation.
-You now need to pinch your right thumb with your right index, and do the same with your left hand. 
+You now need to pinch your right thumb with your right index, and do the same with your left hand.
 A new Mesh should appear, you can rescale it by increasing or decreasing the length between your hands.
 You can also change the depth at which the Mesh was created, by alternating a left pinch and a right pinch and moving your hands like if you were pulling on a string.
 
@@ -72,13 +72,13 @@ To make a boolean operation, follow the following instructions :
 6. You can now go back to point 2 or point 3 if you wish to use the result of the last operation.
 7. You can also return to do something else
 
-### Save 
+### Save
 
-You can save your work by clicking on the button Statistics & Save. 
+You can save your work by clicking on the button Statistics & Save.
 This will display statistics on the Meshes that are in the scene and the operations made so far.
-This will also export CSV files int the ./Assets/Resources/ folder. 
+This will also export CSV files int the ./Assets/Resources/ folder.
 One CSV file will be created for each Mesh and for each operation.
-Be careful, as the data will be overwritten if you start the scene several times. 
+Be careful, as the data will be overwritten if you start the scene several times.
 You may want to copy your work in another folder before leaving Unity or before replaying the scene.
 
 ### Camera Motions
@@ -88,9 +88,23 @@ You can also go forward or backward by moving your right hand in the same direct
 
 # Installation
 1. Download the Leap Motion V4 SDK here : https://developer.leapmotion.com/setup/desktop
-2. Download the StretchABall package or clone the project.
-3. In Unity Hub, select "import a project" if you have cloned the project
-3. In Unity Hub, start a new project and use Assets->Import Package->Custom Package... if you have the StretchABall package
+
+### Package folder
+2. Download the Unity Core assets and the Leap Motion Interaction Engine here : https://developer.leapmotion.com/unity#5436356
+3. In Unity Hub, start a new project
+4. Import them with Assets->Import Package->Custom Package...
+5. Click on Window->Package Manager
+6. In the new windows click on + (at the top right)->Add package from disk...
+7. Select the package.json file from the package folder
+8. Select Stretch-a-ball in the list
+9. Import the sample
+10. Open the scene in the sample
+11. Choose your CSV file in the gameObject ScatterPlot
+12. Play the scene
+
+### StretchABall package Unity
+2. Download the StretchABall package
+3. In Unity Hub, start a new project and use Assets->Import Package->Custom Package...
 4. Choose your CSV file in the gameObject ScatterPlot
 5. Play the scene
 
@@ -110,7 +124,7 @@ And for those who helped along the way :
 - Herrero Victor
 - Mazue Julien
 
-# Links 
+# Links
 * [Manual for scripting with Unity](https://docs.unity3d.com/Manual/ScriptingSection.html)
 * [Leap Motion Unity SDK ](https://developer.leapmotion.com/unity)
 * [How to git with Unity](https://thoughtbot.com/blog/how-to-git-with-unity)

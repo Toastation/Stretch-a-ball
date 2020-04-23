@@ -1,8 +1,8 @@
 {
   "name": "com.pfa.stretch-a-ball",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "Stretch-a-ball",
-  "description": "Stretch-a-ball package",
+  "description": "This project follows on this trend mixing data visualization and 3d environments. It has for purpose to visualize data points in a scene in Unity, and to manipulate them. Their manipulation is made by using some highly complex Meshes. Points can be selected by these Meshes whose shape can be changed for maximum accuracy and operations can be made between Meshes.",
   "unity": "2019.2",
   "unityRelease": "10f1",
   "author" : {"name": "Aubin Claire  Chapal Victor  Even Melvin  Herrero Victor  Hertay Dylan  Lanneau Quentin  Mazue Julien  Trocherie Lucas  Responsable : Sansen Joris"},
@@ -10,7 +10,7 @@
   "samples": [
    {
      "displayName": "Stretch-a-ball",
-     "description": "Appli Stretch-a-ball",
+     "description": "Stretch-a-ball application",
      "path": "Samples/Stretch-a-ball"
    }
 
